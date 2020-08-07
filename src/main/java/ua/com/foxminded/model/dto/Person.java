@@ -17,7 +17,7 @@ public class Person {
         this.id = person.id;
         this.firstName = person.firstName;
         this.lastName = person.lastName;
-        this.contactInfo = person.contactInfo;
+        this.contactInfo = new ContactInfo(person.getContactInfo());
     }
 
     public UUID getId() {
