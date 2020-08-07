@@ -14,7 +14,6 @@ public class Person {
     }
 
     public Person(Person person) {
-        this.id = person.id;
         this.firstName = person.firstName;
         this.lastName = person.lastName;
         this.contactInfo = new ContactInfo(person.getContactInfo());
@@ -62,7 +61,6 @@ public class Person {
         int result = 1;
         result = prime * result + ((contactInfo == null) ? 0 : contactInfo.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         return result;
     }
@@ -85,11 +83,6 @@ public class Person {
             if (other.firstName != null)
                 return false;
         } else if (!firstName.equals(other.firstName))
-            return false;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
             return false;
         if (lastName == null) {
             if (other.lastName != null)

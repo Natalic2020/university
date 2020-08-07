@@ -5,7 +5,7 @@ import java.util.Locale;
 public class ContactInfo {
 
 	private int index;
-	private Locale country;
+	private String country;
 	private String city;
 	private String street;
 	private String house;
@@ -39,11 +39,11 @@ public class ContactInfo {
         return this;
     }
 
-    public Locale getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public ContactInfo setCountry(Locale country) {
+    public ContactInfo setCountry(String country) {
         this.country = country;
         return this;
     }

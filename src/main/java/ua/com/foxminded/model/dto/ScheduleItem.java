@@ -2,7 +2,7 @@ package ua.com.foxminded.model.dto;
 
 import java.util.UUID;
 
-import ua.com.foxminded.enums.DayOfWeek;
+import ua.com.foxminded.model.enums.DayOfWeek;
 
 public class ScheduleItem {
     
@@ -19,7 +19,6 @@ public class ScheduleItem {
     }
 
     public ScheduleItem(ScheduleItem scheduleItem) {
-        this.id = scheduleItem.id;
         this.teacher = new Teacher(scheduleItem.getTeacher())  ;
         this.group = new Group(scheduleItem.getGroup()) ;
         this.subject = new Subject(scheduleItem.getSubject());
@@ -97,7 +96,6 @@ public class ScheduleItem {
         int result = 1;
         result = prime * result + ((dayOWeek == null) ? 0 : dayOWeek.hashCode());
         result = prime * result + ((group == null) ? 0 : group.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((room == null) ? 0 : room.hashCode());
         result = prime * result + ((subject == null) ? 0 : subject.hashCode());
         result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
@@ -120,11 +118,6 @@ public class ScheduleItem {
             if (other.group != null)
                 return false;
         } else if (!group.equals(other.group))
-            return false;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
             return false;
         if (room == null) {
             if (other.room != null)

@@ -2,8 +2,8 @@ package ua.com.foxminded.model.dto;
 
 import java.math.BigDecimal;
 
-import ua.com.foxminded.enums.Degree;
-import ua.com.foxminded.enums.Department;
+import ua.com.foxminded.model.enums.Degree;
+import ua.com.foxminded.model.enums.Department;
 
 public class Teacher extends Person{
     
@@ -20,7 +20,7 @@ public class Teacher extends Person{
         this.degree = teacher.degree;
         this.departament = teacher.departament;
         this.isPermanent = teacher.isPermanent;
-        this.salary = teacher.salary;
+        this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
     }
 
     public Degree getDegree() {

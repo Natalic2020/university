@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Locale;
 
-import ua.com.foxminded.enums.StudyStatus;
+import ua.com.foxminded.model.enums.StudyStatus;
 
 public class Student extends Person{
     
     private StudyStatus studyStatus;
     private LocalDate startOfStudy;
-    private Locale citizenship;
+    private String citizenship;
     private BigDecimal grant;
     
     public Student() {
@@ -18,11 +18,10 @@ public class Student extends Person{
     }
 
     public Student(Student student) {
-        super();
         this.studyStatus = student.studyStatus;
         this.startOfStudy = student.startOfStudy;
         this.citizenship = student.citizenship;
-        this.grant = student.grant;
+        this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
 
     public StudyStatus getStudyStatus() {
@@ -43,11 +42,11 @@ public class Student extends Person{
         return this;
     }
 
-    public Locale getCitizenship() {
+    public String getCitizenship() {
         return citizenship;
     }
 
-    public Student setCitizenship(Locale citizenship) {
+    public Student setCitizenship(String citizenship) {
         this.citizenship = citizenship;
         return this;
     }

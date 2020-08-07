@@ -14,8 +14,8 @@ public class TimeSlot {
 
     public TimeSlot(TimeSlot timeSlot) {
         this.serialNumber = timeSlot.serialNumber;
-        this.startTime = timeSlot.startTime;
-        this.finishTime = timeSlot.finishTime;
+        this.startTime = LocalTime.of(timeSlot.getStartTime().getHour(), timeSlot.getStartTime().getMinute());
+        this.finishTime = LocalTime.of(timeSlot.getFinishTime().getHour(), timeSlot.getFinishTime().getMinute());  
     }
 
     public int getSerialNumber() {
@@ -26,7 +26,6 @@ public class TimeSlot {
         this.serialNumber = serialNumber;
         return this;
     }
-    
 
     public LocalTime getStartTime() {
         return startTime;

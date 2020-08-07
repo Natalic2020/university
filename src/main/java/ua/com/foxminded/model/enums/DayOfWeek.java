@@ -1,4 +1,4 @@
-package ua.com.foxminded.enums;
+package ua.com.foxminded.model.enums;
 
 public enum DayOfWeek {
     MONDAY, TUESDAY, WENDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
