@@ -2,6 +2,7 @@ package ua.com.foxminded.model.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Locale;
 
 import ua.com.foxminded.model.enums.StudyStatus;
@@ -19,7 +20,7 @@ public class Student extends Person{
 
     public Student(Student student) {
         this.studyStatus = student.studyStatus;
-        this.startOfStudy = student.startOfStudy;
+        this.startOfStudy = LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(), student.getStartOfStudy().getDayOfMonth());
         this.citizenship = student.citizenship;
         this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
