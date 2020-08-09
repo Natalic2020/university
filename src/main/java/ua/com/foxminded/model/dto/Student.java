@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
+import java.util.UUID;
 
 import ua.com.foxminded.model.enums.StudyStatus;
 
@@ -18,6 +19,10 @@ public class Student extends Person{
        
     }
 
+    public Student (UUID id, String firstName, String lastName) {
+        super( id,firstName, lastName); 
+    }
+    
     public Student(Student student) {
         this.studyStatus = student.studyStatus;
         this.startOfStudy = LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(), student.getStartOfStudy().getDayOfMonth());
@@ -103,7 +108,7 @@ public class Student extends Person{
 
     @Override
     public String toString() {
-        return "Student [studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy + ", citizenship=" + citizenship
-                + ", grant=" + grant + "]";
+        return "Student  [studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy + ", citizenship=" + citizenship
+                + ", grant=" + grant + "]" + super.toString();
     }
 }
