@@ -1,0 +1,14 @@
+DROP SCHEMA IF EXISTS uni  CASCADE;
+CREATE SCHEMA uni;
+create table uni.groups (id serial PRIMARY KEY, group_name varchar(50)  NOT NULL, specialty varchar(50));
+create table uni.persons (id serial PRIMARY KEY, first_name varchar(50)  NOT NULL, last_name varchar(50));
+create table uni.contact_infos (id serial PRIMARY KEY,  id_person int REFERENCES uni.persons (id) ON DELETE CASCADE, index int, country varchar(50), city varchar(50), street varchar(50), house varchar(50), apartment int, phone1 varchar(50), phone2 varchar(50), email varchar(50))
+create table uni.students (id serial PRIMARY KEY, id_person int REFERENCES uni.persons (id) ON DELETE CASCADE, study_status varchar(50), start_of_study date, citizenship varchar(50), grants money, id_group int REFERENCES uni.groups (id))
+create table uni.teachers (id serial PRIMARY KEY, id_person int REFERENCES uni.persons (id) ON DELETE CASCADE, department varchar(50), permanent boolean,  salary money)
+create table uni.subjects (id serial PRIMARY KEY, name varchar(50))
+create table uni.rooms (id serial PRIMARY KEY, name varchar(50))
+create table uni.time_slots (id serial PRIMARY KEY, serial_number varchar(50), start_time time, finish_time time)
+create table uni.schedule_items (id serial PRIMARY KEY, id_group int REFERENCES uni.groups (id), id_subject int REFERENCES uni.subjects (id), id_room int REFERENCES uni.rooms (id) , id_time_slot int REFERENCES uni.time_slots (id) , day_of_week varchar(50))
+create table uni.schedule_items_teachers (id serial PRIMARY KEY, id_teacher int REFERENCES uni.teachers (id) ON DELETE CASCADE, id_schedule_item int REFERENCES uni.schedule_items (id) ON DELETE CASCADE)
+create table uni.periods (id serial PRIMARY KEY, start_date date, finish_date date)
+create table uni.schedule (id_period int REFERENCES uni.periods (id) ON DELETE CASCADE, id_schedule_items_teacher int REFERENCES uni.schedule_items_teachers (id) ON DELETE CASCADE)
