@@ -8,7 +8,8 @@ import ua.com.foxminded.model.enums.Specialty;
 
 public class Group {
     
-    private UUID id;
+//    private UUID id;
+    private int id;
     private String name;
     private Specialty specialty;
     private List<Student> students;
@@ -23,11 +24,13 @@ public class Group {
         this.students = group.students.stream().collect(Collectors.toList());
     }
 
-    public UUID getId() {
+  
+
+    public int getId() {
         return id;
     }
 
-    public Group setId(UUID id) {
+    public Group setId(int id) {
         this.id = id;
         return this;
     }

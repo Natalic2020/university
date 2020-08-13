@@ -1,6 +1,6 @@
 DROP SCHEMA IF EXISTS uni  CASCADE;
 CREATE SCHEMA uni;
-create table uni.groups (id serial PRIMARY KEY, group_name varchar(50)  NOT NULL, specialty varchar(50));
+create table uni.groups (id serial PRIMARY KEY, name varchar(50)  NOT NULL, specialty varchar(50));
 create table uni.persons (id serial PRIMARY KEY, first_name varchar(50)  NOT NULL, last_name varchar(50));
 create table uni.contact_infos (id serial PRIMARY KEY,  id_person int REFERENCES uni.persons (id) ON DELETE CASCADE, index int, country varchar(50), city varchar(50), street varchar(50), house varchar(50), apartment int, phone1 varchar(50), phone2 varchar(50), email varchar(50))
 create table uni.students (id serial PRIMARY KEY, id_person int REFERENCES uni.persons (id) ON DELETE CASCADE, study_status varchar(50), start_of_study date, citizenship varchar(50), grants money, id_group int REFERENCES uni.groups (id))
