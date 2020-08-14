@@ -1,6 +1,0 @@
-db.properties
-
-jdbc.driver=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:3306/testdb
-jdbc.username=user7
-jdbc.password=s$cret

@@ -5,27 +5,29 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.model.dto.Group;
 import ua.com.foxminded.util.FileParser;
 
-@Component
+@Repository
+@Qualifier("tablesInitializer")
 public class TablesInitializer {
 
-    private DataSource dataSource;
-    private JdbcTemplate jdbcTemplate;
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
     
-    @Autowired 
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }    
+//    @Autowired 
+//    public void setDataSource(DataSource dataSource) {
+//        this.jdbcTemplate = new JdbcTemplate(dataSource);
+//        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+//    }    
     
     public void createTables() {
         FileParser file = new FileParser();
@@ -33,21 +35,21 @@ public class TablesInitializer {
         sqlQueryList.forEach(jdbcTemplate::execute);
     }
   
-    public void insertGroup(Group group) {
-       String sql =  "INSERT INTO uni.groups (id, name) values (:id, :name)"; 
-       SqlParameterSource namedParameters = new MapSqlParameterSource("id", group.getId()).addValue("name", group.getName());
-       namedParameterJdbcTemplate.update(sql, namedParameters) ;  
-    }   
+//    public void insertGroup(Group group) {
+//       String sql =  "INSERT INTO uni.groups (id, name) values (:id, :name)"; 
+//       SqlParameterSource namedParameters = new MapSqlParameterSource("id", group.getId()).addValue("name", group.getName());
+//       namedParameterJdbcTemplate.update(sql, namedParameters) ;  
+//    }   
     
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public DataSource getDataSource() {
-        return dataSource;
-    }  
+//    public JdbcTemplate getJdbcTemplate() {
+//        return jdbcTemplate;
+//    }
+//
+//    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+//        this.jdbcTemplate = jdbcTemplate;
+//    }
+//
+//    public DataSource getDataSource() {
+//        return dataSource;
+//    }  
 }
