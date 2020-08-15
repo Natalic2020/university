@@ -2,7 +2,7 @@ package ua.com.foxminded.model.dto;
 
 import java.util.Locale;
 
-public class ContactInfo {
+public class ContactInfoDto {
 
 	private int index;
 	private String country;
@@ -14,11 +14,11 @@ public class ContactInfo {
 	private String phone2;
 	private String email;
 	
-    public ContactInfo() {
+    public ContactInfoDto() {
        
     }
 
-    public ContactInfo(ContactInfo contactInfo) {
+    public ContactInfoDto(ContactInfoDto contactInfo) {
         this.index = contactInfo.index;
         this.country = contactInfo.country;
         this.city = contactInfo.city;
@@ -34,7 +34,7 @@ public class ContactInfo {
         return index;
     }
 
-    public ContactInfo setIndex(int index) {
+    public ContactInfoDto setIndex(int index) {
         this.index = index;
         return this;
     }
@@ -43,7 +43,7 @@ public class ContactInfo {
         return country;
     }
 
-    public ContactInfo setCountry(String country) {
+    public ContactInfoDto setCountry(String country) {
         this.country = country;
         return this;
     }
@@ -52,7 +52,7 @@ public class ContactInfo {
         return city;
     }
 
-    public ContactInfo setCity(String city) {
+    public ContactInfoDto setCity(String city) {
         this.city = city;
         return this;
     }
@@ -61,7 +61,7 @@ public class ContactInfo {
         return street;
     }
 
-    public ContactInfo setStreet(String street) {
+    public ContactInfoDto setStreet(String street) {
         this.street = street;
         return this;
     }
@@ -70,7 +70,7 @@ public class ContactInfo {
         return house;
     }
 
-    public ContactInfo setHouse(String house) {
+    public ContactInfoDto setHouse(String house) {
         this.house = house;
         return this;
     }
@@ -79,7 +79,7 @@ public class ContactInfo {
         return apartment;
     }
 
-    public ContactInfo setApartment(int apartment) {
+    public ContactInfoDto setApartment(int apartment) {
         this.apartment = apartment;
         return this;
     }
@@ -88,7 +88,7 @@ public class ContactInfo {
         return phone1;
     }
 
-    public ContactInfo setPhone1(String phone1) {
+    public ContactInfoDto setPhone1(String phone1) {
         this.phone1 = phone1;
         return this;
     }
@@ -97,7 +97,7 @@ public class ContactInfo {
         return phone2;
     }
 
-    public ContactInfo setPhone2(String phone2) {
+    public ContactInfoDto setPhone2(String phone2) {
         this.phone2 = phone2;
         return this;
     }
@@ -106,7 +106,7 @@ public class ContactInfo {
         return email;
     }
 
-    public ContactInfo setEmail(String email) {
+    public ContactInfoDto setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -135,7 +135,7 @@ public class ContactInfo {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ContactInfo other = (ContactInfo) obj;
+        ContactInfoDto other = (ContactInfoDto) obj;
         if (apartment != other.apartment)
             return false;
         if (city == null) {

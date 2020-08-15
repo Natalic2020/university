@@ -3,24 +3,24 @@ package ua.com.foxminded.model.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WeekSchedule {
+public class WeekScheduleDto {
     
-    private List<ScheduleItem> schedules;
+    private List<ScheduleItemDto> schedules;
 
-    public WeekSchedule() {
+    public WeekScheduleDto() {
        
     }
 
-    public WeekSchedule(WeekSchedule weekSchedule) {
+    public WeekScheduleDto(WeekScheduleDto weekSchedule) {
         this.schedules = weekSchedule.getSchedules().stream().collect(Collectors.toList());
        
     }
 
-    public List<ScheduleItem> getSchedules() {
+    public List<ScheduleItemDto> getSchedules() {
         return schedules;
     }
 
-    public WeekSchedule setSchedules(List<ScheduleItem> schedules) {
+    public WeekScheduleDto setSchedules(List<ScheduleItemDto> schedules) {
         this.schedules = schedules;
         return this;
     }
@@ -41,7 +41,7 @@ public class WeekSchedule {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        WeekSchedule other = (WeekSchedule) obj;
+        WeekScheduleDto other = (WeekScheduleDto) obj;
         if (schedules == null) {
             if (other.schedules != null)
                 return false;

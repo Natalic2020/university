@@ -1,10 +1,10 @@
-package ua.com.foxminded.model.dto;
+package ua.com.foxminded.dao.entity;
 
 import java.util.UUID;
 
 public class Person {
 
-	private UUID id;
+	private String id;
 	private String firstName;
 	private String lastName;
 	private ContactInfo contactInfo;
@@ -13,23 +13,17 @@ public class Person {
         
     }
     
-    public Person(UUID id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public Person(Person person) {
         this.firstName = person.firstName;
         this.lastName = person.lastName;
         this.contactInfo = new ContactInfo(person.getContactInfo());
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public Person setId(UUID id) {
+    public Person setId(String id) {
         this.id = id;
         return this;
     }

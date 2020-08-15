@@ -1,6 +1,6 @@
 package ua.com.foxminded;
 
-
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,79 +12,97 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.com.foxminded.config.ApplicationConfig;
 import ua.com.foxminded.dao.DatabaseInitializer;
 import ua.com.foxminded.dao.TablesInitializer;
-import ua.com.foxminded.model.dto.Group;
-import ua.com.foxminded.model.dto.Person;
-import ua.com.foxminded.service.GroupService;
+import ua.com.foxminded.dao.entity.ScheduleItem;
+import ua.com.foxminded.dao.entity.Student;
+import ua.com.foxminded.dao.entity.Teacher;
+import ua.com.foxminded.model.dto.GroupDto;
+import ua.com.foxminded.model.dto.PersonDto;
+import ua.com.foxminded.model.dto.StudentDto;
+import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.service.PersonService;
 import ua.com.foxminded.service.StudentService;
+import ua.com.foxminded.service.TeacherService;
 
 public class Application {
 
     public static void main(String args[]) {
-        
+
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-        
-        TablesInitializer tableInitializer   = context.getBean("tablesInitializer", TablesInitializer.class);    
+
+//      DatabaseInitializer dbInitializer = context.getBean("databaseInitializer", DatabaseInitializer.class);
+//      dbInitializer.createDB();  
+
+        TablesInitializer tableInitializer = context.getBean("tablesInitializer", TablesInitializer.class);
         tableInitializer.createTables();
-      
-        PersonService personService = (PersonService) context.getBean("personService");
-        GroupService groupService = (GroupService) context.getBean("groupService");
-        StudentService studentService = (StudentService) context.getBean("studentService");
+//
+//        StudentService studentService = (StudentService) context.getBean("studentService");
+//        TestStudent(studentService);
         
+        TeacherService teacherService = (TeacherService) context.getBean("teacherService");
+        TestTeacher(teacherService);
         
-         UUID uuid1 = UUID.randomUUID();
-         UUID uuid2 = UUID.randomUUID();
-         UUID uuid3 = UUID.randomUUID();
-        
-        Person yashwant = new Person(uuid1, "Yashwant", "Chavan");
-        Person mahesh = new Person(uuid2, "Mahesh", "Patil");
-        Person vishal = new Person(uuid3, "Vishal", "Naik");
- 
-        personService.addPerson(yashwant);
-        personService.addPerson(mahesh);
-        personService.addPerson(vishal);
- 
-        System.out.println("Find All");
- 
-        personService.findAllPerson().forEach(System.out::println);
-        
-       System.out.println("Delete person Id = 3");
-
-        personService.deletePerson(uuid3);
- 
-       yashwant.setFirstName("Yashwant - Updated");
-       yashwant.setLastName("Chavan - Updated");
-
-       System.out.println("Update person Id = 1");
-       personService.editPerson(yashwant, uuid1);
- 
-       System.out.println("Find person Id = 2");
-        Person person = personService.findPerson(uuid2);
-        System.out.println(person);
- 
-        System.out.println("Find All Again");
-        
-        personService.findAllPerson().forEach(System.out::println);
- 
         context.close();
     }
- 
 
+    private static void TestTeacher(TeacherService teacherService) {
+        
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+        UUID uuid3 = UUID.randomUUID();
+
+        TeacherDto teacher1 = new TeacherDto().setId(uuid1).setFirstName("Yashwant").setLastName("Chavan");
+        TeacherDto teacher2 = new TeacherDto().setId(uuid2).setFirstName("Mahesh").setLastName("Patil");
+        TeacherDto teacher3 = new TeacherDto().setId(uuid3).setFirstName("Vishal").setLastName("Naik");
+
+        teacherService.addTeacher(teacher1);
+        teacherService.addTeacher(teacher2);
+        teacherService.addTeacher(teacher3);
+
+        System.out.println("Find All");
+        teacherService.findAllTeacher().forEach(System.out::println);
+
+        System.out.println("Delete theacher Id = 3");
+        teacherService.deleteTeacher(uuid3);
+
+//        System.out.println("Update person Id = 1");
+//        teacherService.editTeacher(new TeacherDto(teacher2), uuid1);
+
+//        System.out.println("Find person Id = 2");
+//        TeacherDto theacher = teacherService.findTeacher(uuid2);
+//        System.out.println(theacher);
+
+        System.out.println("Find All Again");
+        teacherService.findAllTeacher().forEach(System.out::println);
+    }
     
     
-    
-    
-//    public static void main(String[] args) {
-//        
-//        ApplicationContext context =  new ClassPathXmlApplicationContext("Spring-Module.xml");
-//        
-//        DatabaseInitializer dbInitializer = context.getBean("databaseInitializer", DatabaseInitializer.class);
-//        dbInitializer.createDB();       
-//        
-//        TablesInitializer tableInitializer   = context.getBean("tablesInitializer", TablesInitializer.class);
-//        
-//        tableInitializer.createTables();
-//        tableInitializer.insertGroup(new Group().setId(1).setName("gr1"));
-//        
-//    }
+    private static void TestStudent(StudentService studentService) {
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+        UUID uuid3 = UUID.randomUUID();
+
+        StudentDto student1 = new StudentDto().setId(uuid1).setFirstName("Yashwant").setLastName("Chavan");
+        StudentDto student2 = new StudentDto().setId(uuid2).setFirstName("Mahesh").setLastName("Patil");
+        StudentDto student3 = new StudentDto().setId(uuid3).setFirstName("Vishal").setLastName("Naik");
+
+        studentService.addStudent(student1);
+        studentService.addStudent(student2);
+        studentService.addStudent(student3);
+
+        System.out.println("Find All");
+        studentService.findAllStudent().forEach(System.out::println);
+
+        System.out.println("Delete person Id = 3");
+        studentService.deleteStudent(uuid3);
+
+        System.out.println("Update person Id = 1");
+        studentService.editStudent(new StudentDto(student2).setCitizenship("Russia"), uuid1);
+
+        System.out.println("Find person Id = 2");
+        StudentDto student = studentService.findStudent(uuid2);
+        System.out.println(student);
+
+        System.out.println("Find All Again");
+        studentService.findAllStudent().forEach(System.out::println);
+    } 
 }

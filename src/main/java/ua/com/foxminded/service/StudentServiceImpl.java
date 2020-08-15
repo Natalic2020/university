@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.dao.PersonDao;
 import ua.com.foxminded.dao.StudentDao;
-import ua.com.foxminded.model.dto.Student;
+import ua.com.foxminded.model.dto.StudentDto;
 
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
@@ -17,12 +17,12 @@ public class StudentServiceImpl implements StudentService {
     StudentDao studentDao;
     
     @Override
-    public void addStudent(Student student) {
+    public void addStudent(StudentDto student) {
         studentDao.addStudent(student);
     }
 
     @Override
-    public void editStudent(Student student, UUID id) {
+    public void editStudent(StudentDto student, UUID id) {
         studentDao.editStudent(student, id);
     }
 
@@ -32,12 +32,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findStudent(UUID id) {
+    public StudentDto findStudent(UUID id) {
         return studentDao.findStudent(id);
     }
 
     @Override
-    public List<Student> findAllStudent() {
+    public List<StudentDto> findAllStudent() {
         return studentDao.findAllStudent();
     }
 }

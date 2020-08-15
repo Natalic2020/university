@@ -4,61 +4,61 @@ import java.util.UUID;
 
 import ua.com.foxminded.model.enums.DayOfWeek;
 
-public class ScheduleItem {
+public class ScheduleItemDto {
     
     private UUID id;
-    private Teacher teacher;
-    private Group group;
-    private Subject subject;
+    private TeacherDto teacher;
+    private GroupDto group;
+    private SubjectDto subject;
     private DayOfWeek dayOWeek;
-    private TimeSlot timeSlot;
-    private Room room;
+    private TimeSlotDto timeSlot;
+    private RoomDto room;
     
-    public ScheduleItem() {
+    public ScheduleItemDto() {
         
     }
 
-    public ScheduleItem(ScheduleItem scheduleItem) {
-        this.teacher = new Teacher(scheduleItem.getTeacher())  ;
-        this.group = new Group(scheduleItem.getGroup()) ;
-        this.subject = new Subject(scheduleItem.getSubject());
+    public ScheduleItemDto(ScheduleItemDto scheduleItem) {
+        this.teacher = new TeacherDto(scheduleItem.getTeacher())  ;
+        this.group = new GroupDto(scheduleItem.getGroup()) ;
+        this.subject = new SubjectDto(scheduleItem.getSubject());
         this.dayOWeek = scheduleItem.dayOWeek;
-        this.timeSlot = new TimeSlot(scheduleItem.getTimeSlot());
-        this.room = new Room(scheduleItem.getRoom());
+        this.timeSlot = new TimeSlotDto(scheduleItem.getTimeSlot());
+        this.room = new RoomDto(scheduleItem.getRoom());
     }
 
     public UUID getId() {
         return id;
     }
 
-    public ScheduleItem setId(UUID id) {
+    public ScheduleItemDto setId(UUID id) {
         this.id = id;
         return this;
     }
 
-    public Teacher getTeacher() {
+    public TeacherDto getTeacher() {
         return teacher;
     }
 
-    public ScheduleItem setTeacher(Teacher teacher) {
+    public ScheduleItemDto setTeacher(TeacherDto teacher) {
         this.teacher = teacher;
         return this;
     }
 
-    public Group getGroup() {
+    public GroupDto getGroup() {
         return group;
     }
 
-    public ScheduleItem setGroup(Group group) {
+    public ScheduleItemDto setGroup(GroupDto group) {
         this.group = group;
         return this;
     }
 
-    public Subject getSubject() {
+    public SubjectDto getSubject() {
         return subject;
     }
 
-    public ScheduleItem setSubject(Subject subject) {
+    public ScheduleItemDto setSubject(SubjectDto subject) {
         this.subject = subject;
         return this;
     }
@@ -67,25 +67,25 @@ public class ScheduleItem {
         return dayOWeek;
     }
 
-    public ScheduleItem setDayOWeek(DayOfWeek dayOWeek) {
+    public ScheduleItemDto setDayOWeek(DayOfWeek dayOWeek) {
         this.dayOWeek = dayOWeek;
         return this;
     }
 
-    public TimeSlot getTimeSlot() {
+    public TimeSlotDto getTimeSlot() {
         return timeSlot;
     }
 
-    public ScheduleItem setTimeSlot(TimeSlot timeSlot) {
+    public ScheduleItemDto setTimeSlot(TimeSlotDto timeSlot) {
         this.timeSlot = timeSlot;
         return this;
     }
 
-    public Room getRoom() {
+    public RoomDto getRoom() {
         return room;
     }
 
-    public ScheduleItem setRoom(Room room) {
+    public ScheduleItemDto setRoom(RoomDto room) {
         this.room = room;
         return this;
     }
@@ -111,7 +111,7 @@ public class ScheduleItem {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ScheduleItem other = (ScheduleItem) obj;
+        ScheduleItemDto other = (ScheduleItemDto) obj;
         if (dayOWeek != other.dayOWeek)
             return false;
         if (group == null) {

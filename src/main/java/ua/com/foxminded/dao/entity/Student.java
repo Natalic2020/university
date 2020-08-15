@@ -1,4 +1,4 @@
-package ua.com.foxminded.model.dto;
+package ua.com.foxminded.dao.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,19 +8,18 @@ import java.util.UUID;
 
 import ua.com.foxminded.model.enums.StudyStatus;
 
-public class Student extends Person{
+public class Student {
     
-    private StudyStatus studyStatus;
+    private String id;
+    private String idPerson;
+    private String idGroup;
+    private String studyStatus;
     private LocalDate startOfStudy;
     private String citizenship;
     private BigDecimal grant;
     
     public Student() {
        
-    }
-
-    public Student (UUID id, String firstName, String lastName) {
-        super( id,firstName, lastName); 
     }
     
     public Student(Student student) {
@@ -30,11 +29,38 @@ public class Student extends Person{
         this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
 
-    public StudyStatus getStudyStatus() {
+    public String getIdGroup() {
+        return idGroup;
+    }
+
+    public void setIdGroup(String idGroup) {
+        this.idGroup = idGroup;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Student setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getIdPerson() {
+        return idPerson;
+    }
+
+    public Student setIdPerson(String idPerson) {
+        this.idPerson = idPerson;
+        return this;
+    }
+    
+
+    public String getStudyStatus() {
         return studyStatus;
     }
 
-    public Student setStudyStatus(StudyStatus studyStatus) {
+    public Student setStudyStatus(String studyStatus) {
         this.studyStatus = studyStatus;
         return this;
     }

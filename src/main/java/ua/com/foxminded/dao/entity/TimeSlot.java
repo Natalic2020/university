@@ -1,9 +1,10 @@
-package ua.com.foxminded.model.dto;
+package ua.com.foxminded.dao.entity;
 
 import java.time.LocalTime;
 
 public class TimeSlot {
     
+    private String id;
     private int serialNumber;
     private LocalTime startTime;
     private LocalTime finishTime;
@@ -16,6 +17,15 @@ public class TimeSlot {
         this.serialNumber = timeSlot.serialNumber;
         this.startTime = LocalTime.of(timeSlot.getStartTime().getHour(), timeSlot.getStartTime().getMinute());
         this.finishTime = LocalTime.of(timeSlot.getFinishTime().getHour(), timeSlot.getFinishTime().getMinute());  
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public TimeSlot setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public int getSerialNumber() {

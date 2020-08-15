@@ -6,40 +6,36 @@ import java.util.stream.Collectors;
 
 import ua.com.foxminded.model.enums.Specialty;
 
-public class Group {
+public class GroupDto {
     
-//    private UUID id;
-    private int id;
+    private UUID id;
     private String name;
     private Specialty specialty;
-    private List<Student> students;
+    private List<StudentDto> students;
     
-    public Group() {
+    public GroupDto() {
       
     }
 
-    public Group(Group group) {
+    public GroupDto(GroupDto group) {
         this.name = group.name;
         this.specialty = group.specialty;
         this.students = group.students.stream().collect(Collectors.toList());
     }
 
-  
-
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public Group setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public Group setName(String name) {
+    public GroupDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -48,16 +44,16 @@ public class Group {
         return specialty;
     }
 
-    public Group setSpecialty(Specialty specialty) {
+    public GroupDto setSpecialty(Specialty specialty) {
         this.specialty = specialty;
         return this;
     }
 
-    public List<Student> getStudents() {
+    public List<StudentDto> getStudents() {
         return students;
     }
 
-    public Group setStudents(List<Student> students) {
+    public GroupDto setStudents(List<StudentDto> students) {
         this.students = students;
         return this;
     }
@@ -79,7 +75,7 @@ public class Group {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Group other = (Group) obj;
+        GroupDto other = (GroupDto) obj;
         if (name == null) {
             if (other.name != null)
                 return false;

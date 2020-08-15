@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import ua.com.foxminded.model.dto.Group;
+import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.util.FileParser;
 
 @Repository

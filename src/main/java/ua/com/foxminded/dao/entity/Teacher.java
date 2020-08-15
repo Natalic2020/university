@@ -1,14 +1,16 @@
-package ua.com.foxminded.model.dto;
+package ua.com.foxminded.dao.entity;
 
 import java.math.BigDecimal;
 
 import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
 
-public class Teacher extends Person{
+public class Teacher {
     
-    private Degree degree;
-    private Department departament;
+    private String id;
+    private String idPerson;
+    private String degree;
+    private String departament;
     private boolean isPermanent;
     private BigDecimal salary;
    
@@ -23,20 +25,38 @@ public class Teacher extends Person{
         this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
     }
 
-    public Degree getDegree() {
+    public String getId() {
+        return id;
+    }
+
+    public Teacher setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getIdPerson() {
+        return idPerson;
+    }
+
+    public Teacher setIdPerson(String idPerson) {
+        this.idPerson = idPerson;
+        return this;
+    }
+
+    public String getDegree() {
         return degree;
     }
 
-    public Teacher setDegree(Degree degree) {
+    public Teacher setDegree(String degree) {
         this.degree = degree;
         return this;
     }
 
-    public Department getDepartament() {
+    public String getDepartament() {
         return departament;
     }
 
-    public Teacher setDepartament(Department departament) {
+    public Teacher setDepartament(String departament) {
         this.departament = departament;
         return this;
     }
@@ -95,7 +115,7 @@ public class Teacher extends Person{
 
     @Override
     public String toString() {
-        return "Teacher [degree=" + degree + ", departament=" + departament + ", isPermanent=" + isPermanent
-                + ", salary=" + salary + "]";
+        return "Teacher [id=" + id + ", idPerson=" + idPerson + ", degree=" + degree + ", departament=" + departament
+                + ", isPermanent=" + isPermanent + ", salary=" + salary + "]";
     }
 }

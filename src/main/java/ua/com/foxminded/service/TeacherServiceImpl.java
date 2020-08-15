@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.dao.PersonDao;
 import ua.com.foxminded.dao.TeacherDao;
-import ua.com.foxminded.model.dto.Teacher;
+import ua.com.foxminded.model.dto.TeacherDto;
 
 @Service("teacherService")
 public class TeacherServiceImpl implements TeacherService {
@@ -17,12 +17,12 @@ public class TeacherServiceImpl implements TeacherService {
     TeacherDao teacherDao;
     
     @Override
-    public void addTeacher(Teacher teacher) {
+    public void addTeacher(TeacherDto teacher) {
         teacherDao.addTeacher(teacher);
     }
 
     @Override
-    public void editTeacher(Teacher teacher, UUID id) {
+    public void editTeacher(TeacherDto teacher, UUID id) {
         teacherDao.editTeacher(teacher, id);
     }
 
@@ -32,12 +32,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher findTeacher(UUID id) {
+    public TeacherDto findTeacher(UUID id) {
         return teacherDao.findTeacher(id);
     }
 
     @Override
-    public List<Teacher> findAllTeacher() {
+    public List<TeacherDto> findAllTeacher() {
         return teacherDao.findAllTeacher();
     }
 }

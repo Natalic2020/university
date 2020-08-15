@@ -8,23 +8,23 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import ua.com.foxminded.model.dto.WeekSchedule;
+import ua.com.foxminded.model.dto.WeekScheduleDto;
 
 @Repository
 @Qualifier("weekScheduleDao")
-public class WeekScheduleDaoImpl implements WeekScheduleDao {
+public class ScheduleDaoImpl implements ScheduleDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
     
     @Override
-    public void addWeekSchedule(WeekSchedule weekSchedule) {
+    public void addWeekSchedule(WeekScheduleDto weekSchedule) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void editWeekSchedule(WeekSchedule weekSchedule, UUID id) {
+    public void editWeekSchedule(WeekScheduleDto weekSchedule, UUID id) {
         // TODO Auto-generated method stub
 
     }
@@ -36,13 +36,13 @@ public class WeekScheduleDaoImpl implements WeekScheduleDao {
     }
 
     @Override
-    public WeekSchedule findWeekSchedule(UUID id) {
+    public WeekScheduleDto findWeekSchedule(UUID id) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public List<WeekSchedule> findAllWeekSchedule() {
+    public List<WeekScheduleDto> findAllWeekSchedule() {
         // TODO Auto-generated method stub
         return null;
     }

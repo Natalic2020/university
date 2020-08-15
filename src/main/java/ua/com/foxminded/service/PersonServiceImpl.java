@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.dao.PersonDao;
-import ua.com.foxminded.model.dto.Person;
+import ua.com.foxminded.model.dto.PersonDto;
 
 @Service("personService")
 public class PersonServiceImpl implements PersonService {
@@ -16,12 +16,12 @@ public class PersonServiceImpl implements PersonService {
     PersonDao personDao;
     
     @Override
-    public void addPerson(Person person) {
+    public void addPerson(PersonDto person) {
         personDao.addPerson(person);
     }
 
     @Override
-    public void editPerson(Person person, UUID id) {
+    public void editPerson(PersonDto person, UUID id) {
         personDao.editPerson(person, id);
     }
 
@@ -31,12 +31,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person findPerson(UUID id) {  
+    public PersonDto findPerson(UUID id) {  
         return personDao.findPerson(id);
     }
 
     @Override
-    public List<Person> findAllPerson() {   
+    public List<PersonDto> findAllPerson() {   
         return personDao.findAllPerson();
     }
 }
