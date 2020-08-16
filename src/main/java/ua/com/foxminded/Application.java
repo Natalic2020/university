@@ -1,25 +1,14 @@
 package ua.com.foxminded;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ua.com.foxminded.config.ApplicationConfig;
-import ua.com.foxminded.dao.DatabaseInitializer;
 import ua.com.foxminded.dao.TablesInitializer;
-import ua.com.foxminded.dao.entity.ScheduleItem;
-import ua.com.foxminded.dao.entity.Student;
-import ua.com.foxminded.dao.entity.Teacher;
-import ua.com.foxminded.model.dto.GroupDto;
-import ua.com.foxminded.model.dto.PersonDto;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
-import ua.com.foxminded.service.PersonService;
 import ua.com.foxminded.service.StudentService;
 import ua.com.foxminded.service.TeacherService;
 
@@ -35,8 +24,8 @@ public class Application {
         TablesInitializer tableInitializer = context.getBean("tablesInitializer", TablesInitializer.class);
         tableInitializer.createTables();
 //
-//        StudentService studentService = (StudentService) context.getBean("studentService");
-//        TestStudent(studentService);
+        StudentService studentService = (StudentService) context.getBean("studentService");
+        TestStudent(studentService);
         
         TeacherService teacherService = (TeacherService) context.getBean("teacherService");
         TestTeacher(teacherService);
