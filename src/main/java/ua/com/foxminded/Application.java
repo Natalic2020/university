@@ -2,6 +2,7 @@ package ua.com.foxminded;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
@@ -11,9 +12,13 @@ import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.service.StudentService;
 import ua.com.foxminded.service.TeacherService;
+import ua.com.foxminded.transformer.StudentTransformer;
 
 public class Application {
 
+//    @Autowired
+//    StudentTransformer studentTransformer;
+    
     public static void main(String args[]) {
 
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
@@ -25,6 +30,7 @@ public class Application {
         tableInitializer.createTables();
 //
         StudentService studentService = (StudentService) context.getBean("studentService");
+        
         TestStudent(studentService);
         
         TeacherService teacherService = (TeacherService) context.getBean("teacherService");

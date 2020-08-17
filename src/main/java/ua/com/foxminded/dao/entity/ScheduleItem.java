@@ -6,148 +6,100 @@ import ua.com.foxminded.model.enums.DayOfWeek;
 
 public class ScheduleItem {
     
-    private String id;
-    private String idTeacher;
-    private String idGroup;
-    private String idSubject;
-    private String idDayOWeek;
-    private String idTimeSlot;
-    private String idRoom;
+    private String student;
+    private String teacher;
+    private String group;
+    private String subject;
+    private String dayOWeek;
+    private String timeSlot;
+    private String room;
+    private String date;
+   
     
     public ScheduleItem() {
         
     }
 
     public ScheduleItem(ScheduleItem scheduleItem) {
-        this.idTeacher = scheduleItem.idTeacher  ;
-        this.idGroup = scheduleItem.idGroup ;
-        this.idSubject = scheduleItem.idSubject;
-        this.idDayOWeek = scheduleItem.idDayOWeek;
-        this.idTimeSlot = scheduleItem.idTimeSlot;
-        this.idRoom = scheduleItem.idRoom;
+        this.student = student;
+        this.teacher = teacher;
+        this.group = group;
+        this.subject = subject;
+        this.dayOWeek = dayOWeek;
+        this.timeSlot = timeSlot;
+        this.room = room;
+        this.date = date;
     }
 
-    public String getId() {
-        return id;
+    public String getStudent() {
+        return student;
     }
 
-    public ScheduleItem setId(String id) {
-        this.id = id;
+    public ScheduleItem setStudent(String student) {
+        this.student = student;
         return this;
     }
 
-    public String getIdTeacher() {
-        return idTeacher;
+    public String getTeacher() {
+        return teacher;
     }
 
-    public ScheduleItem setIdTeacher(String idTeacher) {
-        this.idTeacher = idTeacher;
+    public ScheduleItem setTeacher(String teacher) {
+        this.teacher = teacher;
         return this;
     }
 
-    public String getIdGroup() {
-        return idGroup;
+    public String getGroup() {
+        return group;
     }
 
-    public ScheduleItem setIdGroup(String idGroup) {
-        this.idGroup = idGroup;
+    public ScheduleItem setGroup(String group) {
+        this.group = group;
         return this;
     }
 
-    public String getIdSubject() {
-        return idSubject;
+    public String getSubject() {
+        return subject;
     }
 
-    public ScheduleItem setIdSubject(String idSubject) {
-        this.idSubject = idSubject;
+    public ScheduleItem setSubject(String subject) {
+        this.subject = subject;
         return this;
     }
 
-    public String getIdDayOWeek() {
-        return idDayOWeek;
+    public String getDayOWeek() {
+        return dayOWeek;
     }
 
-    public ScheduleItem setIdDayOWeek(String idDayOWeek) {
-        this.idDayOWeek = idDayOWeek;
+    public ScheduleItem setDayOWeek(String dayOWeek) {
+        this.dayOWeek = dayOWeek;
         return this;
     }
 
-    public String getIdTimeSlot() {
-        return idTimeSlot;
+    public String getTimeSlot() {
+        return timeSlot;
     }
 
-    public ScheduleItem setIdTimeSlot(String idTimeSlot) {
-        this.idTimeSlot = idTimeSlot;
+    public ScheduleItem setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
         return this;
     }
 
-    public String getIdRoom() {
-        return idRoom;
+    public String getRoom() {
+        return room;
     }
 
-    public ScheduleItem setIdRoom(String idRoom) {
-        this.idRoom = idRoom;
+    public ScheduleItem setRoom(String room) {
+        this.room = room;
         return this;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((idDayOWeek == null) ? 0 : idDayOWeek.hashCode());
-        result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
-        result = prime * result + ((idRoom == null) ? 0 : idRoom.hashCode());
-        result = prime * result + ((idSubject == null) ? 0 : idSubject.hashCode());
-        result = prime * result + ((idTeacher == null) ? 0 : idTeacher.hashCode());
-        result = prime * result + ((idTimeSlot == null) ? 0 : idTimeSlot.hashCode());
-        return result;
+    public String getDate() {
+        return date;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ScheduleItem other = (ScheduleItem) obj;
-        if (idDayOWeek == null) {
-            if (other.idDayOWeek != null)
-                return false;
-        } else if (!idDayOWeek.equals(other.idDayOWeek))
-            return false;
-        if (idGroup == null) {
-            if (other.idGroup != null)
-                return false;
-        } else if (!idGroup.equals(other.idGroup))
-            return false;
-        if (idRoom == null) {
-            if (other.idRoom != null)
-                return false;
-        } else if (!idRoom.equals(other.idRoom))
-            return false;
-        if (idSubject == null) {
-            if (other.idSubject != null)
-                return false;
-        } else if (!idSubject.equals(other.idSubject))
-            return false;
-        if (idTeacher == null) {
-            if (other.idTeacher != null)
-                return false;
-        } else if (!idTeacher.equals(other.idTeacher))
-            return false;
-        if (idTimeSlot == null) {
-            if (other.idTimeSlot != null)
-                return false;
-        } else if (!idTimeSlot.equals(other.idTimeSlot))
-            return false;
-        return true;
+    public ScheduleItem setDate(String date) {
+        this.date = date;
+        return this;
     }
-
-    @Override
-    public String toString() {
-        return "ScheduleItem [id=" + id + ", idTeacher=" + idTeacher + ", idGroup=" + idGroup + ", idSubject="
-                + idSubject + ", idDayOWeek=" + idDayOWeek + ", idTimeSlot=" + idTimeSlot + ", idRoom=" + idRoom + "]";
-    }     
 }

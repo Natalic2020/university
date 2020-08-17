@@ -9,7 +9,7 @@ import ua.com.foxminded.model.enums.Department;
 public class TeacherDto extends PersonDto{
     
     private Degree degree;
-    private Department departament;
+    private Department department;
     private boolean isPermanent;
     private BigDecimal salary;
    
@@ -19,7 +19,7 @@ public class TeacherDto extends PersonDto{
 
     public TeacherDto(TeacherDto teacher) {
         this.degree = teacher.degree;
-        this.departament = teacher.departament;
+        this.department = teacher.department;
         this.isPermanent = teacher.isPermanent;
         this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
     }
@@ -69,12 +69,12 @@ public class TeacherDto extends PersonDto{
         return this;
     }
 
-    public Department getDepartament() {
-        return departament;
+    public Department getDepartment() {
+        return department;
     }
 
-    public TeacherDto setDepartament(Department departament) {
-        this.departament = departament;
+    public TeacherDto setDepartment(Department departament) {
+        this.department = departament;
         return this;
     }
 
@@ -101,7 +101,7 @@ public class TeacherDto extends PersonDto{
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((degree == null) ? 0 : degree.hashCode());
-        result = prime * result + ((departament == null) ? 0 : departament.hashCode());
+        result = prime * result + ((department == null) ? 0 : department.hashCode());
         result = prime * result + (isPermanent ? 1231 : 1237);
         result = prime * result + ((salary == null) ? 0 : salary.hashCode());
         return result;
@@ -118,7 +118,7 @@ public class TeacherDto extends PersonDto{
         TeacherDto other = (TeacherDto) obj;
         if (degree != other.degree)
             return false;
-        if (departament != other.departament)
+        if (department != other.department)
             return false;
         if (isPermanent != other.isPermanent)
             return false;
@@ -132,7 +132,7 @@ public class TeacherDto extends PersonDto{
 
     @Override
     public String toString() {
-        return "Teacher [degree=" + degree + ", departament=" + departament + ", isPermanent=" + isPermanent
+        return "Teacher [degree=" + degree + ", departament=" + department + ", isPermanent=" + isPermanent
                 + ", salary=" + salary + "]";
     }
 }

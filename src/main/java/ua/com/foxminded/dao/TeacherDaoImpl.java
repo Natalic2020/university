@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.model.dto.TeacherDto;
 
 @Repository
@@ -20,7 +21,7 @@ public class TeacherDaoImpl implements TeacherDao {
     JdbcTemplate jdbcTemplate;
     
     @Override
-    public void addTeacher(TeacherDto teacher) {
+    public void addTeacher(Teacher teacher) {
         jdbcTemplate.update("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)",
                 teacher.getId().toString(), teacher.getFirstName(), teacher.getLastName());
         
@@ -30,29 +31,28 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void editTeacher(TeacherDto teacher, UUID id) {
+    public void editTeacher(Teacher teacher, String id) {
         jdbcTemplate.update("UPDATE uni.teachers t SET salary = ?   WHERE t.id_person = ? ",
-                teacher.getSalary(), id.toString());
+                teacher.getSalary(), id);
             System.out.println("Teacher Update");
     }
 
     @Override
-    public void deleteTeacher(UUID id) {
-        jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_person = ? ", id.toString());
+    public void deleteTeacher(String id) {
+        jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_person = ? ", id);
         System.out.println("Teacher Deleted!!");
     }
 
     @Override
-    public TeacherDto findTeacher(UUID id) {
-        TeacherDto teacher = (TeacherDto) jdbcTemplate.queryForObject("SELECT * FROM uni.teachers t where t.id_person = ? ",
-                new Object[] { id.toString() }, new BeanPropertyRowMapper(TeacherDto.class));
+    public Teacher findTeacher(String id) {
+        Teacher teacher = (Teacher) jdbcTemplate.queryForObject("SELECT * FROM uni.teachers t where t.id_person = ? ",
+                new Object[] { id }, new BeanPropertyRowMapper(Teacher.class));
             return teacher;
     }
 
     @Override
-    public List<TeacherDto> findAllTeacher() {
-//        List <TeacherDto> teachers = jdbcTemplate.query("SELECT * FROM uni.teachers", new BeanPropertyRowMapper(TeacherDto.class));
-//        return teachers;
-      return   new ArrayList<>();
+    public List<Teacher> findAllTeacher() {
+        List <Teacher> teachers = jdbcTemplate.query("SELECT * FROM uni.teachers", new BeanPropertyRowMapper(Teacher.class));
+        return teachers; 
     }
 }

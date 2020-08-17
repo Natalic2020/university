@@ -1,16 +1,14 @@
 package ua.com.foxminded.dao;
 
 import java.util.List;
-import java.util.UUID;
 
-import ua.com.foxminded.model.dto.WeekScheduleDto;
+import ua.com.foxminded.dao.entity.ScheduleItem;
 
 public interface ScheduleDao {
 
-    public void addWeekSchedule(WeekScheduleDto weekSchedule);
-    public void editWeekSchedule(WeekScheduleDto weekSchedule, UUID id);
-    public void deleteWeekSchedule(UUID id);
-    public WeekScheduleDto findWeekSchedule(UUID id);
-    public List<WeekScheduleDto> findAllWeekSchedule();
-    
+    public void addWeekSchedule(ScheduleItem scheduleItem);
+    public void editWeekSchedule(ScheduleItem scheduleItem, String id);
+    public void deleteWeekSchedule(String id);
+    public List<ScheduleItem> findScheduleStudent(String id, String startDate, String finishDate);
+    public List<ScheduleItem> findScheduleTeacher(String id, String startDate, String finishDate);
 }

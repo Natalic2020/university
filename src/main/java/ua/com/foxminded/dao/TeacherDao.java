@@ -1,16 +1,14 @@
 package ua.com.foxminded.dao;
 
 import java.util.List;
-import java.util.UUID;
 
-import ua.com.foxminded.model.dto.TeacherDto;
+import ua.com.foxminded.dao.entity.Teacher;
 
 public interface TeacherDao {
 
-    public void addTeacher(TeacherDto teacher);
-    public void editTeacher(TeacherDto teacher, UUID id);
-    public void deleteTeacher(UUID id);
-    public TeacherDto findTeacher(UUID id);
-    public List<TeacherDto> findAllTeacher();
-    
+    public void addTeacher(Teacher teacher);
+    public void editTeacher(Teacher teacher, String id);
+    public void deleteTeacher(String id);
+    public Teacher findTeacher(String id);
+    public List<Teacher> findAllTeacher();  
 }
