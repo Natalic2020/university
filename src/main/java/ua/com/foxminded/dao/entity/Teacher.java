@@ -8,7 +8,7 @@ import ua.com.foxminded.model.enums.Department;
 public class Teacher {
     
     private String id;
-    private String idPerson;
+    private Person Person;
     private String degree;
     private String department;
     private boolean isPermanent;
@@ -25,21 +25,21 @@ public class Teacher {
         this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
     }
 
+    public Person getPerson() {
+        return Person;
+    }
+
+    public Teacher setPerson(Person person) {
+        Person = person;
+        return this;
+    }
+
     public String getId() {
         return id;
     }
 
     public Teacher setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String getIdPerson() {
-        return idPerson;
-    }
-
-    public Teacher setIdPerson(String idPerson) {
-        this.idPerson = idPerson;
         return this;
     }
 
@@ -82,7 +82,8 @@ public class Teacher {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
+        int result = 1;
+        result = prime * result + ((Person == null) ? 0 : Person.hashCode());
         result = prime * result + ((degree == null) ? 0 : degree.hashCode());
         result = prime * result + ((department == null) ? 0 : department.hashCode());
         result = prime * result + (isPermanent ? 1231 : 1237);
@@ -94,14 +95,25 @@ public class Teacher {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!super.equals(obj))
+        if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
         Teacher other = (Teacher) obj;
-        if (degree != other.degree)
+        if (Person == null) {
+            if (other.Person != null)
+                return false;
+        } else if (!Person.equals(other.Person))
             return false;
-        if (department != other.department)
+        if (degree == null) {
+            if (other.degree != null)
+                return false;
+        } else if (!degree.equals(other.degree))
+            return false;
+        if (department == null) {
+            if (other.department != null)
+                return false;
+        } else if (!department.equals(other.department))
             return false;
         if (isPermanent != other.isPermanent)
             return false;
@@ -115,7 +127,7 @@ public class Teacher {
 
     @Override
     public String toString() {
-        return "Teacher [id=" + id + ", idPerson=" + idPerson + ", degree=" + degree + ", departament=" + department
+        return "Teacher [id=" + id + ", Person=" + Person + ", degree=" + degree + ", department=" + department
                 + ", isPermanent=" + isPermanent + ", salary=" + salary + "]";
-    }
+    } 
 }

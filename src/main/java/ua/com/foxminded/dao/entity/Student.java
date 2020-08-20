@@ -11,7 +11,7 @@ import ua.com.foxminded.model.enums.StudyStatus;
 public class Student {
     
     private String id;
-    private String idPerson;
+    private Person Person;
     private String idGroup;
     private String studyStatus;
     private LocalDate startOfStudy;
@@ -28,13 +28,23 @@ public class Student {
         this.citizenship = student.citizenship;
         this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
+    
+    public Person getPerson() {
+        return Person;
+    }
+
+    public Student setPerson(Person person) {
+        Person = person;
+        return this;
+    }
 
     public String getIdGroup() {
         return idGroup;
     }
 
-    public void setIdGroup(String idGroup) {
+    public Student setIdGroup(String idGroup) {
         this.idGroup = idGroup;
+        return this;
     }
 
     public String getId() {
@@ -45,16 +55,6 @@ public class Student {
         this.id = id;
         return this;
     }
-
-    public String getIdPerson() {
-        return idPerson;
-    }
-
-    public Student setIdPerson(String idPerson) {
-        this.idPerson = idPerson;
-        return this;
-    }
-    
 
     public String getStudyStatus() {
         return studyStatus;
@@ -95,9 +95,11 @@ public class Student {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
+        int result = 1;
+        result = prime * result + ((Person == null) ? 0 : Person.hashCode());
         result = prime * result + ((citizenship == null) ? 0 : citizenship.hashCode());
         result = prime * result + ((grant == null) ? 0 : grant.hashCode());
+        result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
         result = prime * result + ((startOfStudy == null) ? 0 : startOfStudy.hashCode());
         result = prime * result + ((studyStatus == null) ? 0 : studyStatus.hashCode());
         return result;
@@ -107,11 +109,16 @@ public class Student {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!super.equals(obj))
+        if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
         Student other = (Student) obj;
+        if (Person == null) {
+            if (other.Person != null)
+                return false;
+        } else if (!Person.equals(other.Person))
+            return false;
         if (citizenship == null) {
             if (other.citizenship != null)
                 return false;
@@ -122,19 +129,27 @@ public class Student {
                 return false;
         } else if (!grant.equals(other.grant))
             return false;
+        if (idGroup == null) {
+            if (other.idGroup != null)
+                return false;
+        } else if (!idGroup.equals(other.idGroup))
+            return false;
         if (startOfStudy == null) {
             if (other.startOfStudy != null)
                 return false;
         } else if (!startOfStudy.equals(other.startOfStudy))
             return false;
-        if (studyStatus != other.studyStatus)
+        if (studyStatus == null) {
+            if (other.studyStatus != null)
+                return false;
+        } else if (!studyStatus.equals(other.studyStatus))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Student  [studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy + ", citizenship=" + citizenship
-                + ", grant=" + grant + "]" + super.toString();
+        return "Student [id=" + id + ", Person=" + Person + ", idGroup=" + idGroup + ", studyStatus=" + studyStatus
+                + ", startOfStudy=" + startOfStudy + ", citizenship=" + citizenship + ", grant=" + grant + "]";
     }
 }

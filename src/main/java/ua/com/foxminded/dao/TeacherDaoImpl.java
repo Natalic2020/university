@@ -23,7 +23,7 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void addTeacher(Teacher teacher) {
         jdbcTemplate.update("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)",
-                teacher.getId().toString(), teacher.getFirstName(), teacher.getLastName());
+                teacher.getPerson().getId(), teacher.getPerson().getFirstName(), teacher.getPerson().getLastName());
         
         jdbcTemplate.update("INSERT INTO uni.teachers (id, id_person,  salary  ) values (?, ?, ?)",
                 UUID.randomUUID(), teacher.getId(), teacher.getSalary());
@@ -32,27 +32,27 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public void editTeacher(Teacher teacher, String id) {
-        jdbcTemplate.update("UPDATE uni.teachers t SET salary = ?   WHERE t.id_person = ? ",
+        jdbcTemplate.update("UPDATE uni.teachers t SET salary = ?   WHERE t.id = ? ",
                 teacher.getSalary(), id);
             System.out.println("Teacher Update");
     }
 
     @Override
     public void deleteTeacher(String id) {
-        jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_person = ? ", id);
+        jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id = ? ", id);
         System.out.println("Teacher Deleted!!");
     }
 
     @Override
     public Teacher findTeacher(String id) {
-        Teacher teacher = (Teacher) jdbcTemplate.queryForObject("SELECT * FROM uni.teachers t where t.id_person = ? ",
+        Teacher teacher = (Teacher) jdbcTemplate.queryForObject("SELECT * FROM uni.teachers t where t.id = ? ",
                 new Object[] { id }, new BeanPropertyRowMapper(Teacher.class));
             return teacher;
     }
 
     @Override
     public List<Teacher> findAllTeacher() {
-        List <Teacher> teachers = jdbcTemplate.query("SELECT * FROM uni.teachers", new BeanPropertyRowMapper(Teacher.class));
+        List <Teacher> teachers = jdbcTemplate.query("SELECT * FROM uni.teachers", new TeacherMapper());
         return teachers; 
     }
 }

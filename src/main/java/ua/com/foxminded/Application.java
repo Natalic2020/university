@@ -7,12 +7,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import ua.com.foxminded.config.ApplicationConfig;
+import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.TablesInitializer;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.service.StudentService;
 import ua.com.foxminded.service.TeacherService;
-import ua.com.foxminded.transformer.StudentTransformer;
 
 public class Application {
 

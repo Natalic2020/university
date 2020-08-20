@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public abstract class PersonDto {
 
-	protected UUID id;
+	protected UUID idPerson;
 	protected String firstName;
 	protected String lastName;
 	protected ContactInfoDto contactInfo;
@@ -13,47 +13,47 @@ public abstract class PersonDto {
         
     }
 
-//    public PersonDto(PersonDto person) {
-//        this.firstName = person.firstName;
-//        this.lastName = person.lastName;
-//        this.contactInfo = new ContactInfoDto(person.getContactInfo());
-//    }
+    public PersonDto(PersonDto person) {
+        this.firstName = person.firstName;
+        this.lastName = person.lastName;
+        this.contactInfo = new ContactInfoDto(person.getContactInfo());
+    }
 
-//    public UUID getId() {
-//        return id;
-//    }
-//
-//    public PersonDto setId(UUID id) {
-//        this.id = id;
-//        return this;
-//    }
-//
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//
-//    public PersonDto setFirstName(String firstName) {
-//        this.firstName = firstName;
-//        return this;
-//    }
-//
-//    public String getLastName() {
-//        return lastName;
-//    }
-//
-//    public PersonDto setLastName(String lastName) {
-//        this.lastName = lastName;
-//        return this;
-//    }
-//
-//    public ContactInfoDto getContactInfo() {
-//        return contactInfo;
-//    }
-//
-//    public PersonDto setContactInfo(ContactInfoDto contactInfo) {
-//        this.contactInfo = contactInfo;
-//        return this;
-//    }
+    public UUID getIdPerson() {
+        return idPerson;
+    }
+
+    public PersonDto setIdPerson(UUID idPerson) {
+        this.idPerson = idPerson;
+        return this;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public PersonDto setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public PersonDto setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ContactInfoDto getContactInfo() {
+        return contactInfo;
+    }
+
+    public PersonDto setContactInfo(ContactInfoDto contactInfo) {
+        this.contactInfo = contactInfo;
+        return this;
+    }
 
     @Override
     public int hashCode() {
@@ -94,7 +94,7 @@ public abstract class PersonDto {
 
     @Override
     public String toString() {
-        return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", contactInfo="
+        return "Person [idPerson=" + idPerson + ", firstName=" + firstName + ", lastName=" + lastName + ", contactInfo="
                 + contactInfo + "]";
     }	
 }

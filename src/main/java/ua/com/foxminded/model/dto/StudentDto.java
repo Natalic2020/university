@@ -11,6 +11,7 @@ import ua.com.foxminded.model.enums.StudyStatus;
 
 public class StudentDto extends PersonDto {
 
+    private UUID idStudent;
     private StudyStatus studyStatus;
     private LocalDate startOfStudy;
     private String citizenship;
@@ -28,39 +29,12 @@ public class StudentDto extends PersonDto {
 //        this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getIdStudent() {
+        return idStudent;
     }
 
-    public StudentDto setId(UUID id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public StudentDto setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public StudentDto setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public ContactInfoDto getContactInfo() {
-        return contactInfo;
-    }
-
-    public StudentDto setContactInfo(ContactInfoDto contactInfo) {
-        this.contactInfo = contactInfo;
+    public StudentDto setIdStudent(UUID idStudent) {
+        this.idStudent = idStudent;
         return this;
     }
 
@@ -142,8 +116,7 @@ public class StudentDto extends PersonDto {
 
     @Override
     public String toString() {
-        return "Student  [studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy + ", citizenship="
-                + citizenship
-                + ", grant=" + grant + "]" + super.toString();
+        return "StudentDto [idStudent=" + idStudent + ", studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy
+                + ", citizenship=" + citizenship + ", grant=" + grant + "]";
     }
 }

@@ -7,10 +7,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.com.foxminded.dao.PersonDao;
+import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.StudentDao;
 import ua.com.foxminded.model.dto.StudentDto;
-import ua.com.foxminded.transformer.StudentTransformer;
 
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
@@ -19,7 +18,7 @@ public class StudentServiceImpl implements StudentService {
     StudentDao studentDao;
     
     @Autowired
-    StudentTransformer studentTransformer;
+    StudentConverter studentTransformer;
     
     @Override
     public void addStudent(StudentDto student) {

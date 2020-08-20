@@ -3,8 +3,8 @@ package ua.com.foxminded.dao.entity;
 public class ScheduleItemTeacher {
     
     private String id;
-    private String idScheduleItem;
-    private String idTeacher;
+    private ScheduleItem scheduleItem;
+    private Teacher teacher;
     
     public ScheduleItemTeacher() {
        
@@ -12,8 +12,8 @@ public class ScheduleItemTeacher {
 
     public ScheduleItemTeacher(ScheduleItemTeacher scheduleItemTeacher) {
         this.id = scheduleItemTeacher.id;
-        this.idScheduleItem = scheduleItemTeacher.idScheduleItem;
-        this.idTeacher = scheduleItemTeacher.idTeacher;
+        this.scheduleItem = scheduleItemTeacher.scheduleItem;
+        this.teacher = scheduleItemTeacher.teacher;
     }
 
     public String getId() {
@@ -24,28 +24,28 @@ public class ScheduleItemTeacher {
         this.id = id;
     }
 
-    public String getIdScheduleItem() {
-        return idScheduleItem;
+    public ScheduleItem getScheduleItem() {
+        return scheduleItem;
     }
 
-    public void setIdScheduleItem(String idScheduleItem) {
-        this.idScheduleItem = idScheduleItem;
+    public void setScheduleItem(ScheduleItem scheduleItem) {
+        this.scheduleItem = scheduleItem;
     }
 
-    public String getIdTeacher() {
-        return idTeacher;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setIdTeacher(String idTeacher) {
-        this.idTeacher = idTeacher;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((idScheduleItem == null) ? 0 : idScheduleItem.hashCode());
-        result = prime * result + ((idTeacher == null) ? 0 : idTeacher.hashCode());
+        result = prime * result + ((scheduleItem == null) ? 0 : scheduleItem.hashCode());
+        result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
         return result;
     }
 
@@ -58,22 +58,21 @@ public class ScheduleItemTeacher {
         if (getClass() != obj.getClass())
             return false;
         ScheduleItemTeacher other = (ScheduleItemTeacher) obj;
-        if (idScheduleItem == null) {
-            if (other.idScheduleItem != null)
+        if (scheduleItem == null) {
+            if (other.scheduleItem != null)
                 return false;
-        } else if (!idScheduleItem.equals(other.idScheduleItem))
+        } else if (!scheduleItem.equals(other.scheduleItem))
             return false;
-        if (idTeacher == null) {
-            if (other.idTeacher != null)
+        if (teacher == null) {
+            if (other.teacher != null)
                 return false;
-        } else if (!idTeacher.equals(other.idTeacher))
+        } else if (!teacher.equals(other.teacher))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "ScheduleItemTeacher [id=" + id + ", idScheduleItem=" + idScheduleItem + ", idTeacher=" + idTeacher
-                + "]";
+        return "ScheduleItemTeacher [id=" + id + ", scheduleItem=" + scheduleItem + ", teacher=" + teacher + "]";
     }
 }

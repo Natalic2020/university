@@ -5,33 +5,67 @@ import java.util.stream.Collectors;
 
 public class Schedule {
     
-    private String idScheduleItemTeacher;
-    private String idPeriod;
+    private  ScheduleItemTeacher scheduleItemTeacher;
+    private Period period;
 
     public Schedule() {
        
     }
 
     public Schedule(Schedule schedule) {
-        this.idScheduleItemTeacher = schedule.idScheduleItemTeacher;
-        this.idPeriod = schedule.idPeriod;
+        this.scheduleItemTeacher = schedule.scheduleItemTeacher;
+        this.period = schedule.period;
     }
 
-    public String getIdScheduleItemTeacher() {
-        return idScheduleItemTeacher;
+    public ScheduleItemTeacher getScheduleItemTeacher() {
+        return scheduleItemTeacher;
     }
 
-    public Schedule setIdScheduleItemTeacher(String idScheduleItemTeacher) {
-        this.idScheduleItemTeacher = idScheduleItemTeacher;
-        return this;
+    public void setScheduleItemTeacher(ScheduleItemTeacher scheduleItemTeacher) {
+        this.scheduleItemTeacher = scheduleItemTeacher;
     }
 
-    public String getIdPeriod() {
-        return idPeriod;
+    public Period getPeriod() {
+        return period;
     }
 
-    public Schedule setIdPeriod(String idPeriod) {
-        this.idPeriod = idPeriod;
-        return this;
+    public void setPeriod(Period period) {
+        this.period = period;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((period == null) ? 0 : period.hashCode());
+        result = prime * result + ((scheduleItemTeacher == null) ? 0 : scheduleItemTeacher.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Schedule other = (Schedule) obj;
+        if (period == null) {
+            if (other.period != null)
+                return false;
+        } else if (!period.equals(other.period))
+            return false;
+        if (scheduleItemTeacher == null) {
+            if (other.scheduleItemTeacher != null)
+                return false;
+        } else if (!scheduleItemTeacher.equals(other.scheduleItemTeacher))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Schedule [scheduleItemTeacher=" + scheduleItemTeacher + ", period=" + period + "]";
+    }   
 }

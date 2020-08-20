@@ -8,6 +8,7 @@ import ua.com.foxminded.model.enums.Department;
 
 public class TeacherDto extends PersonDto{
     
+    private UUID idTeacher;
     private Degree degree;
     private Department department;
     private boolean isPermanent;
@@ -24,42 +25,15 @@ public class TeacherDto extends PersonDto{
         this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getIdTeacher() {
+        return idTeacher;
     }
 
-    public TeacherDto setId(UUID id) {
-        this.id = id;
+    public TeacherDto setIdTeacher(UUID idTeacher) {
+        this.idTeacher = idTeacher;
         return this;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public TeacherDto setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public TeacherDto setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public ContactInfoDto getContactInfo() {
-        return contactInfo;
-    }
-
-    public TeacherDto setContactInfo(ContactInfoDto contactInfo) {
-        this.contactInfo = contactInfo;
-        return this;
-    }
-    
     public Degree getDegree() {
         return degree;
     }
@@ -73,8 +47,8 @@ public class TeacherDto extends PersonDto{
         return department;
     }
 
-    public TeacherDto setDepartment(Department departament) {
-        this.department = departament;
+    public TeacherDto setDepartment(Department department) {
+        this.department = department;
         return this;
     }
 
@@ -86,6 +60,7 @@ public class TeacherDto extends PersonDto{
         this.isPermanent = isPermanent;
         return this;
     }
+   
 
     public BigDecimal getSalary() {
         return salary;
@@ -132,7 +107,7 @@ public class TeacherDto extends PersonDto{
 
     @Override
     public String toString() {
-        return "Teacher [degree=" + degree + ", departament=" + department + ", isPermanent=" + isPermanent
-                + ", salary=" + salary + "]";
-    }
+        return "TeacherDto [idTeacher=" + idTeacher + ", degree=" + degree + ", department=" + department
+                + ", isPermanent=" + isPermanent + ", salary=" + salary + "]";
+    }  
 }
