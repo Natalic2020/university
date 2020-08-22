@@ -1,5 +1,6 @@
 package ua.com.foxminded.model.dto;
 
+import java.util.List;
 import java.util.UUID;
 
 import ua.com.foxminded.model.enums.DayOfWeek;
@@ -7,7 +8,7 @@ import ua.com.foxminded.model.enums.DayOfWeek;
 public class ScheduleItemDto {
     
     private UUID id;
-    private TeacherDto teacher;
+    private List<TeacherDto> teachers;
     private GroupDto group;
     private SubjectDto subject;
     private DayOfWeek dayOWeek;
@@ -19,7 +20,7 @@ public class ScheduleItemDto {
     }
 
     public ScheduleItemDto(ScheduleItemDto scheduleItem) {
-        this.teacher = new TeacherDto(scheduleItem.getTeacher())  ;
+//        this.teacher = new TeacherDto(scheduleItem.getTeacher())  ;
         this.group = new GroupDto(scheduleItem.getGroup()) ;
         this.subject = new SubjectDto(scheduleItem.getSubject());
         this.dayOWeek = scheduleItem.dayOWeek;
@@ -36,12 +37,12 @@ public class ScheduleItemDto {
         return this;
     }
 
-    public TeacherDto getTeacher() {
-        return teacher;
+    public List<TeacherDto> getTeachers() {
+        return teachers;
     }
 
-    public ScheduleItemDto setTeacher(TeacherDto teacher) {
-        this.teacher = teacher;
+    public ScheduleItemDto setTeachers(List<TeacherDto> teachers) {
+        this.teachers = teachers;
         return this;
     }
 
@@ -98,7 +99,7 @@ public class ScheduleItemDto {
         result = prime * result + ((group == null) ? 0 : group.hashCode());
         result = prime * result + ((room == null) ? 0 : room.hashCode());
         result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-        result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+        result = prime * result + ((teachers == null) ? 0 : teachers.hashCode());
         result = prime * result + ((timeSlot == null) ? 0 : timeSlot.hashCode());
         return result;
     }
@@ -129,10 +130,10 @@ public class ScheduleItemDto {
                 return false;
         } else if (!subject.equals(other.subject))
             return false;
-        if (teacher == null) {
-            if (other.teacher != null)
+        if (teachers == null) {
+            if (other.teachers != null)
                 return false;
-        } else if (!teacher.equals(other.teacher))
+        } else if (!teachers.equals(other.teachers))
             return false;
         if (timeSlot == null) {
             if (other.timeSlot != null)
@@ -144,7 +145,7 @@ public class ScheduleItemDto {
 
     @Override
     public String toString() {
-        return "ScheduleItem [id=" + id + ", teacher=" + teacher + ", group=" + group + ", subject=" + subject
+        return "ScheduleItemDto [id=" + id + ", teachers=" + teachers + ", group=" + group + ", subject=" + subject
                 + ", dayOWeek=" + dayOWeek + ", timeSlot=" + timeSlot + ", room=" + room + "]";
-    }   
+    } 
 }

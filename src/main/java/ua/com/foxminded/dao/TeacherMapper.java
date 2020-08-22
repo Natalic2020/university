@@ -21,8 +21,7 @@ public class TeacherMapper  implements RowMapper<Teacher>  {
         teacher.setDegree(rs.getString("degree"));
         teacher.setDepartment(rs.getString("department"));
         teacher.setPermanent(rs.getBoolean("permanent"));
-        teacher.setSalary(BigDecimal.valueOf(rs.getLong("salary")));
-        
+        teacher.setSalary(rs.getBigDecimal("salary"));      
         return teacher;
     }  
 }

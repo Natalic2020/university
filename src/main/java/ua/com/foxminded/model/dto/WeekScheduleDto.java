@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class WeekScheduleDto {
     
     private List<ScheduleItemDto> schedules;
+    private PeriodDto period; 
 
     public WeekScheduleDto() {
        
@@ -25,10 +26,20 @@ public class WeekScheduleDto {
         return this;
     }
 
+    public PeriodDto getPeriod() {
+        return period;
+    }
+
+    public WeekScheduleDto setPeriod(PeriodDto period) {
+        this.period = period;
+        return this;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((period == null) ? 0 : period.hashCode());
         result = prime * result + ((schedules == null) ? 0 : schedules.hashCode());
         return result;
     }
@@ -42,6 +53,11 @@ public class WeekScheduleDto {
         if (getClass() != obj.getClass())
             return false;
         WeekScheduleDto other = (WeekScheduleDto) obj;
+        if (period == null) {
+            if (other.period != null)
+                return false;
+        } else if (!period.equals(other.period))
+            return false;
         if (schedules == null) {
             if (other.schedules != null)
                 return false;
@@ -52,6 +68,6 @@ public class WeekScheduleDto {
 
     @Override
     public String toString() {
-        return "WeekSchedule [schedules=" + schedules + "]";
-    } 
+        return "WeekScheduleDto [schedules=" + schedules + ", period=" + period + "]";
+    }
 }

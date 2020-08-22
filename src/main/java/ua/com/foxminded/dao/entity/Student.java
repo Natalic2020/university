@@ -11,8 +11,8 @@ import ua.com.foxminded.model.enums.StudyStatus;
 public class Student {
     
     private String id;
-    private Person Person;
-    private String idGroup;
+    private Person person;
+    private Group group;
     private String studyStatus;
     private LocalDate startOfStudy;
     private String citizenship;
@@ -28,24 +28,6 @@ public class Student {
         this.citizenship = student.citizenship;
         this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
-    
-    public Person getPerson() {
-        return Person;
-    }
-
-    public Student setPerson(Person person) {
-        Person = person;
-        return this;
-    }
-
-    public String getIdGroup() {
-        return idGroup;
-    }
-
-    public Student setIdGroup(String idGroup) {
-        this.idGroup = idGroup;
-        return this;
-    }
 
     public String getId() {
         return id;
@@ -53,6 +35,24 @@ public class Student {
 
     public Student setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public Student setPerson(Person person) {
+        this.person = person;
+        return this;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public Student setGroup(Group group) {
+        this.group = group;
         return this;
     }
 
@@ -96,10 +96,10 @@ public class Student {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((Person == null) ? 0 : Person.hashCode());
         result = prime * result + ((citizenship == null) ? 0 : citizenship.hashCode());
         result = prime * result + ((grant == null) ? 0 : grant.hashCode());
-        result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
+        result = prime * result + ((group == null) ? 0 : group.hashCode());
+        result = prime * result + ((person == null) ? 0 : person.hashCode());
         result = prime * result + ((startOfStudy == null) ? 0 : startOfStudy.hashCode());
         result = prime * result + ((studyStatus == null) ? 0 : studyStatus.hashCode());
         return result;
@@ -114,11 +114,6 @@ public class Student {
         if (getClass() != obj.getClass())
             return false;
         Student other = (Student) obj;
-        if (Person == null) {
-            if (other.Person != null)
-                return false;
-        } else if (!Person.equals(other.Person))
-            return false;
         if (citizenship == null) {
             if (other.citizenship != null)
                 return false;
@@ -129,10 +124,15 @@ public class Student {
                 return false;
         } else if (!grant.equals(other.grant))
             return false;
-        if (idGroup == null) {
-            if (other.idGroup != null)
+        if (group == null) {
+            if (other.group != null)
                 return false;
-        } else if (!idGroup.equals(other.idGroup))
+        } else if (!group.equals(other.group))
+            return false;
+        if (person == null) {
+            if (other.person != null)
+                return false;
+        } else if (!person.equals(other.person))
             return false;
         if (startOfStudy == null) {
             if (other.startOfStudy != null)
@@ -149,7 +149,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student [id=" + id + ", Person=" + Person + ", idGroup=" + idGroup + ", studyStatus=" + studyStatus
+        return "Student [id=" + id + ", person=" + person + ", group=" + group + ", studyStatus=" + studyStatus
                 + ", startOfStudy=" + startOfStudy + ", citizenship=" + citizenship + ", grant=" + grant + "]";
-    }
+    } 
 }

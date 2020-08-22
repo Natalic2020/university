@@ -5,13 +5,13 @@ import java.util.UUID;
 
 import ua.com.foxminded.dao.entity.ScheduleItem;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
-import ua.com.foxminded.model.dto.StudentDto;
+import ua.com.foxminded.model.dto.WeekScheduleDto;
 
-public interface ScheduleItemService {
+public interface ScheduleService {
 
-    public void addScheduleItem(ScheduleItemDto scheduleItemDto);
-    public void editScheduleItemt(ScheduleItemDto scheduleItemDto, UUID id);
-    public void deleteScheduleItem(UUID id);
+    public void addSchedule(WeekScheduleDto weekScheduleDto);
+    public void editSchedule(ScheduleItemDto scheduleItemDto, UUID id);
+    public void deleteSchedule(UUID id);
     public List<ScheduleItem> findScheduleStudent(UUID id, String startDate, String finishDate);
     public List<ScheduleItem> findScheduleTeacher(UUID id, String startDate, String finishDate);
 }

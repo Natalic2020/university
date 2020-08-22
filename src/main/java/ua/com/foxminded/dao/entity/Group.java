@@ -10,7 +10,7 @@ public class Group {
     
     private String id;
     private String name;
-    private Specialty specialty;
+    private String specialty;
     private List<Student> students;
     
     public Group() {
@@ -41,11 +41,11 @@ public class Group {
         return this;
     }
 
-    public Specialty getSpecialty() {
+    public String getSpecialty() {
         return specialty;
     }
 
-    public Group setSpecialty(Specialty specialty) {
+    public Group setSpecialty(String specialty) {
         this.specialty = specialty;
         return this;
     }

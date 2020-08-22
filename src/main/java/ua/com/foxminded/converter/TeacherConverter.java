@@ -18,8 +18,8 @@ public class TeacherConverter {
                 .setPerson(new Person().setId(teacherDto.getIdPerson().toString())
                 .setFirstName(teacherDto.getFirstName())
                 .setLastName(teacherDto.getLastName()))            
-        .setDegree(teacherDto.getDegree().toString())
-        .setDepartment(teacherDto.getDepartment().toString())
+        .setDegree(teacherDto.getDegree().name())
+        .setDepartment(teacherDto.getDepartment().name())
         .setPermanent(teacherDto.isPermanent())
         .setSalary(teacherDto.getSalary());
     }

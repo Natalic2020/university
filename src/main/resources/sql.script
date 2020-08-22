@@ -3,8 +3,8 @@ CREATE SCHEMA uni;
 create table uni.groups (id varchar(50) PRIMARY KEY, name varchar(50)  NOT NULL, specialty varchar(50));
 create table uni.persons (id varchar(50) PRIMARY KEY, first_name varchar(50)  NOT NULL, last_name varchar(50));
 create table uni.contact_infos (id varchar(50) PRIMARY KEY,  id_person varchar(50) REFERENCES uni.persons (id) ON DELETE CASCADE, index int, country varchar(50), city varchar(50), street varchar(50), house varchar(50), apartment int, phone1 varchar(50), phone2 varchar(50), email varchar(50))
-create table uni.students (id varchar(50) PRIMARY KEY, id_person varchar(50) REFERENCES uni.persons (id) ON DELETE CASCADE, study_status varchar(50), start_of_study date, citizenship varchar(50), grants money, id_group varchar(50) REFERENCES uni.groups (id))
-create table uni.teachers (id varchar(50) PRIMARY KEY, id_person varchar(50) REFERENCES uni.persons (id) ON DELETE CASCADE, department varchar(50), permanent boolean,  salary money)
+create table uni.students (id varchar(50) PRIMARY KEY, id_person varchar(50) REFERENCES uni.persons (id) ON DELETE CASCADE, study_status varchar(50), start_of_study date, citizenship varchar(50), grants numeric, id_group varchar(50) REFERENCES uni.groups (id))
+create table uni.teachers (id varchar(50) PRIMARY KEY, id_person varchar(50) REFERENCES uni.persons (id) ON DELETE CASCADE, degree varchar(50),department varchar(50), permanent boolean,  salary numeric)
 create table uni.subjects (id varchar(50) PRIMARY KEY, name varchar(50))
 create table uni.rooms (id varchar(50) PRIMARY KEY, name varchar(50))
 create table uni.time_slots (id varchar(50) PRIMARY KEY, serial_number varchar(50), start_time time, finish_time time)

@@ -4,10 +4,10 @@ import java.util.UUID;
 
 public abstract class PersonDto {
 
-	protected UUID idPerson;
-	protected String firstName;
-	protected String lastName;
-	protected ContactInfoDto contactInfo;
+	private UUID idPerson;
+	private String firstName;
+	private String lastName;
+	private ContactInfoDto contactInfo;
 	
     public PersonDto() {
         
@@ -94,7 +94,7 @@ public abstract class PersonDto {
 
     @Override
     public String toString() {
-        return "Person [idPerson=" + idPerson + ", firstName=" + firstName + ", lastName=" + lastName + ", contactInfo="
-                + contactInfo + "]";
-    }	
+        return "PersonDto [idPerson=" + idPerson + ", firstName=" + firstName + ", lastName=" + lastName
+                + ", contactInfo=" + contactInfo + "]";
+    }
 }

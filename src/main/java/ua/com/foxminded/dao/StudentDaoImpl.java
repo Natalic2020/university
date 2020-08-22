@@ -1,17 +1,13 @@
 package ua.com.foxminded.dao;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.dao.entity.Student;
-import ua.com.foxminded.model.dto.PersonDto;
-import ua.com.foxminded.model.dto.StudentDto;
 
 @Repository
 @Qualifier("studentDao")
@@ -27,39 +23,35 @@ public class StudentDaoImpl implements StudentDao {
 
         jdbcTemplate.update(
                 "INSERT INTO uni.students (id, id_person, study_status, start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?, ?)",
-                UUID.randomUUID().toString(), student.getId(), student.getStudyStatus(),
+                student.getId(), student.getPerson().getId(), student.getStudyStatus(),
                 student.getStartOfStudy(), student.getCitizenship(), student.getGrant());
         System.out.println("Student Added!!");
     }
 
     @Override
     public void editStudent(Student student, String id) {
-//        jdbcTemplate.update("UPDATE uni.students s SET citizenship = ? , startOfStudy = ?  WHERE s.id_person = ? ",
-//                student.getCitizenship(), student.getStartOfStudy(), id.toString());
-//            System.out.println("Person Updated!!");
-        jdbcTemplate.update("UPDATE uni.students s SET citizenship = ? , startOfStudy = ?   WHERE s.id_person = ? ",
-                student.getCitizenship(), student.getStartOfStudy(), id);
+        jdbcTemplate.update("UPDATE uni.students s SET citizenship = ?, study_status = ?, grants = ?, start_of_study = ?  WHERE s.id = ? ",
+                student.getCitizenship(), student.getStudyStatus(), student.getGrant(), student.getStartOfStudy(), id);
         System.out.println("Student Updated!!");
     }
 
     @Override
     public void deleteStudent(String id) {
-        jdbcTemplate.update("DELETE from uni.students s WHERE s.id_person = ? ", id.toString());
+        jdbcTemplate.update("DELETE from uni.students s WHERE s.id_person = ? ", id);
         System.out.println("Student Deleted!!");
     }
 
     @Override
-    public Student findStudent(String id) {
-        Student student = (Student) jdbcTemplate.queryForObject(
-                "SELECT * FROM uni.students s where s.id_person = ? ",
-                new Object[] { id }, new BeanPropertyRowMapper(Student.class));
-        return student;
+    public List<Student> findStudent(String id) {
+        List<Student> students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
+                " where s.id_person = p.id and s.id = ? ", new StudentMapper() , id);
+        return students;
     }
 
     @Override
     public List<Student> findAllStudent() {
-        List<Student> students = jdbcTemplate.query("SELECT * FROM uni.students",
-                new BeanPropertyRowMapper(Student.class));
+        List<Student> students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
+                " where s.id_person = p.id", new StudentMapper());
         return students;
     }
 }

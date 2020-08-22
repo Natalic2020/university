@@ -18,16 +18,16 @@ public class StudentServiceImpl implements StudentService {
     StudentDao studentDao;
     
     @Autowired
-    StudentConverter studentTransformer;
+    StudentConverter studentConverter;
     
     @Override
     public void addStudent(StudentDto student) {
-        studentDao.addStudent(studentTransformer.convertDtoToEntity(student));
+        studentDao.addStudent(studentConverter.convertDtoToEntity(student));
     }
 
     @Override
     public void editStudent(StudentDto student, UUID id) {
-        studentDao.editStudent(studentTransformer.convertDtoToEntity(student), id.toString());
+        studentDao.editStudent(studentConverter.convertDtoToEntity(student), id.toString());
     }
 
     @Override
@@ -36,12 +36,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDto findStudent(UUID id) {
-        return studentTransformer.convertEntityToDto(studentDao.findStudent(id.toString()));
+    public List<StudentDto> findStudent(UUID id) {
+        return studentDao.findStudent(id.toString()).stream().map(studentConverter::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<StudentDto> findAllStudent() {
-        return studentDao.findAllStudent().stream().map(studentTransformer::convertEntityToDto).collect(Collectors.toList());
+        return studentDao.findAllStudent().stream().map(studentConverter::convertEntityToDto).collect(Collectors.toList());
     }
 }

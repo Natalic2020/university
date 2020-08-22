@@ -1,7 +1,6 @@
 package ua.com.foxminded.dao;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,33 +8,32 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.dao.entity.Schedule;
 import ua.com.foxminded.dao.entity.ScheduleItem;
-import ua.com.foxminded.dao.entity.Student;
-import ua.com.foxminded.model.dto.WeekScheduleDto;
 
 @Repository
-@Qualifier("weekScheduleDao")
+@Qualifier("scheduleDao")
 public class ScheduleDaoImpl implements ScheduleDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public void addWeekSchedule(ScheduleItem scheduleItem) {
-        jdbcTemplate.update("INSERT INTO uni.teachers (id, id_person,  salary  ) values (?, ?, ?)",
-                UUID.randomUUID(), teacher.getId(), teacher.getSalary());
-         System.out.println("Teacher Added!!");
+    public void addSchedule(Schedule schedule) {
+        jdbcTemplate.update("INSERT INTO uni.shedule (id_period, id_schedule_items_teacher ) values (?, ?)",
+               schedule.getPeriod().getId(), schedule.getScheduleItemTeacher().getId());
+         System.out.println("Schedule Added!!");
         
     }
 
     @Override
-    public void editWeekSchedule(ScheduleItem scheduleItem, String id) {
+    public void editItemSchedule(ScheduleItem scheduleItem, String id) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void deleteWeekSchedule(String id) {
+    public void deleteItemSchedule(String id) {
         // TODO Auto-generated method stub
         
     }

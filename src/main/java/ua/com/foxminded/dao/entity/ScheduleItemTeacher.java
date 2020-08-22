@@ -20,24 +20,27 @@ public class ScheduleItemTeacher {
         return id;
     }
 
-    public void setId(String id) {
+    public ScheduleItemTeacher setId(String id) {
         this.id = id;
+        return this;
     }
 
     public ScheduleItem getScheduleItem() {
         return scheduleItem;
     }
 
-    public void setScheduleItem(ScheduleItem scheduleItem) {
+    public ScheduleItemTeacher setScheduleItem(ScheduleItem scheduleItem) {
         this.scheduleItem = scheduleItem;
+        return this;
     }
 
     public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public ScheduleItemTeacher setTeacher(Teacher teacher) {
         this.teacher = teacher;
+        return this;
     }
 
     @Override

@@ -108,6 +108,7 @@ public class TeacherDto extends PersonDto{
     @Override
     public String toString() {
         return "TeacherDto [idTeacher=" + idTeacher + ", degree=" + degree + ", department=" + department
-                + ", isPermanent=" + isPermanent + ", salary=" + salary + "]";
+                + ", isPermanent=" + isPermanent + ", salary=" + salary + ", idPerson=" + super.getIdPerson() + ", firstName="
+                + super.getFirstName() + ", lastName=" + super.getLastName() + ", contactInfo=" + super.getContactInfo() + "]";
     }  
 }

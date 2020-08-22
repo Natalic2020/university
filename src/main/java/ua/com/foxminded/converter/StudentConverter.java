@@ -1,5 +1,6 @@
 package ua.com.foxminded.converter;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Component;
@@ -17,20 +18,22 @@ public class StudentConverter {
                 .setPerson(new Person().setId(studentDto.getIdPerson().toString())
                         .setFirstName(studentDto.getFirstName())
                         .setLastName(studentDto.getLastName()))
-        .setCitizenship(studentDto.getCitizenship().toString())
+        .setCitizenship(studentDto.getCitizenship())
         .setGrant(studentDto.getGrant())
         .setStartOfStudy(studentDto.getStartOfStudy())
-        .setStudyStatus(studentDto.getStudyStatus().toString());
+        .setStudyStatus(studentDto.getStudyStatus().name());
     }
 
     public StudentDto convertEntityToDto(Student student) {
-        return ((StudentDto) new StudentDto().setIdStudent(UUID.fromString(student.getId()))
+        StudentDto  studentDto = 
+        ((StudentDto) new StudentDto().setIdStudent(UUID.fromString(student.getId()))
                 .setIdPerson(UUID.fromString(student.getPerson().getId()))
                .setFirstName(student.getPerson().getFirstName())
                 .setLastName(student.getPerson().getLastName()))  
         .setCitizenship(student.getCitizenship())
         .setGrant(student.getGrant())
-        .setStartOfStudy(student.getStartOfStudy())
-        .setStudyStatus(StudyStatus.valueOf(student.getStudyStatus()));        
+        .setStartOfStudy(student.getStartOfStudy());
+        Optional.ofNullable(student.getStudyStatus()).ifPresent(ss -> studentDto.setStudyStatus(StudyStatus.valueOf(ss)));      
+        return studentDto;
     }
 }

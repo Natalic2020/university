@@ -27,8 +27,9 @@ public class GroupDto {
         return id;
     }
 
-    public void setId(UUID id) {
+    public GroupDto setId(UUID id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {

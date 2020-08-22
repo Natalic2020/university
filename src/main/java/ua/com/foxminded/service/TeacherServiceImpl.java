@@ -37,8 +37,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherDto findTeacher(UUID id) {
-        return teacherConverter.convertEntityToDto(teacherDao.findTeacher(id.toString()));
+    public List<TeacherDto> findTeacher(UUID id) {
+        return teacherDao.findTeacher(id.toString()).stream().map(teacher -> teacherConverter.convertEntityToDto(teacher)).collect(Collectors.toList());
     }
 
     @Override

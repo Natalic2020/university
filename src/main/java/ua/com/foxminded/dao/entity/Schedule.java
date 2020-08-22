@@ -1,11 +1,8 @@
 package ua.com.foxminded.dao.entity;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Schedule {
     
-    private  ScheduleItemTeacher scheduleItemTeacher;
+    private ScheduleItemTeacher scheduleItemTeacher;
     private Period period;
 
     public Schedule() {
@@ -21,16 +18,18 @@ public class Schedule {
         return scheduleItemTeacher;
     }
 
-    public void setScheduleItemTeacher(ScheduleItemTeacher scheduleItemTeacher) {
+    public Schedule setScheduleItemTeacher(ScheduleItemTeacher scheduleItemTeacher) {
         this.scheduleItemTeacher = scheduleItemTeacher;
+        return this;
     }
 
     public Period getPeriod() {
         return period;
     }
 
-    public void setPeriod(Period period) {
+    public Schedule setPeriod(Period period) {
         this.period = period;
+        return this;
     }
 
     @Override
