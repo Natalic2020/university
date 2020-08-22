@@ -68,7 +68,7 @@ public class ScheduleItemDto {
         return dayOfWeek;
     }
 
-    public ScheduleItemDto setDayOWeek(DayOfWeek dayOWeek) {
+    public ScheduleItemDto setDayOfWeek(DayOfWeek dayOWeek) {
         this.dayOfWeek = dayOWeek;
         return this;
     }

@@ -91,29 +91,9 @@ public class ScheduleDaoImpl implements ScheduleDao {
          System.out.println("Table Schedule Added!!");   
     }
     
-    
     @Override
-    public void editItemSchedule(ScheduleItem scheduleItem, String id) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deleteItemSchedule(String id) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public List<ScheduleItem> findScheduleStudent(String id, String startDate, String finishDate) {
-        List<ScheduleItem> schedule = jdbcTemplate.query("SELECT * FROM uni.students where s.id_person = ? ",
-                new BeanPropertyRowMapper(ScheduleItem.class));
-        return schedule;
-    }
-
-    @Override
-    public List<ScheduleItem> findScheduleTeacher(String id, String startDate, String finishDate) {
-        List<ScheduleItem> schedule = jdbcTemplate.query("Select * " + 
+    public List<Schedule> findScheduleTeacher(String id, String startDate, String finishDate) {
+        List<Schedule> schedule = jdbcTemplate.query("Select * " + 
                 "from uni.persons p," + 
                 "uni.teachers t," + 
                 "uni.groups g," + 

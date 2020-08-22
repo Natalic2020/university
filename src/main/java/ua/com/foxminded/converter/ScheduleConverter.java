@@ -22,6 +22,7 @@ import ua.com.foxminded.model.dto.ScheduleItemDto;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.model.dto.WeekScheduleDto;
+import ua.com.foxminded.model.enums.DayOfWeek;
 import ua.com.foxminded.model.enums.StudyStatus;
 
 @Component
@@ -77,16 +78,12 @@ public class ScheduleConverter {
     }
 
     public ScheduleItemDto convertEntityToDto(Schedule schedule) {
-//        StudentDto  studentDto = 
-//        ((StudentDto) new StudentDto().setIdStudent(UUID.fromString(student.getId()))
-//                .setIdPerson(UUID.fromString(student.getPerson().getId()))
-//               .setFirstName(student.getPerson().getFirstName())
-//                .setLastName(student.getPerson().getLastName()))  
-//        .setCitizenship(student.getCitizenship())
-//        .setGrant(student.getGrant())
-//        .setStartOfStudy(student.getStartOfStudy());
-//        Optional.ofNullable(student.getStudyStatus()).ifPresent(ss -> studentDto.setStudyStatus(StudyStatus.valueOf(ss)));      
-//        return studentDto;
+
+        ScheduleItemDto  scheduleItemDto = new ScheduleItemDto();
+        Optional.ofNullable(schedule.getScheduleItemTeacher().getScheduleItem().getDayOfWeek()).ifPresent(ss -> scheduleItemDto.setDayOfWeek(DayOfWeek.valueOf(ss))); 
+        scheduleItemDto.
+                
+                
         return new ScheduleItemDto();
         }
     }

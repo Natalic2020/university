@@ -2,6 +2,7 @@ package ua.com.foxminded.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,9 +48,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleItem> findScheduleTeacher(UUID id, String startDate, String finishDate) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<ScheduleItemDto> findScheduleTeacher(UUID id, String startDate, String finishDate) {
+        return scheduleDao.findScheduleTeacher(id.toString(), startDate, finishDate).stream().map(ScheduleConverter::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override

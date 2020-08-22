@@ -54,7 +54,7 @@ public class Application {
 //
         ScheduleService scheduleService = (ScheduleService) context.getBean("scheduleService");
         TestSchedule(scheduleService);
-        
+        scheduleService.findScheduleTeacher(UUID.randomUUID(), "", "");
             
 //        scheduleService.fillTable();;
         
@@ -163,7 +163,7 @@ public class Application {
         TimeSlotDto timeSlot1 = new TimeSlotDto().setId(UUID.randomUUID()).setSerialNumber(1).setStartTime(LocalTime.of(8,0,0)).setFinishTime(LocalTime.of(9,30,0)); 
         
         ScheduleItemDto scheduleItemDto = new ScheduleItemDto().setId(uuid1)
-                .setDayOWeek(DayOfWeek.MONDAY)
+                .setDayOfWeek(DayOfWeek.MONDAY)
                 .setGroup(group1)
                 .setRoom(room1)
                 .setSubject(subject1)
