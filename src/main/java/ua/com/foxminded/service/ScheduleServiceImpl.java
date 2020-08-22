@@ -52,4 +52,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         return null;
     }
 
+    @Override
+    public void fillTable() {
+        scheduleDao.fillTable();   
+    }
 }

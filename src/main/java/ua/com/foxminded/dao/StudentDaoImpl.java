@@ -1,5 +1,6 @@
 package ua.com.foxminded.dao;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void addStudent(Student student) {
+        
+//        jdbcTemplate.update("IINSERT INTO uni.time_slots (id, serial_number, start_time, finish_time ) values (?, ?, ?, ?) " ,
+//                "1","1", LocalTime.of(8,0,0), LocalTime.of(9,30,0));
+        
+//        jdbcTemplate.update("INSERT INTO uni.time_slots (id, serial_number, start_time ) values (?, ?, ?) " ,
+//                student.getPerson().getId(), student.getPerson().getId(), LocalTime.of(8,0,0));
+        
         jdbcTemplate.update("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)",
                 student.getPerson().getId(), student.getPerson().getFirstName(), student.getPerson().getLastName());
 

@@ -1,9 +1,11 @@
 package ua.com.foxminded.model.dto;
 
 import java.time.LocalTime;
+import java.util.UUID;
 
 public class TimeSlotDto {
     
+    private UUID id;
     private int serialNumber;
     private LocalTime startTime;
     private LocalTime finishTime;
@@ -18,6 +20,15 @@ public class TimeSlotDto {
         this.finishTime = LocalTime.of(timeSlot.getFinishTime().getHour(), timeSlot.getFinishTime().getMinute());  
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public TimeSlotDto setId(UUID id) {
+        this.id = id;
+        return this;
+    }
+    
     public int getSerialNumber() {
         return serialNumber;
     }
@@ -81,7 +92,7 @@ public class TimeSlotDto {
 
     @Override
     public String toString() {
-        return "TimeSlot [serialNumber=" + serialNumber + ", startTime=" + startTime + ", finishTime=" + finishTime
-                + "]";
-    }
+        return "TimeSlotDto [id=" + id + ", serialNumber=" + serialNumber + ", startTime=" + startTime + ", finishTime="
+                + finishTime + "]";
+    } 
 }

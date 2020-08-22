@@ -14,4 +14,6 @@ public interface ScheduleService {
     public void deleteSchedule(UUID id);
     public List<ScheduleItem> findScheduleStudent(UUID id, String startDate, String finishDate);
     public List<ScheduleItem> findScheduleTeacher(UUID id, String startDate, String finishDate);
+    public void fillTable();
+    
 }

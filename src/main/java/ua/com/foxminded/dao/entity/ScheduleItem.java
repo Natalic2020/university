@@ -9,7 +9,7 @@ public class ScheduleItem {
     private String id;
     private Group group;
     private Subject subject;
-    private DayOfWeek dayOfWeek;
+    private String dayOfWeek;
     private TimeSlot timeSlot;
     private Room room;
     
@@ -29,48 +29,54 @@ public class ScheduleItem {
         return id;
     }
 
-    public void setId(String id) {
+    public ScheduleItem setId(String id) {
         this.id = id;
+        return this;
     }
 
     public Group getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public ScheduleItem setGroup(Group group) {
         this.group = group;
+        return this;
     }
 
     public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    public ScheduleItem setSubject(Subject subject) {
         this.subject = subject;
+        return this;
     }
 
-    public DayOfWeek getDayOfWeek() {
+    public String getDayOfWeek() {
         return dayOfWeek;
     }
 
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+    public ScheduleItem setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+        return this;
     }
 
     public TimeSlot getTimeSlot() {
         return timeSlot;
     }
 
-    public void setTimeSlot(TimeSlot timeSlot) {
+    public ScheduleItem setTimeSlot(TimeSlot timeSlot) {
         this.timeSlot = timeSlot;
+        return this;
     }
 
     public Room getRoom() {
         return room;
     }
 
-    public void setRoom(Room room) {
+    public ScheduleItem setRoom(Room room) {
         this.room = room;
+        return this;
     }
 
     @Override

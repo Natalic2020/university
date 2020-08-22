@@ -11,7 +11,7 @@ public class ScheduleItemDto {
     private List<TeacherDto> teachers;
     private GroupDto group;
     private SubjectDto subject;
-    private DayOfWeek dayOWeek;
+    private DayOfWeek dayOfWeek;
     private TimeSlotDto timeSlot;
     private RoomDto room;
     
@@ -23,7 +23,7 @@ public class ScheduleItemDto {
 //        this.teacher = new TeacherDto(scheduleItem.getTeacher())  ;
         this.group = new GroupDto(scheduleItem.getGroup()) ;
         this.subject = new SubjectDto(scheduleItem.getSubject());
-        this.dayOWeek = scheduleItem.dayOWeek;
+        this.dayOfWeek = scheduleItem.dayOfWeek;
         this.timeSlot = new TimeSlotDto(scheduleItem.getTimeSlot());
         this.room = new RoomDto(scheduleItem.getRoom());
     }
@@ -64,12 +64,12 @@ public class ScheduleItemDto {
         return this;
     }
 
-    public DayOfWeek getDayOWeek() {
-        return dayOWeek;
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
     }
 
     public ScheduleItemDto setDayOWeek(DayOfWeek dayOWeek) {
-        this.dayOWeek = dayOWeek;
+        this.dayOfWeek = dayOWeek;
         return this;
     }
 
@@ -95,7 +95,7 @@ public class ScheduleItemDto {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((dayOWeek == null) ? 0 : dayOWeek.hashCode());
+        result = prime * result + ((dayOfWeek == null) ? 0 : dayOfWeek.hashCode());
         result = prime * result + ((group == null) ? 0 : group.hashCode());
         result = prime * result + ((room == null) ? 0 : room.hashCode());
         result = prime * result + ((subject == null) ? 0 : subject.hashCode());
@@ -113,7 +113,7 @@ public class ScheduleItemDto {
         if (getClass() != obj.getClass())
             return false;
         ScheduleItemDto other = (ScheduleItemDto) obj;
-        if (dayOWeek != other.dayOWeek)
+        if (dayOfWeek != other.dayOfWeek)
             return false;
         if (group == null) {
             if (other.group != null)
@@ -146,6 +146,6 @@ public class ScheduleItemDto {
     @Override
     public String toString() {
         return "ScheduleItemDto [id=" + id + ", teachers=" + teachers + ", group=" + group + ", subject=" + subject
-                + ", dayOWeek=" + dayOWeek + ", timeSlot=" + timeSlot + ", room=" + room + "]";
+                + ", dayOWeek=" + dayOfWeek + ", timeSlot=" + timeSlot + ", room=" + room + "]";
     } 
 }

@@ -46,14 +46,18 @@ public class Application {
         TablesInitializer tableInitializer = context.getBean("tablesInitializer", TablesInitializer.class);
         tableInitializer.createTables();
 
-        StudentService studentService = (StudentService) context.getBean("studentService");
-        TestStudent(studentService);
-
-        TeacherService teacherService = (TeacherService) context.getBean("teacherService");
-        TestTeacher(teacherService);
-
+//        StudentService studentService = (StudentService) context.getBean("studentService");
+//        TestStudent(studentService);
+//
+//        TeacherService teacherService = (TeacherService) context.getBean("teacherService");
+//        TestTeacher(teacherService);
+//
         ScheduleService scheduleService = (ScheduleService) context.getBean("scheduleService");
         TestSchedule(scheduleService);
+        
+            
+//        scheduleService.fillTable();;
+        
 
         context.close();
     }
@@ -156,7 +160,7 @@ public class Application {
         
         SubjectDto subject1 = new SubjectDto().setId(UUID.randomUUID()).setName("Maths");
         
-        TimeSlotDto timeSlot1 = new TimeSlotDto().setSerialNumber(1).setStartTime(LocalTime.of(8,0,0)).setFinishTime(LocalTime.of(9,30,0)); 
+        TimeSlotDto timeSlot1 = new TimeSlotDto().setId(UUID.randomUUID()).setSerialNumber(1).setStartTime(LocalTime.of(8,0,0)).setFinishTime(LocalTime.of(9,30,0)); 
         
         ScheduleItemDto scheduleItemDto = new ScheduleItemDto().setId(uuid1)
                 .setDayOWeek(DayOfWeek.MONDAY)
