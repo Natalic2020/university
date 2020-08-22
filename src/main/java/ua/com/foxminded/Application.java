@@ -54,8 +54,11 @@ public class Application {
 //
         ScheduleService scheduleService = (ScheduleService) context.getBean("scheduleService");
         TestSchedule(scheduleService);
-        scheduleService.findScheduleTeacher(UUID.randomUUID(), "", "");
-            
+        List<ScheduleItemDto> schedule = scheduleService.findScheduleTeacher(UUID.randomUUID(), "", "");
+        
+        LocalDate.of(2016, 9, 01).getDayOfWeek();   
+        
+        
 //        scheduleService.fillTable();;
         
 

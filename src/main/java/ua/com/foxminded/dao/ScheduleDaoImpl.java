@@ -94,25 +94,25 @@ public class ScheduleDaoImpl implements ScheduleDao {
     @Override
     public List<Schedule> findScheduleTeacher(String id, String startDate, String finishDate) {
         List<Schedule> schedule = jdbcTemplate.query("Select * " + 
-                "from uni.persons p," + 
-                "uni.teachers t," + 
-                "uni.groups g," + 
-                "uni.subjects su," + 
-                "uni.rooms r," + 
-                "uni.time_slots ts," + 
-                "uni.schedule_items si," + 
-                "uni.schedule_items_teachers sit," + 
-                "uni.periods per," + 
-                "uni.schedule sch" + 
-                "where sch.id_period = per.id" + 
-                "and sch.id_schedule_items_teacher = sit.id" + 
-                "and sit.id_teacher = t.id" + 
-                "and t.id_person = p.id" + 
-                "and sit.id_schedule_item = si.id" + 
-                "and si.id_group = g.id" + 
-                "and si.id_subject = su.id" + 
-                "and si.id_room = r.id" + 
-                "and si.id_time_slot = ts.id",
+                "from uni.persons p, " + 
+                " uni.teachers t," + 
+                " uni.groups g," + 
+                " uni.subjects su," + 
+                " uni.rooms r," + 
+                " uni.time_slots ts," + 
+                " uni.schedule_items si," + 
+                " uni.schedule_items_teachers sit," + 
+                " uni.periods per," + 
+                " uni.schedule sch" + 
+                " where sch.id_period = per.id " + 
+                " and sch.id_schedule_items_teacher = sit.id " + 
+                " and sit.id_teacher = t.id " + 
+                " and t.id_person = p.id " + 
+                " and sit.id_schedule_item = si.id " + 
+                " and si.id_group = g.id " + 
+                " and si.id_subject = su.id " + 
+                " and si.id_room = r.id " + 
+                " and si.id_time_slot = ts.id ",
                 new ScheduleMapper());
         return schedule;
     }

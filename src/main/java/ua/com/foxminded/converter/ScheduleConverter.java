@@ -18,9 +18,13 @@ import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.entity.Subject;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.entity.TimeSlot;
+import ua.com.foxminded.model.dto.GroupDto;
+import ua.com.foxminded.model.dto.RoomDto;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
 import ua.com.foxminded.model.dto.StudentDto;
+import ua.com.foxminded.model.dto.SubjectDto;
 import ua.com.foxminded.model.dto.TeacherDto;
+import ua.com.foxminded.model.dto.TimeSlotDto;
 import ua.com.foxminded.model.dto.WeekScheduleDto;
 import ua.com.foxminded.model.enums.DayOfWeek;
 import ua.com.foxminded.model.enums.StudyStatus;
@@ -77,13 +81,15 @@ public class ScheduleConverter {
         return schedule;
     }
 
-    public ScheduleItemDto convertEntityToDto(Schedule schedule) {
+    public static ScheduleItemDto convertEntityToDto(Schedule schedule) {
 
         ScheduleItemDto  scheduleItemDto = new ScheduleItemDto();
         Optional.ofNullable(schedule.getScheduleItemTeacher().getScheduleItem().getDayOfWeek()).ifPresent(ss -> scheduleItemDto.setDayOfWeek(DayOfWeek.valueOf(ss))); 
-        scheduleItemDto.
-                
-                
+        scheduleItemDto.setGroup(new GroupDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getName()));
+        scheduleItemDto.setRoom(new RoomDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getName()));
+        scheduleItemDto.setSubject(new SubjectDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getName()));       
+        scheduleItemDto.setTimeSlot(new TimeSlotDto().setSerialNumber(schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getSerialNumber()));
+        
         return new ScheduleItemDto();
         }
     }
