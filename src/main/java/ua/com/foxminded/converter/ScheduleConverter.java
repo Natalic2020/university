@@ -38,12 +38,22 @@ public class ScheduleConverter {
         
         Period period = new Period().setId(weekScheduleDto.getPeriod().getId().toString())
                 .setStartDate(weekScheduleDto.getPeriod().getStartDate())
-                .setFinishDate(weekScheduleDto.getPeriod().getStartDate());        
+                .setFinishDate(weekScheduleDto.getPeriod().getFinishDate());        
         
         for (ScheduleItemDto  scheduleItemDto : weekScheduleDto.getSchedules()) {
             
+           List<Student> students = new ArrayList<>();
+           
+           scheduleItemDto.getGroup().getStudents().forEach(studentDto -> {
+               Person person = new Person().setId(studentDto.getIdPerson().toString())
+                       .setFirstName(studentDto.getFirstName())
+                       .setLastName(studentDto.getLastName());
+               Student student = new Student().setId(studentDto.getIdStudent().toString()).setPerson(person);
+               students.add(student);
+           });
+           
             Group group = new Group().setId(scheduleItemDto.getGroup().getId().toString())
-                    .setName(scheduleItemDto.getGroup().getName());
+                    .setName(scheduleItemDto.getGroup().getName()).setStudents(students);
             
             Room room = new Room().setId(scheduleItemDto.getRoom().getId().toString())
                     .setName(scheduleItemDto.getRoom().getName());
@@ -83,13 +93,18 @@ public class ScheduleConverter {
 
     public static ScheduleItemDto convertEntityToDto(Schedule schedule) {
 
-        ScheduleItemDto  scheduleItemDto = new ScheduleItemDto();
+        ScheduleItemDto scheduleItemDto = new ScheduleItemDto();
+        
+        if (schedule == null) {
+            return scheduleItemDto;
+        }
+        
         Optional.ofNullable(schedule.getScheduleItemTeacher().getScheduleItem().getDayOfWeek()).ifPresent(ss -> scheduleItemDto.setDayOfWeek(DayOfWeek.valueOf(ss))); 
         scheduleItemDto.setGroup(new GroupDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getName()));
         scheduleItemDto.setRoom(new RoomDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getName()));
         scheduleItemDto.setSubject(new SubjectDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getName()));       
         scheduleItemDto.setTimeSlot(new TimeSlotDto().setSerialNumber(schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getSerialNumber()));
         
-        return new ScheduleItemDto();
+        return scheduleItemDto;
         }
     }

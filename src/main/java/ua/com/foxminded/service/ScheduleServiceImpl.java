@@ -1,5 +1,6 @@
 package ua.com.foxminded.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,14 +43,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleItem> findScheduleStudent(UUID id, String startDate, String finishDate) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<ScheduleItemDto> findScheduleStudent(String lastName, LocalDate date) {
+        return scheduleDao.findScheduleStudent(lastName, date).stream().map(ScheduleConverter::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<ScheduleItemDto> findScheduleTeacher(UUID id, String startDate, String finishDate) {
-        return scheduleDao.findScheduleTeacher(id.toString(), startDate, finishDate).stream().map(ScheduleConverter::convertEntityToDto).collect(Collectors.toList());
+    public List<ScheduleItemDto> findScheduleTeacher(String lastName, LocalDate date) {
+        return scheduleDao.findScheduleTeacher(lastName, date).stream().map(ScheduleConverter::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override

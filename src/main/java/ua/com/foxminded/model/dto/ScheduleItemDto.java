@@ -145,7 +145,6 @@ public class ScheduleItemDto {
 
     @Override
     public String toString() {
-        return "ScheduleItemDto [id=" + id + ", teachers=" + teachers + ", group=" + group + ", subject=" + subject
-                + ", dayOWeek=" + dayOfWeek + ", timeSlot=" + timeSlot + ", room=" + room + "]";
-    } 
+        return String.format("                 %0$-10s %0$-20s %0$-30s %s", dayOfWeek, timeSlot.getSerialNumber(), subject.getName(), group.getName(), room.getName());
+    }
 }
