@@ -8,6 +8,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
 
 import ua.com.foxminded.config.ApplicationConfig;
+import ua.com.foxminded.dao.DatabaseInitializer;
 import ua.com.foxminded.dao.TablesInitializer;
 import ua.com.foxminded.service.Report;
 import ua.com.foxminded.service.ScheduleGenerator;
@@ -23,6 +24,9 @@ public class Application {
     
     @Autowired
     TablesInitializer tableInitializer;
+    
+    @Autowired
+    DatabaseInitializer dbInitializer;
     
     public static void main(String args[]) {
 
@@ -50,10 +54,6 @@ public class Application {
     }  
     
     public void createDB() {
-//      DatabaseInitializer dbInitializer = context.getBean("databaseInitializer", DatabaseInitializer.class);
-//      dbInitializer.createDB();  
-
-//        TablesInitializer tableInitializer = context.getBean("tablesInitializer", TablesInitializer.class);
         tableInitializer.createTables();
     }
 }

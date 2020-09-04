@@ -20,7 +20,6 @@ public class ScheduleItemDto {
     }
 
     public ScheduleItemDto(ScheduleItemDto scheduleItem) {
-//        this.teacher = new TeacherDto(scheduleItem.getTeacher())  ;
         this.group = new GroupDto(scheduleItem.getGroup()) ;
         this.subject = new SubjectDto(scheduleItem.getSubject());
         this.dayOfWeek = scheduleItem.dayOfWeek;

@@ -23,10 +23,10 @@ public class StudentDto extends PersonDto {
 
     public StudentDto(StudentDto student) {
         this.studyStatus = student.studyStatus;
-//        this.startOfStudy =  LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(),
-//                student.getStartOfStudy().getDayOfMonth()) ;
+        this.startOfStudy =  LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(),
+                student.getStartOfStudy().getDayOfMonth()) ;
         this.citizenship = student.citizenship;
-//        this.grant = BigDecimal.valueOf(student.getGrant().longValue());
+        this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
 
     public UUID getIdStudent() {

@@ -33,14 +33,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void editSchedule(ScheduleItemDto scheduleItemDto, UUID id) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void deleteSchedule(UUID id) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

@@ -1,22 +1,16 @@
 package ua.com.foxminded.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.dao.entity.Schedule;
-import ua.com.foxminded.dao.entity.ScheduleItem;
-import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.ScheduleDao;
 import ua.com.foxminded.dao.mappers.ScheduleMapper;
 
@@ -36,134 +30,56 @@ public class ScheduleDaoImpl implements ScheduleDao {
     }    
    
     public void addScheduleItem(Schedule schedule) {
-        jdbcTemplate.execute("INSERT INTO uni.rooms (id, name_room ) values (?, ?)", new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getId()); 
-                ps.setString(2,schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getName());
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getName());
-        
-        jdbcTemplate.execute("INSERT INTO uni.subjects (id, name_subject ) values (?, ?)", new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getId());  
-                ps.setString(2,schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getName());
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getName());
-        
-        jdbcTemplate.execute("INSERT INTO uni.groups (id, name_group ) values (?, ?)", new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId());  
-                ps.setString(2,schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getName()); 
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getName());
-        
-        jdbcTemplate.execute("INSERT INTO uni.time_slots (id, serial_number, start_time, finish_time ) values (?, ?, ?, ?) " , new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getId());  
-                ps.setInt(2,schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getSerialNumber());
-                ps.setTime(3, java.sql.Time.valueOf(schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getStartTime()));
-                ps.setTime(4, java.sql.Time.valueOf(schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getFinishTime()));
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getSerialNumber(),
-//                schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getStartTime(), schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getFinishTime());
-        
-        String idGroup = schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId();
-        
-        schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getStudents().forEach(student -> {
-            jdbcTemplate.execute("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)", new PreparedStatementCallback<Boolean>(){
-                @Override  
-                public Boolean doInPreparedStatement(PreparedStatement ps)  
-                        throws SQLException, DataAccessException {                 
-                    ps.setString(1,student.getPerson().getId());
-                    ps.setString(2,student.getPerson().getFirstName());
-                    ps.setString(3,student.getPerson().getLastName());
-                    return ps.execute();  
-                }  
-                });  
-//                    student.getPerson().getId(),
-//                    student.getPerson().getFirstName(), student.getPerson().getLastName());
+        try {
+            jdbcTemplate.update("INSERT INTO uni.rooms (id, name_room ) values (?, ?)",  
+                    schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getName());
             
-            jdbcTemplate.update(
-                    "INSERT INTO uni.students (id, id_person, study_status, start_of_study, citizenship , grants, id_group  ) values (?, ?, ?, ?, ?, ?, ?)",                  
-                    student.getId(), student.getPerson().getId(), student.getStudyStatus(),
-                    student.getStartOfStudy(), student.getCitizenship(), student.getGrant(), idGroup);
-        });
-        
+            jdbcTemplate.update("INSERT INTO uni.subjects (id, name_subject ) values (?, ?)",
+                    schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getName());
+            
+            jdbcTemplate.update("INSERT INTO uni.groups (id, name_group ) values (?, ?)", 
+                    schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getName());
+            
+            jdbcTemplate.update("INSERT INTO uni.time_slots (id, serial_number, start_time, finish_time ) values (?, ?, ?, ?) " , 
+                    schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getSerialNumber(),
+                    schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getStartTime(), schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getFinishTime());
+            
+            String idGroup = schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId();
+            
+            schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getStudents().forEach(student -> {
+                jdbcTemplate.update("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)", 
+                        student.getPerson().getId(),
+                        student.getPerson().getFirstName(), student.getPerson().getLastName());
                 
-        jdbcTemplate.execute("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)", new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getTeacher().getPerson().getId());
-                ps.setString(2,schedule.getScheduleItemTeacher().getTeacher().getPerson().getFirstName());
-                ps.setString(3,schedule.getScheduleItemTeacher().getTeacher().getPerson().getLastName());
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getTeacher().getPerson().getId(), schedule.getScheduleItemTeacher().getTeacher().getPerson().getFirstName(),schedule.getScheduleItemTeacher().getTeacher().getPerson().getLastName());
-        
-        jdbcTemplate.execute("INSERT INTO uni.teachers (id, id_person ) values (?, ?)", new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getTeacher().getId());  
-                ps.setString(2,schedule.getScheduleItemTeacher().getTeacher().getPerson().getId());
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getTeacher().getId(), schedule.getScheduleItemTeacher().getTeacher().getPerson().getId());
-        
-        jdbcTemplate.execute("INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, day_of_week) values (?, ?, ?, ?, ?, ? )",new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getScheduleItem().getId());  
-                ps.setString(2,schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId());
-                ps.setString(3,schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getId());
-                ps.setString(4,schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getId());
-                ps.setString(5,schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getId());
-                ps.setString(6,schedule.getScheduleItemTeacher().getScheduleItem().getDayOfWeek());
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getScheduleItem().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId(),
-//                schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getId(),
-//                schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getDayOfWeek());
-        
-        jdbcTemplate.execute("INSERT INTO uni.schedule_items_teachers (id, id_schedule_item, id_teacher ) values (?, ?, ?)", new PreparedStatementCallback<Boolean>(){
-            @Override  
-            public Boolean doInPreparedStatement(PreparedStatement ps)  
-                    throws SQLException, DataAccessException {                 
-                ps.setString(1,schedule.getScheduleItemTeacher().getId());  
-                ps.setString(2,schedule.getScheduleItemTeacher().getScheduleItem().getId());
-                ps.setString(3,schedule.getScheduleItemTeacher().getTeacher().getId());
-                return ps.execute();  
-            }  
-            });  
-//                schedule.getScheduleItemTeacher().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getId(), schedule.getScheduleItemTeacher().getTeacher().getId());
-        
-        jdbcTemplate.update("INSERT INTO uni.periods (id, start_date, finish_date ) values (?, ?, ?)", 
-                schedule.getPeriod().getId(), schedule.getPeriod().getStartDate(), schedule.getPeriod().getFinishDate());
-        
-        jdbcTemplate.update("INSERT INTO uni.schedule (id_period, id_schedule_items_teacher ) values (?, ?)",
-                schedule.getPeriod().getId(), schedule.getScheduleItemTeacher().getId());
-         System.out.println("Schedule Added!!");      
+                jdbcTemplate.update(
+                        "INSERT INTO uni.students (id, id_person, study_status, start_of_study, citizenship , grants, id_group  ) values (?, ?, ?, ?, ?, ?, ?)",                  
+                        student.getId(), student.getPerson().getId(), student.getStudyStatus(),
+                        student.getStartOfStudy(), student.getCitizenship(), student.getGrant(), idGroup);
+            });
+                    
+            jdbcTemplate.update("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)", 
+                    schedule.getScheduleItemTeacher().getTeacher().getPerson().getId(), schedule.getScheduleItemTeacher().getTeacher().getPerson().getFirstName(),schedule.getScheduleItemTeacher().getTeacher().getPerson().getLastName());
+            
+            jdbcTemplate.update("INSERT INTO uni.teachers (id, id_person ) values (?, ?)", 
+                    schedule.getScheduleItemTeacher().getTeacher().getId(), schedule.getScheduleItemTeacher().getTeacher().getPerson().getId());
+            
+            jdbcTemplate.update("INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, day_of_week) values (?, ?, ?, ?, ?, ? )",
+                    schedule.getScheduleItemTeacher().getScheduleItem().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getId(),
+                    schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getId(),
+                    schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getDayOfWeek());
+            
+            jdbcTemplate.update("INSERT INTO uni.schedule_items_teachers (id, id_schedule_item, id_teacher ) values (?, ?, ?)", 
+                    schedule.getScheduleItemTeacher().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getId(), schedule.getScheduleItemTeacher().getTeacher().getId());
+            
+            jdbcTemplate.update("INSERT INTO uni.periods (id, start_date, finish_date ) values (?, ?, ?)", 
+                    schedule.getPeriod().getId(), schedule.getPeriod().getStartDate(), schedule.getPeriod().getFinishDate());
+            
+            jdbcTemplate.update("INSERT INTO uni.schedule (id_period, id_schedule_items_teacher ) values (?, ?)",
+                    schedule.getPeriod().getId(), schedule.getScheduleItemTeacher().getId());
+             System.out.println("Schedule Added!!");
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }      
     }
     
     @Override
