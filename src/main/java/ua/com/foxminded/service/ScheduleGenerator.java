@@ -10,11 +10,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import ua.com.foxminded.config.ApplicationConfig;
 import ua.com.foxminded.dao.TablesInitializer;
+import ua.com.foxminded.dao.interfaces.ScheduleDao;
+import ua.com.foxminded.dao.mappers.ScheduleMapper;
 import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.PeriodDto;
 import ua.com.foxminded.model.dto.RoomDto;
@@ -29,23 +34,29 @@ import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
 import ua.com.foxminded.model.enums.Specialty;
 import ua.com.foxminded.model.enums.StudyStatus;
+import ua.com.foxminded.service.interfaces.ScheduleService;
+import ua.com.foxminded.service.interfaces.StudentService;
+import ua.com.foxminded.service.interfaces.TeacherService;
 
+@Component
 public class ScheduleGenerator {
 
+    @Autowired
+    ScheduleService scheduleService;
     
-    public void fillSchedule(AbstractApplicationContext context) {
+    @Autowired
+    StudentServiceImpl studentService;
+    
+    @Autowired
+    TeacherService teacherService;
+    
+    public void fillSchedule() {
 
-        ScheduleService scheduleService = (ScheduleService) context.getBean("scheduleService");
-        createSchedule(scheduleService);
+        createSchedule();
         
-        
-//        List<ScheduleItemDto> schedule = scheduleService.findScheduleTeacher("Ivaniv", LocalDate.of(2019, 9, 2));
-//        schedule.forEach(e -> System.out.println(e.toString()));  
-    }
+    }  
     
-    
-    
-    public void createSchedule(ScheduleService scheduleService){
+    public void createSchedule(){
         createSchedule2().forEach(element -> {
             scheduleService.addSchedule(createScheduleSmall(element));
         });
@@ -283,7 +294,7 @@ public class ScheduleGenerator {
     }
 
     
-      public void testTeacher(TeacherService teacherService) {
+      public void testTeacher() {
 
         UUID uuidT1 = UUID.randomUUID();
         UUID uuidT2 = UUID.randomUUID();
@@ -332,7 +343,7 @@ public class ScheduleGenerator {
         teacherService.deleteTeacher(uuidT3);
 
         System.out.println("Update person Id = 1");
-        teacherService.editTeacher(teacher2.setDegree(Degree.PROFESSOR).setDepartment(Department.ARCHITECTURE), uuidT1);
+        teacherService.editTeacher(teacher2.setDegree(Degree.PROFESSOR).setDepartment(Department.ARCHITECTURE));
 
         System.out.println("Find person Id = 2");
         teacherService.findTeacher(uuidT2).forEach(System.out::println);
@@ -341,7 +352,7 @@ public class ScheduleGenerator {
         teacherService.findAllTeacher().forEach(System.out::println);
     }
 
-    public void testStudent(StudentService studentService) {
+    public void testStudent() {
         UUID uuidS1 = UUID.randomUUID();
         UUID uuidS2 = UUID.randomUUID();
         UUID uuidS3 = UUID.randomUUID();
@@ -396,8 +407,7 @@ public class ScheduleGenerator {
         studentService.editStudent(student1.setCitizenship("Russia")
                                            .setStudyStatus(StudyStatus.FINISHED)
                                            .setGrant(new BigDecimal(10))
-                                           .setStartOfStudy(LocalDate.of(1999, 02, 02)),
-                uuidS1);
+                                           .setStartOfStudy(LocalDate.of(1999, 02, 02)));
 
         System.out.println("Find person Id = 2");
         studentService.findStudent(uuidS2).forEach(System.out::println);

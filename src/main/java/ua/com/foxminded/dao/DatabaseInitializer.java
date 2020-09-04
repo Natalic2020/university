@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ua.com.foxminded.util.FileParser;
@@ -17,8 +18,11 @@ public class DatabaseInitializer {
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "1234";
 
+    @Autowired
+    FileParser file;
+    
     public void createDB() {
-        FileParser file = new FileParser();
+//        FileParser file = new FileParser();
         List<String> sqlQueryList = file.readFileToLines("sql_db.script");
         sqlQueryList.forEach(this::runSQL);
 

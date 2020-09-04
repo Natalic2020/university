@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.ScheduleConverter;
 import ua.com.foxminded.converter.StudentConverter;
-import ua.com.foxminded.dao.ScheduleDao;
-import ua.com.foxminded.dao.StudentDao;
 import ua.com.foxminded.dao.entity.ScheduleItem;
+import ua.com.foxminded.dao.interfaces.ScheduleDao;
+import ua.com.foxminded.dao.interfaces.StudentDao;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
 import ua.com.foxminded.model.dto.WeekScheduleDto;
+import ua.com.foxminded.service.interfaces.ScheduleService;
 
 @Service("scheduleService")
 public class ScheduleServiceImpl implements ScheduleService {
@@ -50,10 +51,5 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleItemDto> findScheduleTeacher(String lastName, LocalDate date) {
         return scheduleDao.findScheduleTeacher(lastName, date).stream().map(ScheduleConverter::convertEntityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public void fillTable() {
-        scheduleDao.fillTable();   
     }
 }

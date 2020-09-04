@@ -11,6 +11,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FileParser {
 
     public List<String> readFileToLines(String fileName) {

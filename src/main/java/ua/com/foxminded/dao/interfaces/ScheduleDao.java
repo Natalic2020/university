@@ -1,4 +1,4 @@
-package ua.com.foxminded.dao;
+package ua.com.foxminded.dao.interfaces;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,6 +9,5 @@ public interface ScheduleDao {
 
     public void  addSchedule(List<Schedule> schedule);
     public List<Schedule> findScheduleTeacher(String lastName, LocalDate date);
-    void fillTable();
     public List<Schedule> findScheduleStudent(String lastName, LocalDate date);
 }

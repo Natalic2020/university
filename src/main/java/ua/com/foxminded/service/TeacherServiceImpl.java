@@ -5,14 +5,17 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.TeacherConverter;
-import ua.com.foxminded.dao.TeacherDao;
 import ua.com.foxminded.dao.entity.Teacher;
+import ua.com.foxminded.dao.interfaces.TeacherDao;
 import ua.com.foxminded.model.dto.TeacherDto;
+import ua.com.foxminded.service.interfaces.TeacherService;
 
 @Service("teacherService")
+@Component
 public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
@@ -27,8 +30,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void editTeacher(TeacherDto teacherDto, UUID id) {
-        teacherDao.editTeacher(teacherConverter.convertDtoToEntity(teacherDto), id.toString());
+    public void editTeacher(TeacherDto teacherDto) {
+        teacherDao.editTeacher(teacherConverter.convertDtoToEntity(teacherDto));
     }
 
     @Override

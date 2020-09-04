@@ -1,14 +1,16 @@
-package ua.com.foxminded.dao;
+package ua.com.foxminded.dao.mappers;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Teacher;
 
+@Component
 public class TeacherMapper  implements RowMapper<Teacher>  {
 
     @Override
