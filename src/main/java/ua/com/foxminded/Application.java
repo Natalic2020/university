@@ -46,11 +46,11 @@ public class Application {
 
         System.out.println("********TeacherSchedule******************");
         System.out.println("Ivaniv");
-        report.outputTeacherSchedule( "Ivaniv", LocalDate.of(2019, 9, 2), LocalDate.of(2019, 10, 2));
+        report.outputTeacherSchedule( "Ivaniv", LocalDate.of(2019, 9, 12));
         System.out.println("***********************************");
         System.out.println("********StudentSchedule******************");
         System.out.println("Vano");
-        report.outputStudentSchedule( "Vano", LocalDate.of(2019, 9, 3), LocalDate.of(2019, 10, 2));
+        report.outputStudentSchedule( "Vano", LocalDate.of(2019, 9, 4));
     }  
     
     public void createDB() {

@@ -2,6 +2,7 @@ package ua.com.foxminded.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class TeacherDaoImpl implements TeacherDao {
                   
              System.out.println("Teacher Added!!");
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            System.out.println("Teacher didn't add!!  Reason: " + e.getMessage());
         } 
     }
 
@@ -79,7 +80,7 @@ public class TeacherDaoImpl implements TeacherDao {
                 });  
                 System.out.println("Teacher Update");
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            System.out.println("Teacher didn't update!!  Reason: " + e.getMessage());
         }
     }
 
@@ -96,21 +97,31 @@ public class TeacherDaoImpl implements TeacherDao {
                 });  
             System.out.println("Teacher Deleted!!");
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            System.out.println("Teacher didn't delete!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
     public List<Teacher> findTeacher(String id) {
-        List<Teacher> teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
-                "  where t.id_person = p.id and t.id = ? ", teacherMapper, id);
-            return teachers;
+        List<Teacher> teacher = new ArrayList<>();
+        try {
+            teacher = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
+                    "  where t.id_person = p.id and t.id = ? ", teacherMapper, id);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find the teacher id = " + id +". Reason: " + e.getMessage());
+        }
+            return teacher;
     }
 
     @Override
     public List<Teacher> findAllTeacher() {
-        List <Teacher> teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
-                "where t.id_person = p.id", teacherMapper);
+        List<Teacher> teachers = new ArrayList<>();
+        try {
+            teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
+                    "where t.id_person = p.id", teacherMapper);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find all teachers . Reason: " + e.getMessage());
+        }
         return teachers; 
     }
 }

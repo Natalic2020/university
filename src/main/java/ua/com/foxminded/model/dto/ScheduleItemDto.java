@@ -144,6 +144,6 @@ public class ScheduleItemDto {
 
     @Override
     public String toString() {
-        return String.format("                 %0$-10s %0$-20s %0$-30s %s", dayOfWeek, timeSlot.getSerialNumber(), subject.getName(), group.getName(), room.getName());
+        return String.format("                 %0$-10s %0$-20s %0$-30s %s%n", dayOfWeek, timeSlot.getSerialNumber(), subject.getName(), group.getName(), room.getName());
     }
 }

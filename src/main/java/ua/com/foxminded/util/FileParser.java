@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileParser {
 
-    public List<String> readFileToLines(String fileName) {
+    public String[] readFileToLines(String fileName) {
         String file = receivePath(fileName);
-        List<String> sqlQueryList = new ArrayList<>();
+        String[] sqlQueryList = new String[1];
         try (Stream<String> fileInStream = Files.lines(Paths.get(file))) {
-            sqlQueryList = fileInStream.collect(Collectors.toList());
+            sqlQueryList = fileInStream.toArray(String[]::new);
         } catch (IOException e) {
             e.printStackTrace();
         }

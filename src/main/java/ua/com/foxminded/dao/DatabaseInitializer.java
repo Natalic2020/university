@@ -1,7 +1,5 @@
 package ua.com.foxminded.dao;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -18,7 +16,6 @@ public class DatabaseInitializer {
     JdbcTemplate jdbcTemplate;
     
     public void createDB() {
-        List<String> sqlQueryList = file.readFileToLines("sql_db.script");
-        jdbcTemplate.batchUpdate((String[]) sqlQueryList.toArray());
+        jdbcTemplate.batchUpdate( file.readFileToLines("sql_db.script"));
     }
 }

@@ -2,6 +2,7 @@ package ua.com.foxminded.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +59,7 @@ public class StudentDaoImpl implements StudentDao {
                         });  
             System.out.println("Student Added!!");
         } catch (DataAccessException e) {
-            System.out.println("Student didn't add!!");
-            e.printStackTrace();
+            System.out.println("Student didn't add!!  Reason: " + e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class StudentDaoImpl implements StudentDao {
                 });  
             System.out.println("Student Updated!!");
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            System.out.println("Student didn't update!!  Reason: " + e.getMessage());
         }
     }
 
@@ -99,21 +99,31 @@ public class StudentDaoImpl implements StudentDao {
       
             System.out.println("Student Deleted!!");
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            System.out.println("Student didn't delete!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
     public List<Student> findStudent(String id) {
-        List<Student> students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
-                " where s.id_person = p.id and s.id = ? ", studentMapper , id);
+        List<Student> students = new ArrayList<>();
+        try {
+            students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
+                    " where s.id_person = p.id and s.id = ? ", studentMapper , id);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find the student id = " + id +". Reason: " + e.getMessage());
+        }
         return students;
     }
 
     @Override
     public List<Student> findAllStudent() {
-        List<Student> students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
-                " where s.id_person = p.id", studentMapper);
+        List<Student> students = new ArrayList<>();
+        try {
+            students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
+                    " where s.id_person = p.id", studentMapper);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find all students. Reason: " + e.getMessage());
+        }
         return students;
     }
 }
