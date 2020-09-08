@@ -1,4 +1,4 @@
-package ua.com.foxminded.service;
+package ua.com.foxminded;
 
 import java.time.LocalDate;
 import java.util.List;

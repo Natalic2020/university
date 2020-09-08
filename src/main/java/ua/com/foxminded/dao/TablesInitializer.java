@@ -20,4 +20,9 @@ public class TablesInitializer {
     public void createTables() {
         jdbcTemplate.batchUpdate( file.readFileToLines("sql.script"));
     }  
+    
+    public void fillTables() {
+        jdbcTemplate.batchUpdate( file.readFileToLines("tables.script"));
+    }  
+    
 }
