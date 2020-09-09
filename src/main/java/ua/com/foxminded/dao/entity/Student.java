@@ -79,4 +79,62 @@ public class Student {
         this.grant = grant;
         return this;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((citizenship == null) ? 0 : citizenship.hashCode());
+        result = prime * result + ((grant == null) ? 0 : grant.hashCode());
+        result = prime * result + ((group == null) ? 0 : group.hashCode());
+        result = prime * result + ((person == null) ? 0 : person.hashCode());
+        result = prime * result + ((startOfStudy == null) ? 0 : startOfStudy.hashCode());
+        result = prime * result + ((studyStatus == null) ? 0 : studyStatus.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Student other = (Student) obj;
+        if (citizenship == null) {
+            if (other.citizenship != null)
+                return false;
+        } else if (!citizenship.equals(other.citizenship))
+            return false;
+        if (grant == null) {
+            if (other.grant != null)
+                return false;
+        } else if (!grant.equals(other.grant))
+            return false;
+        if (group == null) {
+            if (other.group != null)
+                return false;
+        } else if (!group.equals(other.group))
+            return false;
+        if (person == null) {
+            if (other.person != null)
+                return false;
+        } else if (!person.equals(other.person))
+            return false;
+        if (startOfStudy == null) {
+            if (other.startOfStudy != null)
+                return false;
+        } else if (!startOfStudy.equals(other.startOfStudy))
+            return false;
+        if (studyStatus == null) {
+            if (other.studyStatus != null)
+                return false;
+        } else if (!studyStatus.equals(other.studyStatus))
+            return false;
+        return true;
+    }
+    
+    
+    
 }
