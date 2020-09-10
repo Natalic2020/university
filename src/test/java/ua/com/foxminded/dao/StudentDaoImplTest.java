@@ -7,9 +7,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.FixMethodOrder;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,6 +31,7 @@ import ua.com.foxminded.util.FileParser;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { ApplicationConfigTest.class })
+@TestMethodOrder(OrderAnnotation.class)
 class StudentDaoImplTest {
 
     @Autowired
@@ -36,21 +43,14 @@ class StudentDaoImplTest {
     @Autowired
     StudentDao studentDao;
 
-    AbstractApplicationContext context;
+//    AbstractApplicationContext context;
 
-    @BeforeEach
-    void init() {
+    @Test
+    @Order(1)
+    void aaddStudent_schoudReturnStudent_whenAddStudent() {
+
         jdbcTemplate.batchUpdate(file.readFileToLines("sql_test.script"));
-    }
-
-    @Test
-    public void addStudent_shouldThrowNullPointerException_whenInputStudentOnlyWithID() {
-        assertThrows(NullPointerException.class, () -> studentDao.addStudent(new Student()));
-    }
-
-    @Test
-    void addStudent_schoudReturnStudent_whenInputStudent() {
-
+        
         Student student = new Student()
                                        .setId("20")
                                        .setStudyStatus(StudyStatus.FINISHED.toString())
@@ -70,4 +70,19 @@ class StudentDaoImplTest {
         List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
     }
+    
+    @Test
+    @Order(2)
+    void deleteStudent__schoudReturnEmpty_whenDeleteStudent() {
+        studentDao.deleteStudent("20");
+        List<Student> expected = new ArrayList<>();
+        List<Student> actual = studentDao.findStudent("Ivan");
+        assertEquals(expected, actual);   
+    }
+    
+    @Test
+    @Order(3)
+    void addStudent_shouldThrowNullPointerException_whenInputStudentOnlyWithID() {
+        assertThrows(NullPointerException.class, () -> studentDao.addStudent(new Student()));
+    }   
 }

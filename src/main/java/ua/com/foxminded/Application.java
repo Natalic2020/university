@@ -10,14 +10,10 @@ import org.springframework.stereotype.Component;
 import ua.com.foxminded.config.ApplicationConfig;
 import ua.com.foxminded.dao.DatabaseInitializer;
 import ua.com.foxminded.dao.TablesInitializer;
-import ua.com.foxminded.service.ScheduleGenerator;
 
 @Component
 public class Application {
-
-    @Autowired
-    ScheduleGenerator scheduleGenerator;
-    
+  
     @Autowired
     Report report;
     
