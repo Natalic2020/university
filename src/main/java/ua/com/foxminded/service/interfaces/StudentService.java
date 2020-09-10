@@ -10,6 +10,7 @@ public interface StudentService {
     public void addStudent(StudentDto student);
     public void editStudent(StudentDto student);
     public void deleteStudent(UUID id);
-    public List<StudentDto> findStudent(UUID id);
-    public List<StudentDto> findAllStudent();  
+    public List<StudentDto> findStudent(String text);
+    public List<StudentDto> findAllStudent();
+      
 }

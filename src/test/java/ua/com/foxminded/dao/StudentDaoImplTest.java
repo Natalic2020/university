@@ -41,16 +41,16 @@ class StudentDaoImplTest {
     @BeforeEach
     void init() {
         jdbcTemplate.batchUpdate(file.readFileToLines("sql_test.script"));
-    }  
+    }
 
     @Test
     public void addStudent_shouldThrowNullPointerException_whenInputStudentOnlyWithID() {
-        assertThrows(NullPointerException.class, () -> studentDao.addStudent(new Student()
-                .setId("22")));
+        assertThrows(NullPointerException.class, () -> studentDao.addStudent(new Student()));
     }
-    
+
     @Test
     void addStudent_schoudReturnStudent_whenInputStudent() {
+
         Student student = new Student()
                                        .setId("20")
                                        .setStudyStatus(StudyStatus.FINISHED.toString())
@@ -63,11 +63,11 @@ class StudentDaoImplTest {
                                                               .setLastName("Ivan"));
 
         studentDao.addStudent(student);
-        
+
         List<Student> expected = new ArrayList<>();
         expected.add(student);
-        
-        List<Student> actual = studentDao.findStudent("20");
+
+        List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
     }
 }

@@ -94,7 +94,7 @@ public abstract class PersonDto {
 
     @Override
     public String toString() {
-        return "PersonDto [idPerson=" + idPerson + ", firstName=" + firstName + ", lastName=" + lastName
+        return "PersonDto [idPerson=" + idPerson.toString() + ", firstName=" + firstName + ", lastName=" + lastName
                 + ", contactInfo=" + contactInfo + "]";
     }
 }

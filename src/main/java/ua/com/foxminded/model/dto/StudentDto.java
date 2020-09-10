@@ -117,7 +117,9 @@ public class StudentDto extends PersonDto {
     @Override
     public String toString() {
         return "StudentDto [idStudent=" + idStudent + ", studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy
-                + ", citizenship=" + citizenship + ", grant=" + grant + ", idPerson=" + super.getFirstName() + ", firstName="
-                + super.getFirstName() + ", lastName=" + super.getLastName() + ", contactInfo=" + super.getContactInfo() + "]";
+                + ", citizenship=" + citizenship + ", grant=" + grant + ", getFirstName()=" + getFirstName()
+                + ", getLastName()=" + getLastName() + "]";
     }
+
+   
 }

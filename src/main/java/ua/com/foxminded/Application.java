@@ -39,17 +39,16 @@ public class Application {
     
     public void run() {
 
-        scheduleGenerator.testStudent();
-        scheduleGenerator.testTeacher();
-        scheduleGenerator.fillSchedule();
+        report.testStudent();
+        report.testTeacher();
 
         System.out.println("********TeacherSchedule******************");
-        System.out.println("Ivaniv");
-        report.outputTeacherSchedule( "Ivaniv", LocalDate.of(2019, 9, 12));
+        System.out.println("Chavan");
+        report.outputTeacherSchedule( "Chavan", LocalDate.of(2019, 9, 12));
         System.out.println("***********************************");
         System.out.println("********StudentSchedule******************");
-        System.out.println("Vano");
-        report.outputStudentSchedule( "Vano", LocalDate.of(2019, 9, 4));
+        System.out.println("Svitlychna");
+        report.outputStudentSchedule( "Svitlychna", LocalDate.of(2019, 9, 4));
     }  
     
     public void createDB() {

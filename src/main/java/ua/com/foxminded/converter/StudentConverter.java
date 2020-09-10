@@ -14,21 +14,28 @@ import ua.com.foxminded.model.enums.StudyStatus;
 public class StudentConverter {
    
     public Student convertDtoToEntity(StudentDto studentDto) {    
-        return new Student().setId(studentDto.getIdStudent().toString())
-                .setPerson(new Person().setId(studentDto.getIdPerson().toString())
-                        .setFirstName(studentDto.getFirstName())
+        
+        Student student = new Student();
+        Optional.ofNullable(studentDto.getIdStudent()).ifPresent(ss -> student.setId(ss.toString()));
+        Person person = new Person();
+        Optional.ofNullable(studentDto.getIdPerson()).ifPresent(ss -> person.setId(ss.toString()));
+        
+          student.setPerson(person.setFirstName(studentDto.getFirstName())
                         .setLastName(studentDto.getLastName()))
         .setCitizenship(studentDto.getCitizenship())
         .setGrant(studentDto.getGrant())
         .setStartOfStudy(studentDto.getStartOfStudy())
         .setStudyStatus(studentDto.getStudyStatus().name());
+      return   student;
+        
     }
 
     public StudentDto convertEntityToDto(Student student) {
         StudentDto  studentDto = 
-        ((StudentDto) new StudentDto().setIdStudent(UUID.fromString(student.getId()))
+        ((StudentDto) new StudentDto()
+                .setIdStudent(UUID.fromString(student.getId()))
                 .setIdPerson(UUID.fromString(student.getPerson().getId()))
-               .setFirstName(student.getPerson().getFirstName())
+                .setFirstName(student.getPerson().getFirstName())
                 .setLastName(student.getPerson().getLastName()))  
         .setCitizenship(student.getCitizenship())
         .setGrant(student.getGrant())

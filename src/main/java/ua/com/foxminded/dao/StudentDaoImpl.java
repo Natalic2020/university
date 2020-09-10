@@ -88,7 +88,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void deleteStudent(String id) {
         try {
-            jdbcTemplate.execute("DELETE from uni.students s WHERE s.id_person = ? ", new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("DELETE from uni.students s WHERE s.id = ? ", new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
@@ -104,13 +104,13 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> findStudent(String id) {
+    public List<Student> findStudent(String lastName) {
         List<Student> students = new ArrayList<>();
         try {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
-                    " where s.id_person = p.id and s.id = ? ", studentMapper , id);
+                    " where s.id_person = p.id and p.last_name = ? ", studentMapper , lastName);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find the student id = " + id +". Reason: " + e.getMessage());
+            System.out.println(" I can't find the student id = " + lastName +". Reason: " + e.getMessage());
         }
         return students;
     }

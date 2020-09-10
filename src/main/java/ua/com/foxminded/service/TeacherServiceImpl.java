@@ -26,7 +26,7 @@ public class TeacherServiceImpl implements TeacherService {
     
     @Override
     public void addTeacher(TeacherDto teacherDto) {
-        teacherDao.addTeacher(teacherConverter.convertDtoToEntity(teacherDto));
+        teacherDao.addTeacher(teacherConverter.convertDtoToEntity(teacherDto.setIdTeacher(UUID.randomUUID())));
     }
 
     @Override

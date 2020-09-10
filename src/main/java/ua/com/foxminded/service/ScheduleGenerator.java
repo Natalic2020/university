@@ -296,124 +296,124 @@ public class ScheduleGenerator {
     
       public void testTeacher() {
 
-        UUID uuidT1 = UUID.randomUUID();
-        UUID uuidT2 = UUID.randomUUID();
-        UUID uuidT3 = UUID.randomUUID();
-
-        UUID uuidP1 = UUID.randomUUID();
-        UUID uuidP2 = UUID.randomUUID();
-        UUID uuidP3 = UUID.randomUUID();
-
-        TeacherDto teacher1 = ((TeacherDto) new TeacherDto().setIdTeacher(uuidT1)
-                                                            .setIdPerson(uuidP1)
-                                                            .setFirstName("Yashwant")
-                                                            .setLastName("Chavan"))
-                                                                                   .setDegree(Degree.DOCTOR)
-                                                                                   .setDepartment(
-                                                                                           Department.INFORMATICS)
-                                                                                   .setPermanent(true)
-                                                                                   .setSalary(new BigDecimal(1000));
-
-        TeacherDto teacher2 = ((TeacherDto) new TeacherDto().setIdTeacher(uuidT2)
-                                                            .setIdPerson(uuidP2)
-                                                            .setFirstName("Mahesh")
-                                                            .setLastName("Patil"))
-                                                                                  .setDegree(Degree.DOCTOR)
-                                                                                  .setDepartment(Department.INFORMATICS)
-                                                                                  .setPermanent(true)
-                                                                                  .setSalary(new BigDecimal(2000));
-
-        TeacherDto teacher3 = ((TeacherDto) new TeacherDto().setIdTeacher(uuidT3)
-                                                            .setIdPerson(uuidP3)
-                                                            .setFirstName("Vishal")
-                                                            .setLastName("Naik"))
-                                                                                 .setDegree(Degree.DOCTOR)
-                                                                                 .setDepartment(Department.INFORMATICS)
-                                                                                 .setPermanent(true)
-                                                                                 .setSalary(new BigDecimal(3000));
-
-        teacherService.addTeacher(teacher1);
-        teacherService.addTeacher(teacher2);
-        teacherService.addTeacher(teacher3);
-
-        System.out.println("Find All");
-        teacherService.findAllTeacher().forEach(System.out::println);
-
-        System.out.println("Delete theacher Id = 3");
-        teacherService.deleteTeacher(uuidT3);
-
-        System.out.println("Update person Id = 1");
-        teacherService.editTeacher(teacher2.setDegree(Degree.PROFESSOR).setDepartment(Department.ARCHITECTURE));
-
-        System.out.println("Find person Id = 2");
-        teacherService.findTeacher(uuidT2).forEach(System.out::println);
-
-        System.out.println("Find All Again");
-        teacherService.findAllTeacher().forEach(System.out::println);
+//        UUID uuidT1 = UUID.randomUUID();
+//        UUID uuidT2 = UUID.randomUUID();
+//        UUID uuidT3 = UUID.randomUUID();
+//
+//        UUID uuidP1 = UUID.randomUUID();
+//        UUID uuidP2 = UUID.randomUUID();
+//        UUID uuidP3 = UUID.randomUUID();
+//
+//        TeacherDto teacher1 = ((TeacherDto) new TeacherDto().setIdTeacher(uuidT1)
+//                                                            .setIdPerson(uuidP1)
+//                                                            .setFirstName("Yashwant")
+//                                                            .setLastName("Chavan"))
+//                                                                                   .setDegree(Degree.DOCTOR)
+//                                                                                   .setDepartment(
+//                                                                                           Department.INFORMATICS)
+//                                                                                   .setPermanent(true)
+//                                                                                   .setSalary(new BigDecimal(1000));
+//
+//        TeacherDto teacher2 = ((TeacherDto) new TeacherDto().setIdTeacher(uuidT2)
+//                                                            .setIdPerson(uuidP2)
+//                                                            .setFirstName("Mahesh")
+//                                                            .setLastName("Patil"))
+//                                                                                  .setDegree(Degree.DOCTOR)
+//                                                                                  .setDepartment(Department.INFORMATICS)
+//                                                                                  .setPermanent(true)
+//                                                                                  .setSalary(new BigDecimal(2000));
+//
+//        TeacherDto teacher3 = ((TeacherDto) new TeacherDto().setIdTeacher(uuidT3)
+//                                                            .setIdPerson(uuidP3)
+//                                                            .setFirstName("Vishal")
+//                                                            .setLastName("Naik"))
+//                                                                                 .setDegree(Degree.DOCTOR)
+//                                                                                 .setDepartment(Department.INFORMATICS)
+//                                                                                 .setPermanent(true)
+//                                                                                 .setSalary(new BigDecimal(3000));
+//
+//        teacherService.addTeacher(teacher1);
+//        teacherService.addTeacher(teacher2);
+//        teacherService.addTeacher(teacher3);
+//
+//        System.out.println("Find All");
+//        teacherService.findAllTeacher().forEach(System.out::println);
+//
+//        System.out.println("Delete theacher Id = 3");
+//        teacherService.deleteTeacher(uuidT3);
+//
+//        System.out.println("Update person Id = 1");
+//        teacherService.editTeacher(teacher2.setDegree(Degree.PROFESSOR).setDepartment(Department.ARCHITECTURE));
+//
+//        System.out.println("Find person Id = 2");
+//        teacherService.findTeacher(uuidT2).forEach(System.out::println);
+//
+//        System.out.println("Find All Again");
+//        teacherService.findAllTeacher().forEach(System.out::println);
     }
 
     public void testStudent() {
-        UUID uuidS1 = UUID.randomUUID();
-        UUID uuidS2 = UUID.randomUUID();
-        UUID uuidS3 = UUID.randomUUID();
-
-        UUID uuidP1 = UUID.randomUUID();
-        UUID uuidP2 = UUID.randomUUID();
-        UUID uuidP3 = UUID.randomUUID();
-
-        StudentDto student1 = ((StudentDto) new StudentDto().setIdStudent(uuidS1)
-                                                            .setIdPerson(uuidP1)
-                                                            .setFirstName("Nata")
-                                                            .setLastName("Svitlychna"))
-                                                                                       .setCitizenship("Ukraine")
-                                                                                       .setGrant(new BigDecimal(111))
-                                                                                       .setStartOfStudy(LocalDate.of(
-                                                                                               2015, 12, 31))
-                                                                                       .setStudyStatus(
-                                                                                               StudyStatus.ACCEPTED);
-
-        StudentDto student2 = ((StudentDto) new StudentDto().setIdStudent(uuidS2)
-                                                            .setIdPerson(uuidP2)
-                                                            .setFirstName("Katja")
-                                                            .setLastName("Loza"))
-                                                                                 .setCitizenship("Germany")
-                                                                                 .setGrant(new BigDecimal(222))
-                                                                                 .setStartOfStudy(
-                                                                                         LocalDate.of(2016, 9, 01))
-                                                                                 .setStudyStatus(StudyStatus.ACCEPTED);
-
-        StudentDto student3 = ((StudentDto) new StudentDto().setIdStudent(uuidS3)
-                                                            .setIdPerson(uuidP3)
-                                                            .setFirstName("Nina")
-                                                            .setLastName("Ivanov"))
-                                                                                   .setCitizenship("England")
-                                                                                   .setGrant(new BigDecimal(333))
-                                                                                   .setStartOfStudy(
-                                                                                           LocalDate.of(2020, 12, 12))
-                                                                                   .setStudyStatus(
-                                                                                           StudyStatus.ACCEPTED);
-
-        studentService.addStudent(student1);
-        studentService.addStudent(student2);
-        studentService.addStudent(student3);
-
-        System.out.println("Find All");
-        studentService.findAllStudent().forEach(System.out::println);
-
-        System.out.println("Delete person Id = 3");
-        studentService.deleteStudent(uuidS3);
-
-        System.out.println("Update person Id = 1");
-        studentService.editStudent(student1.setCitizenship("Russia")
-                                           .setStudyStatus(StudyStatus.FINISHED)
-                                           .setGrant(new BigDecimal(10))
-                                           .setStartOfStudy(LocalDate.of(1999, 02, 02)));
-
-        System.out.println("Find person Id = 2");
-        studentService.findStudent(uuidS2).forEach(System.out::println);
-
-        System.out.println("Find All Again");
-        studentService.findAllStudent().forEach(System.out::println);
+//        UUID uuidS1 = UUID.randomUUID();
+//        UUID uuidS2 = UUID.randomUUID();
+//        UUID uuidS3 = UUID.randomUUID();
+//
+//        UUID uuidP1 = UUID.randomUUID();
+//        UUID uuidP2 = UUID.randomUUID();
+//        UUID uuidP3 = UUID.randomUUID();
+//
+//        StudentDto student1 = ((StudentDto) new StudentDto().setIdStudent(uuidS1)
+//                                                            .setIdPerson(uuidP1)
+//                                                            .setFirstName("Nata")
+//                                                            .setLastName("Svitlychna"))
+//                                                                                       .setCitizenship("Ukraine")
+//                                                                                       .setGrant(new BigDecimal(111))
+//                                                                                       .setStartOfStudy(LocalDate.of(
+//                                                                                               2015, 12, 31))
+//                                                                                       .setStudyStatus(
+//                                                                                               StudyStatus.ACCEPTED);
+//
+//        StudentDto student2 = ((StudentDto) new StudentDto().setIdStudent(uuidS2)
+//                                                            .setIdPerson(uuidP2)
+//                                                            .setFirstName("Katja")
+//                                                            .setLastName("Loza"))
+//                                                                                 .setCitizenship("Germany")
+//                                                                                 .setGrant(new BigDecimal(222))
+//                                                                                 .setStartOfStudy(
+//                                                                                         LocalDate.of(2016, 9, 01))
+//                                                                                 .setStudyStatus(StudyStatus.ACCEPTED);
+//
+//        StudentDto student3 = ((StudentDto) new StudentDto().setIdStudent(uuidS3)
+//                                                            .setIdPerson(uuidP3)
+//                                                            .setFirstName("Nina")
+//                                                            .setLastName("Ivanov"))
+//                                                                                   .setCitizenship("England")
+//                                                                                   .setGrant(new BigDecimal(333))
+//                                                                                   .setStartOfStudy(
+//                                                                                           LocalDate.of(2020, 12, 12))
+//                                                                                   .setStudyStatus(
+//                                                                                           StudyStatus.ACCEPTED);
+//
+//        studentService.addStudent(student1);
+//        studentService.addStudent(student2);
+//        studentService.addStudent(student3);
+//
+//        System.out.println("Find All");
+//        studentService.findAllStudent().forEach(System.out::println);
+//
+//        System.out.println("Delete person Id = 3");
+//        studentService.deleteStudent(uuidS3);
+//
+//        System.out.println("Update person Id = 1");
+//        studentService.editStudent(student1.setCitizenship("Russia")
+//                                           .setStudyStatus(StudyStatus.FINISHED)
+//                                           .setGrant(new BigDecimal(10))
+//                                           .setStartOfStudy(LocalDate.of(1999, 02, 02)));
+//
+//        System.out.println("Find person Id = 2");
+//        studentService.findStudent(uuidS2).forEach(System.out::println);
+//
+//        System.out.println("Find All Again");
+//        studentService.findAllStudent().forEach(System.out::println);
     }
     
 }
