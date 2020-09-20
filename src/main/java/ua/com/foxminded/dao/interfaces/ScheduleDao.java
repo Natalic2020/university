@@ -7,7 +7,8 @@ import ua.com.foxminded.dao.entity.Schedule;
 
 public interface ScheduleDao {
 
-    public void  addSchedule(List<Schedule> schedule);
-    public List<Schedule> findScheduleTeacher(String lastName, LocalDate date);
-    public List<Schedule> findScheduleStudent(String lastName, LocalDate date);
+    public void  addSchedule(Schedule schedule);
+    public Schedule findScheduleTeacher(String lastName, LocalDate date);
+    public Schedule findScheduleStudent(String lastName, LocalDate date);
+ 
 }

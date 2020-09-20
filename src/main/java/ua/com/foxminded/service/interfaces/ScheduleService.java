@@ -12,8 +12,8 @@ public interface ScheduleService {
     public void addSchedule(WeekScheduleDto weekScheduleDto);
     public void editSchedule(ScheduleItemDto scheduleItemDto, UUID id);
     public void deleteSchedule(UUID id);
-    public List<WeekScheduleDto> findWeekScheduleStudent(String lastName, LocalDate date);
-    public List<WeekScheduleDto> findMonthScheduleStudent(String lastName, LocalDate date);
-    public List<WeekScheduleDto> findWeekScheduleTeacher(String lastName, LocalDate date);
-    public List<WeekScheduleDto> findMonthScheduleTeacher(String lastName, LocalDate date);
+    public WeekScheduleDto findWeekScheduleStudent(String lastName, LocalDate date);
+    public WeekScheduleDto findMonthScheduleStudent(String lastName, LocalDate date);
+    public WeekScheduleDto findWeekScheduleTeacher(String lastName, LocalDate date);
+    public WeekScheduleDto findMonthScheduleTeacher(String lastName, LocalDate date);
 }

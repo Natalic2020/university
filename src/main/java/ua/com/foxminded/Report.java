@@ -38,17 +38,13 @@ public class Report {
     
     public void outputTeacherSchedule(String lastName, LocalDate startPeriod) {
         
-        List<TeacherDto> teachersDto = new ArrayList<TeacherDto>();
-        teachersDto.add(new TeacherDto().setIdTeacher(UUID.fromString("95d5a598-4fa1-4937-acf7-382a878d19fa")));
-        List <ScheduleItemDto> schedules = new ArrayList<>();
-        schedules.add(new ScheduleItemDto().setId(UUID.fromString("5e9330ba-162f-45ea-b9de-605ae734f585")).setTeachers(teachersDto));
-        schedules.add(new ScheduleItemDto().setId(UUID.fromString("a8ee0b44-e269-424f-8c33-74d145aaf8d1")).setTeachers(teachersDto));
-        schedules.add(new ScheduleItemDto().setId(UUID.fromString("92f6742f-ab90-4975-9f50-bbf4a3a99c74")).setTeachers(teachersDto));
-        schedules.add(new ScheduleItemDto().setId(UUID.fromString("c38685d8-5c63-46af-8584-6001273a775a")).setTeachers(teachersDto));
-        
-        
-        
-        WeekScheduleDto weekScheduleDto = new WeekScheduleDto().setSchedules(schedules).setPeriod(new PeriodDto().setId(UUID.fromString("a3158159-e04d-4cfd-99dc-f12e24a57824")));
+        List <ScheduleItemDto> scheduleItemsDto = new ArrayList<>();
+        scheduleItemsDto.add(new ScheduleItemDto().setId(UUID.fromString("5e9330ba-162f-45ea-b9de-605ae734f585")));
+        scheduleItemsDto.add(new ScheduleItemDto().setId(UUID.fromString("a8ee0b44-e269-424f-8c33-74d145aaf8d1")));
+        scheduleItemsDto.add(new ScheduleItemDto().setId(UUID.fromString("92f6742f-ab90-4975-9f50-bbf4a3a99c74")));
+        scheduleItemsDto.add(new ScheduleItemDto().setId(UUID.fromString("c38685d8-5c63-46af-8584-6001273a775a")));
+                  
+        WeekScheduleDto weekScheduleDto = new WeekScheduleDto().setSchedules(scheduleItemsDto).setPeriod(new PeriodDto().setId(UUID.fromString("a3158159-e04d-4cfd-99dc-f12e24a57824")));
         
         scheduleService.addSchedule(weekScheduleDto);
         

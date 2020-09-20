@@ -1,20 +1,22 @@
 package ua.com.foxminded.dao.entity;
 
+import java.util.List;
+
 public class Schedule {
     
-    private ScheduleItemTeacher scheduleItemTeacher;
+    private List<ScheduleItem> scheduleItems;
     private Period period;
 
     public Schedule() {
        
     }
 
-    public ScheduleItemTeacher getScheduleItemTeacher() {
-        return scheduleItemTeacher;
+    public List<ScheduleItem> getScheduleItems() {
+        return scheduleItems;
     }
 
-    public Schedule setScheduleItemTeacher(ScheduleItemTeacher scheduleItemTeacher) {
-        this.scheduleItemTeacher = scheduleItemTeacher;
+    public Schedule setScheduleItems(List<ScheduleItem> scheduleItems) {
+        this.scheduleItems = scheduleItems;
         return this;
     }
 

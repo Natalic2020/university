@@ -12,8 +12,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.dao.entity.Schedule;
+import ua.com.foxminded.dao.entity.ScheduleItem;
 import ua.com.foxminded.dao.interfaces.ScheduleDao;
 import ua.com.foxminded.dao.mappers.ScheduleMapper;
+import ua.com.foxminded.model.dto.ScheduleItemDto;
 
 @Repository
 @Qualifier("scheduleDao")
@@ -26,19 +28,20 @@ public class ScheduleDaoImpl implements ScheduleDao {
     ScheduleMapper scheduleMapper;
     
     @Override
-    public void addSchedule(List<Schedule> schedule) {   
-        schedule.forEach(this::addScheduleItem); 
+    public void addSchedule(Schedule schedule) {   
+        schedule.getScheduleItems().forEach(scheduleItem -> addScheduleItem(scheduleItem, schedule)); 
     }    
    
-    public void addScheduleItem(Schedule schedule) {
+    public void addScheduleItem(ScheduleItem scheduleItem, Schedule schedule ) {
         try {
           
-            jdbcTemplate.update("INSERT INTO uni.schedule_items_teachers (id, id_schedule_item, id_teacher ) values (?, ?, ?)", 
-                    schedule.getScheduleItemTeacher().getId(), schedule.getScheduleItemTeacher().getScheduleItem().getId(), schedule.getScheduleItemTeacher().getTeacher().getId());
-           
+            jdbcTemplate.update("INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, id_teacher, day_of_week) values (?, ?, ?, ?, ?, ?, ? )",
+                    scheduleItem.getId(), scheduleItem.getGroup().getId(),
+                    scheduleItem.getSubject().getId(), scheduleItem.getRoom().getId(),
+                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getId(), scheduleItem.getDayOfWeek());
             
-            jdbcTemplate.update("INSERT INTO uni.schedule (id_period, id_schedule_items_teacher ) values (?, ?)",
-                    schedule.getPeriod().getId(), schedule.getScheduleItemTeacher().getId());
+            jdbcTemplate.update("INSERT INTO uni.schedule (id_period, id_schedule_items ) values (?, ?)",
+                    schedule.getPeriod().getId(), scheduleItem.getId());
              System.out.println("Schedule Added!!");
         } catch (DataAccessException e) {
             System.out.println("Schedule didn't add!!  Reason: " + e.getMessage());
@@ -46,10 +49,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
     }
     
     @Override
-    public List<Schedule> findScheduleTeacher(String lastName, LocalDate date) {
-        List<Schedule> schedule = new ArrayList<>();
+    public Schedule findScheduleTeacher(String lastName, LocalDate date) {
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
-            schedule = jdbcTemplate.query("Select * " + 
+            scheduleItems = jdbcTemplate.query("Select * " + 
                     "from uni.persons p,  uni.teachers t, uni.groups g, uni.subjects su, uni.rooms r, uni.time_slots ts," + 
                     " uni.schedule_items si, uni.schedule_items_teachers sit, uni.periods per, uni.schedule sch" + 
                     " where sch.id_period = per.id  and sch.id_schedule_items_teacher = sit.id " + 
@@ -62,14 +65,14 @@ public class ScheduleDaoImpl implements ScheduleDao {
         } catch (DataAccessException e) {
             System.out.println(" I can't find schedule teacher . Last name " + lastName + " . Date " + date + ". Reason: " + e.getMessage());
         }
-        return schedule;
+        return new Schedule().setScheduleItems(scheduleItems);
     }
     
     @Override
-    public List<Schedule> findScheduleStudent(String lastName, LocalDate date) {
-        List<Schedule> schedule = new ArrayList<>();
+    public Schedule findScheduleStudent(String lastName, LocalDate date) {
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
-            schedule = jdbcTemplate.query("Select * " + 
+            scheduleItems = jdbcTemplate.query("Select * " + 
                     "from uni.persons p,  uni.teachers t,  uni.groups g, uni.students st, uni.subjects su, uni.rooms r, uni.time_slots ts," + 
                     " uni.schedule_items si, uni.schedule_items_teachers sit, uni.periods per, uni.schedule sch" + 
                     " where sch.id_period = per.id  and sch.id_schedule_items_teacher = sit.id  and sit.id_teacher = t.id " + 
@@ -82,6 +85,6 @@ public class ScheduleDaoImpl implements ScheduleDao {
         } catch (DataAccessException e) {
             System.out.println(" I can't find schedule student . Last name " + lastName + " . Date " + date + ". Reason: " + e.getMessage());
         }
-        return schedule;
+        return new Schedule().setScheduleItems(scheduleItems);
     }
 }

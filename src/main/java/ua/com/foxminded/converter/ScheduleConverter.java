@@ -13,7 +13,6 @@ import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Room;
 import ua.com.foxminded.dao.entity.Schedule;
 import ua.com.foxminded.dao.entity.ScheduleItem;
-import ua.com.foxminded.dao.entity.ScheduleItemTeacher;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.entity.Subject;
 import ua.com.foxminded.dao.entity.Teacher;
@@ -32,9 +31,10 @@ import ua.com.foxminded.model.enums.StudyStatus;
 @Component
 public class ScheduleConverter {
 
-    public static List<Schedule> convertDtoToEntity(WeekScheduleDto weekScheduleDto) {
+    public static  Schedule convertDtoToEntity(WeekScheduleDto weekScheduleDto) {
 
-        List<Schedule> schedule = new ArrayList<Schedule>();
+        
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
 
         Period period = new Period();
         Optional.ofNullable(weekScheduleDto.getPeriod().getId()).ifPresent(ss -> period.setId(ss.toString()));
@@ -90,6 +90,18 @@ public class ScheduleConverter {
                         .setFinishTime(scheduleItemDto.getTimeSlot().getFinishTime());
             }
             
+            Person person = new Person();
+            Optional.ofNullable(scheduleItemDto.getTeacher().getIdPerson()).ifPresent(ss -> person.setId(ss.toString()));
+
+            person.setFirstName(scheduleItemDto.getTeacher().getFirstName())
+                  .setLastName(scheduleItemDto.getTeacher().getLastName());
+            
+
+            Teacher teacher = new Teacher();
+            Optional.ofNullable(scheduleItemDto.getTeacher().getIdTeacher()).ifPresent(ss -> teacher.setId(ss.toString()));
+            teacher.setPerson(person);
+            
+            
             ScheduleItem scheduleItem = new ScheduleItem();
             
             Optional.ofNullable(scheduleItemDto.getId()).ifPresent(ss -> scheduleItem.setId(ss.toString()));
@@ -98,50 +110,40 @@ public class ScheduleConverter {
             scheduleItem.setGroup(group)
                         .setRoom(room)
                         .setSubject(subject)
-                        .setTimeSlot(timeSlot);
+                        .setTimeSlot(timeSlot)
+                        .setTeacher(teacher);
 
-            for (TeacherDto teacherDto : scheduleItemDto.getTeachers()) {
-
-                Person person = new Person();
-                Optional.ofNullable(teacherDto.getIdPerson()).ifPresent(ss -> person.setId(ss.toString()));
-
-                person.setFirstName(teacherDto.getFirstName())
-                      .setLastName(teacherDto.getLastName());
-                
-
-                Teacher teacher = new Teacher();
-                Optional.ofNullable(teacherDto.getIdTeacher()).ifPresent(ss -> teacher.setId(ss.toString()));
-                teacher.setPerson(person);
-
-                ScheduleItemTeacher scheduleItemTeacher = new ScheduleItemTeacher().setId(UUID.randomUUID().toString())
-                                                                                   .setScheduleItem(scheduleItem)
-                                                                                   .setTeacher(teacher);
-
-                schedule.add(new Schedule().setPeriod(period).setScheduleItemTeacher(scheduleItemTeacher));
-            }
+            scheduleItems.add(scheduleItem);
         }
-        return schedule;
+        
+        return new Schedule().setPeriod(period).setScheduleItems(scheduleItems);
     }
 
-    public static ScheduleItemDto convertEntityToDto(Schedule schedule) {
+    public static  WeekScheduleDto convertEntityToDto(Schedule schedule) {
 
-        ScheduleItemDto scheduleItemDto = new ScheduleItemDto();
+        WeekScheduleDto weekScheduleDto = new WeekScheduleDto();
+        List<ScheduleItemDto> scheduleItemsDto = new ArrayList<>(); 
 
         if (schedule == null) {
-            return scheduleItemDto;
+            return weekScheduleDto;
         }
-
-        Optional.ofNullable(schedule.getScheduleItemTeacher().getScheduleItem().getDayOfWeek())
+        ScheduleItemDto scheduleItemDto = new ScheduleItemDto();
+        schedule.getScheduleItems().forEach(scheduleItem -> {
+        
+        Optional.ofNullable(scheduleItem.getDayOfWeek())
                 .ifPresent(ss -> scheduleItemDto.setDayOfWeek(DayOfWeek.valueOf(ss)));
         scheduleItemDto.setGroup(
-                new GroupDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getGroup().getName()));
+                new GroupDto().setName(scheduleItem.getGroup().getName()));
         scheduleItemDto.setRoom(
-                new RoomDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getRoom().getName()));
+                new RoomDto().setName(scheduleItem.getRoom().getName()));
         scheduleItemDto.setSubject(
-                new SubjectDto().setName(schedule.getScheduleItemTeacher().getScheduleItem().getSubject().getName()));
+                new SubjectDto().setName(scheduleItem.getSubject().getName()));
         scheduleItemDto.setTimeSlot(new TimeSlotDto().setSerialNumber(
-                schedule.getScheduleItemTeacher().getScheduleItem().getTimeSlot().getSerialNumber()));
+                scheduleItem.getTimeSlot().getSerialNumber()));
 
-        return scheduleItemDto;
+        scheduleItemsDto.add(scheduleItemDto);
+        });
+        
+        return weekScheduleDto.setSchedules(scheduleItemsDto);
     }
 }

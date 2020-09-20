@@ -44,51 +44,49 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<WeekScheduleDto> findWeekScheduleStudent(String lastName, LocalDate date) {
+    public WeekScheduleDto findWeekScheduleStudent(String lastName, LocalDate date) {
         LocalDate dateStart = date.with(DayOfWeek.MONDAY);
         LocalDate dateFinish = dateStart.plusWeeks(1);
         return findScheduleStudents(lastName,  dateStart, dateFinish);
     }
 
     @Override
-    public List<WeekScheduleDto> findMonthScheduleStudent(String lastName, LocalDate date) {
+    public WeekScheduleDto findMonthScheduleStudent(String lastName, LocalDate date) {
         LocalDate dateStart = date.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate dateFinish = dateStart.plusMonths(1);
         return findScheduleStudents(lastName,  dateStart, dateFinish);
     }
     
-    private List<WeekScheduleDto> findScheduleStudents(String lastName,LocalDate dateStart,
+    private WeekScheduleDto findScheduleStudents(String lastName,LocalDate dateStart,
             LocalDate dateFinish) {
         List<WeekScheduleDto> schedule = new ArrayList<>();
-        for (LocalDate dateN = dateStart; dateN.isBefore(dateFinish); dateN = dateN.plusDays(1)) {
-            List<ScheduleItemDto> scheduleDto = scheduleDao.findScheduleStudent(lastName, dateN)
-                                                           .stream()
-                                                           .map(ScheduleConverter::convertEntityToDto)
-                                                           .collect(Collectors.toList());
-            if (scheduleDto.size() > 0) {
-                schedule.add(new WeekScheduleDto().setSchedules(scheduleDto)
-                                                  .setPeriod(new PeriodDto().setStartDate(dateN)));
-            }
-        }
-        return schedule;
+//        for (LocalDate dateN = dateStart; dateN.isBefore(dateFinish); dateN = dateN.plusDays(1)) {
+        WeekScheduleDto weekScheduleDto = ScheduleConverter.convertEntityToDto(scheduleDao.findScheduleStudent(lastName, dateStart));
+        
+//            if (scheduleDto.size() > 0) {
+//                schedule.add(new WeekScheduleDto().setSchedules(scheduleDto)
+//                                                  .setPeriod(new PeriodDto().setStartDate(dateN)));
+//            }
+//        }
+        return weekScheduleDto;
     }   
 
     @Override
-    public List<WeekScheduleDto> findWeekScheduleTeacher(String lastName, LocalDate date) {
+    public WeekScheduleDto findWeekScheduleTeacher(String lastName, LocalDate date) {
         LocalDate dateStart = date.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate dateFinish = dateStart.plusWeeks(1);
         return findScheduleTeacher(lastName,  dateStart, dateFinish);
     }
 
     @Override
-    public List<WeekScheduleDto> findMonthScheduleTeacher(String lastName, LocalDate date) {
+    public WeekScheduleDto findMonthScheduleTeacher(String lastName, LocalDate date) {
         LocalDate dateStart = date.with(DayOfWeek.MONDAY);
         LocalDate dateFinish = dateStart.plusMonths(1);
         return findScheduleTeacher(lastName,  dateStart, dateFinish);
     }
 
     
-    private List<WeekScheduleDto> findScheduleTeacher(String lastName,LocalDate dateStart,
+    private WeekScheduleDto findScheduleTeacher(String lastName,LocalDate dateStart,
             LocalDate dateFinish) {
         List<WeekScheduleDto> schedule = new ArrayList<>();
         for (LocalDate dateN = dateStart; dateN.isBefore(dateFinish); dateN = dateN.plusDays(1)) {

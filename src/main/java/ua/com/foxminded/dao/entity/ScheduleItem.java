@@ -8,6 +8,7 @@ public class ScheduleItem {
     private String dayOfWeek;
     private TimeSlot timeSlot;
     private Room room;
+    private Teacher teacher;
     
     public ScheduleItem() {
         
@@ -64,6 +65,15 @@ public class ScheduleItem {
 
     public ScheduleItem setRoom(Room room) {
         this.room = room;
+        return this;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public ScheduleItem setTeacher(Teacher teacher) {
+        this.teacher = teacher;
         return this;
     }
 }

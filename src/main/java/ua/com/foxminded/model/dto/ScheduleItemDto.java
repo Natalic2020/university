@@ -8,7 +8,7 @@ import ua.com.foxminded.model.enums.DayOfWeek;
 public class ScheduleItemDto {
     
     private UUID id;
-    private List<TeacherDto> teachers;
+    private TeacherDto teacher;
     private GroupDto group;
     private SubjectDto subject;
     private DayOfWeek dayOfWeek;
@@ -36,12 +36,12 @@ public class ScheduleItemDto {
         return this;
     }
 
-    public List<TeacherDto> getTeachers() {
-        return teachers;
+    public TeacherDto getTeacher() {
+        return teacher;
     }
 
-    public ScheduleItemDto setTeachers(List<TeacherDto> teachers) {
-        this.teachers = teachers;
+    public ScheduleItemDto setTeacher(TeacherDto teacher) {
+        this.teacher = teacher;
         return this;
     }
 
@@ -98,7 +98,7 @@ public class ScheduleItemDto {
         result = prime * result + ((group == null) ? 0 : group.hashCode());
         result = prime * result + ((room == null) ? 0 : room.hashCode());
         result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-        result = prime * result + ((teachers == null) ? 0 : teachers.hashCode());
+        result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
         result = prime * result + ((timeSlot == null) ? 0 : timeSlot.hashCode());
         return result;
     }
@@ -129,10 +129,10 @@ public class ScheduleItemDto {
                 return false;
         } else if (!subject.equals(other.subject))
             return false;
-        if (teachers == null) {
-            if (other.teachers != null)
+        if (teacher == null) {
+            if (other.teacher != null)
                 return false;
-        } else if (!teachers.equals(other.teachers))
+        } else if (!teacher.equals(other.teacher))
             return false;
         if (timeSlot == null) {
             if (other.timeSlot != null)
