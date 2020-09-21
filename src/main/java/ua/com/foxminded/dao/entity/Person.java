@@ -1,8 +1,8 @@
 package ua.com.foxminded.dao.entity;
 
-public class Person {
+public abstract class Person {
 
-	private String id;
+	private String idPerson;
 	private String firstName;
 	private String lastName;
 	private ContactInfo contactInfo;
@@ -11,12 +11,12 @@ public class Person {
         
     }
 
-    public String getId() {
-        return id;
+    public String getIdPerson() {
+        return idPerson;
     }
 
-    public Person setId(String id) {
-        this.id = id;
+    public Person setIdPerson(String idPerson) {
+        this.idPerson = idPerson;
         return this;
     }
 

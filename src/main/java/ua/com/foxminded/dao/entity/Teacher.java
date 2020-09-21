@@ -2,10 +2,10 @@ package ua.com.foxminded.dao.entity;
 
 import java.math.BigDecimal;
 
-public class Teacher {
+public class Teacher extends Person{
 
-    private String id;
-    private Person Person;
+    private String idTeacher;
+//    private Person Person;
     private String degree;
     private String department;
     private boolean isPermanent;
@@ -15,21 +15,12 @@ public class Teacher {
      
     }
 
-    public Person getPerson() {
-        return Person;
+    public String getIdTeacher() {
+        return idTeacher;
     }
 
-    public Teacher setPerson(Person person) {
-        Person = person;
-        return this;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Teacher setId(String id) {
-        this.id = id;
+    public Teacher setIdTeacher(String idTeacher) {
+        this.idTeacher = idTeacher;
         return this;
     }
 
@@ -68,21 +59,14 @@ public class Teacher {
         this.salary = salary;
         return this;
     }
-    
-    @Override
-    public String toString() {
-        return "Teacher [id=" + id + ", Person=" + Person + ", degree=" + degree + ", department=" + department
-                + ", isPermanent=" + isPermanent + ", salary=" + salary + "]";
-    }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + ((Person == null) ? 0 : Person.hashCode());
+        int result = super.hashCode();
         result = prime * result + ((degree == null) ? 0 : degree.hashCode());
         result = prime * result + ((department == null) ? 0 : department.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((idTeacher == null) ? 0 : idTeacher.hashCode());
         result = prime * result + (isPermanent ? 1231 : 1237);
         result = prime * result + ((salary == null) ? 0 : salary.hashCode());
         return result;
@@ -92,16 +76,11 @@ public class Teacher {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (!super.equals(obj))
             return false;
         if (getClass() != obj.getClass())
             return false;
         Teacher other = (Teacher) obj;
-        if (Person == null) {
-            if (other.Person != null)
-                return false;
-        } else if (!Person.equals(other.Person))
-            return false;
         if (degree == null) {
             if (other.degree != null)
                 return false;
@@ -112,10 +91,10 @@ public class Teacher {
                 return false;
         } else if (!department.equals(other.department))
             return false;
-        if (id == null) {
-            if (other.id != null)
+        if (idTeacher == null) {
+            if (other.idTeacher != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!idTeacher.equals(other.idTeacher))
             return false;
         if (isPermanent != other.isPermanent)
             return false;
@@ -125,8 +104,6 @@ public class Teacher {
         } else if (!salary.equals(other.salary))
             return false;
         return true;
-    }
-    
-    
+    }   
     
 }

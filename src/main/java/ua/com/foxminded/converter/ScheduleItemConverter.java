@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import ua.com.foxminded.dao.entity.Group;
-import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Room;
 import ua.com.foxminded.dao.entity.ScheduleItem;
 import ua.com.foxminded.dao.entity.Student;
@@ -31,15 +30,12 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
             Group group = new Group();
             if (scheduleItemDto.getGroup() != null) {
             scheduleItemDto.getGroup().getStudents().forEach(studentDto ->
-                {
-                    Person person = new Person();
-                    Optional.ofNullable(studentDto.getIdPerson()).ifPresent(ss -> person.setId(ss.toString()));
-
-                    person.setFirstName(studentDto.getFirstName())
-                          .setLastName(studentDto.getLastName());
+                {   
                     Student student = new Student();
-                    Optional.ofNullable(studentDto.getIdStudent()).ifPresent(ss -> student.setId(ss.toString()));
-                    student.setPerson(person);
+                    Optional.ofNullable(studentDto.getIdStudent()).ifPresent(ss -> student.setIdStudent(ss.toString()));
+                    Optional.ofNullable(studentDto.getIdPerson()).ifPresent(ss -> student.setIdStudent(ss.toString()));
+                   student.setFirstName(studentDto.getFirstName())
+                    .setLastName(studentDto.getLastName());
                     students.add(student);
                 });
 
@@ -72,17 +68,14 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
                         .setFinishTime(scheduleItemDto.getTimeSlot().getFinishTime());
             }
             
-            Person person = new Person();
-            Optional.ofNullable(scheduleItemDto.getTeacher().getIdPerson()).ifPresent(ss -> person.setId(ss.toString()));
-
-            person.setFirstName(scheduleItemDto.getTeacher().getFirstName())
-                  .setLastName(scheduleItemDto.getTeacher().getLastName());
             
 
             Teacher teacher = new Teacher();
-            Optional.ofNullable(scheduleItemDto.getTeacher().getIdTeacher()).ifPresent(ss -> teacher.setId(ss.toString()));
-            teacher.setPerson(person);
-            
+            Optional.ofNullable(scheduleItemDto.getTeacher().getIdTeacher()).ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
+            Optional.ofNullable(scheduleItemDto.getTeacher().getIdPerson()).ifPresent(ss -> teacher.setIdPerson(ss.toString()));
+
+            teacher.setFirstName(scheduleItemDto.getTeacher().getFirstName())
+                  .setLastName(scheduleItemDto.getTeacher().getLastName());
             
             ScheduleItem scheduleItem = new ScheduleItem();
             
@@ -99,7 +92,6 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
     }
 
     public   ScheduleItemDto convertEntityToDto(ScheduleItem scheduleItem) {
-
 
         ScheduleItemDto scheduleItemDto = new ScheduleItemDto();
 

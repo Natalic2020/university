@@ -16,13 +16,12 @@ public class TeacherConverter {
 
     public Teacher convertDtoToEntity(TeacherDto teacherDto) {  
         Teacher teacher = new Teacher();
-        Optional.ofNullable(teacherDto.getIdTeacher()).ifPresent(ss -> teacher.setId(ss.toString()));
-        Person person = new Person();
-        Optional.ofNullable(teacherDto.getIdPerson()).ifPresent(ss -> person.setId(ss.toString()));
+        Optional.ofNullable(teacherDto.getIdTeacher()).ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
+        Optional.ofNullable(teacherDto.getIdPerson()).ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
                   
-        teacher.setPerson(person.setFirstName(teacherDto.getFirstName())
-                .setLastName(teacherDto.getLastName()))            
-        .setDegree(teacherDto.getDegree().name())
+        teacher.setFirstName(teacherDto.getFirstName())
+                .setLastName(teacherDto.getLastName());            
+        teacher.setDegree(teacherDto.getDegree().name())
         .setDepartment(teacherDto.getDepartment().name())
         .setPermanent(teacherDto.isPermanent())
         .setSalary(teacherDto.getSalary());
@@ -30,10 +29,10 @@ public class TeacherConverter {
     }
 
     public TeacherDto convertEntityToDto(Teacher teacher) {
-        return ((TeacherDto) new TeacherDto().setIdTeacher(UUID.fromString(teacher.getId()))
-                                             .setIdPerson(UUID.fromString(teacher.getPerson().getId()))
-                                             .setFirstName(teacher.getPerson().getFirstName())
-                                             .setLastName(teacher.getPerson().getLastName()))
+        return ((TeacherDto) new TeacherDto().setIdTeacher(UUID.fromString(teacher.getIdTeacher()))
+                                             .setIdPerson(UUID.fromString(teacher.getIdPerson()))
+                                             .setFirstName(teacher.getFirstName())
+                                             .setLastName(teacher.getLastName()))
                                                                                              .setDegree(Degree.valueOf(
                                                                                                      teacher.getDegree()))
                                                                                              .setDepartment(

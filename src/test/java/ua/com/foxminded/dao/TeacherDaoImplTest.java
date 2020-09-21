@@ -51,15 +51,14 @@ public class TeacherDaoImplTest {
     void Init() throws Exception {
         creatDB();
         teacher = new Teacher()
-                .setId(teacherUUID)
+                .setIdTeacher(teacherUUID)
                 .setDegree("DOCENT")
                 .setDepartment("MATHEMATICS")
                 .setPermanent(true)
-                .setSalary(new BigDecimal(9999))
-                .setPerson(new Person()
-                                       .setId(personUUID)
+                .setSalary(new BigDecimal(9999));
+                teacher.setIdPerson(personUUID)
                                        .setFirstName("Maria")
-                                       .setLastName("Ivanovna"));
+                                       .setLastName("Ivanovna");
     }
 
     public void creatDB() {
@@ -149,7 +148,7 @@ public class TeacherDaoImplTest {
     }
     
     @Test
-    void addTeacher_shouldThrowNullPointerException_whenInputTeacherOnlyWithID() {
-        assertThrows(NullPointerException.class, () -> teacherDao.addTeacher(new Teacher()));
+    void addTeacher_shouldThrowNoClassDefFoundError_whenInputTeacherOnlyWithID() {
+        assertThrows(NoClassDefFoundError.class, () -> teacherDao.addTeacher(new Teacher()));
     }   
 }

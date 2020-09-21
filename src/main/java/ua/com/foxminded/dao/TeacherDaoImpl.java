@@ -30,24 +30,24 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void addTeacher(Teacher teacher) {
         try {
-            jdbcTemplate.execute("INSERT INTO uni.persons (id, first_name, last_name) values (?, ?, ?)", new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) values (?, ?, ?)", new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
-                    ps.setString(1,teacher.getPerson().getId()); 
-                    ps.setString(2,teacher.getPerson().getFirstName());
-                    ps.setString(3,teacher.getPerson().getLastName());
+                    ps.setString(1,teacher.getIdPerson()); 
+                    ps.setString(2,teacher.getFirstName());
+                    ps.setString(3,teacher.getLastName());
                     
                     return ps.execute();  
                 }  
                 });  
             
-            jdbcTemplate.execute("INSERT INTO uni.teachers (id, id_person, degree, department, permanent, salary ) values (?, ?, ?, ?, ?, ?)",new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("INSERT INTO uni.teachers (id_teacher, id_person, degree, department, permanent, salary ) values (?, ?, ?, ?, ?, ?)",new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
-                    ps.setString(1,teacher.getId());  
-                    ps.setString(2,teacher.getPerson().getId());
+                    ps.setString(1,teacher.getIdTeacher());  
+                    ps.setString(2,teacher.getIdPerson());
                     ps.setString(3,teacher.getDegree());
                     ps.setString(4,teacher.getDepartment());
                     ps.setBoolean(5,teacher.isPermanent());
@@ -65,7 +65,7 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void editTeacher(Teacher teacher) {
         try {
-            jdbcTemplate.execute("UPDATE uni.teachers t SET degree = ?, department = ?, permanent = ? , salary = ?  WHERE t.id = ? ",
+            jdbcTemplate.execute("UPDATE uni.teachers t SET degree = ?, department = ?, permanent = ? , salary = ?  WHERE t.id_teacher = ? ",
                     new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
@@ -74,7 +74,7 @@ public class TeacherDaoImpl implements TeacherDao {
                     ps.setString(2,teacher.getDepartment());
                     ps.setBoolean(3,teacher.isPermanent());
                     ps.setBigDecimal(4,teacher.getSalary());
-                    ps.setString(5,teacher.getId());
+                    ps.setString(5,teacher.getIdTeacher());
                     return ps.execute();  
                 }  
                 });  
@@ -87,7 +87,7 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void deleteTeacher(String id) {
         try {
-            jdbcTemplate.execute("DELETE from uni.teachers s WHERE s.id = ? ", new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("DELETE from uni.teachers s WHERE s.id_teacher = ? ", new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
@@ -106,7 +106,7 @@ public class TeacherDaoImpl implements TeacherDao {
         List<Teacher> teacher = new ArrayList<>();
         try {
             teacher = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
-                    "  where t.id_person = p.id and t.id = ? ", teacherMapper, id);
+                    "  where t.id_person = p.id_person and t.id_teacher = ? ", teacherMapper, id);
         } catch (DataAccessException e) {
             System.out.println(" I can't find the teacher id = " + id +". Reason: " + e.getMessage());
         }
@@ -118,7 +118,7 @@ public class TeacherDaoImpl implements TeacherDao {
         List<Teacher> teachers = new ArrayList<>();
         try {
             teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
-                    "where t.id_person = p.id", teacherMapper);
+                    "where t.id_person = p.id_person", teacherMapper);
         } catch (DataAccessException e) {
             System.out.println(" I can't find all teachers . Reason: " + e.getMessage());
         }

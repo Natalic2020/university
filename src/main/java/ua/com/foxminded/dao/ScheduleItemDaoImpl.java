@@ -29,7 +29,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao{
             jdbcTemplate.update("INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, id_teacher, day_of_week) values (?, ?, ?, ?, ?, ?, ? )",
                     scheduleItem.getId(), scheduleItem.getGroup().getId(),
                     scheduleItem.getSubject().getId(), scheduleItem.getRoom().getId(),
-                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getId(), scheduleItem.getDayOfWeek());
+                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek());
             
              System.out.println("ScheduleItem Added!!");
         } catch (DataAccessException e) {
@@ -43,7 +43,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao{
             jdbcTemplate.update("UPDATE  uni.schedule_items SET id = ?, id_group= ?, id_subject= ?, id_room= ?, id_time_slot= ?, id_teacher= ?, day_of_week= ? ",
                     scheduleItem.getId(), scheduleItem.getGroup().getId(),
                     scheduleItem.getSubject().getId(), scheduleItem.getRoom().getId(),
-                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getId(), scheduleItem.getDayOfWeek());
+                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek());
             
              System.out.println("ScheduleItem Updated!!");
         } catch (DataAccessException e) {
@@ -70,7 +70,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao{
         try {
             scheduleItems = jdbcTemplate.query("Select * " + 
                     " from uni.persons p,  uni.teachers t,  uni.groups g,  uni.subjects su, uni.rooms r, uni.time_slots ts, uni.schedule_items si " + 
-                    " where si.id_teacher = t.id and t.id_person = p.id    and si.id_group = g.id    and si.id_subject = su.id " +
+                    " where si.id_teacher = t.id_teacher and t.id_person = p.id_person  and si.id_group = g.id    and si.id_subject = su.id " +
                     " and si.id_room = r.id  and si.id_time_slot = ts.id  and p.last_name = ?  " + 
                     " order by ts.serial_number ",
                     scheduleMapper, lastName);
@@ -86,7 +86,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao{
         try {
             scheduleItems = jdbcTemplate.query("Select * " + 
                     "from uni.persons p,  uni.teachers t,  uni.groups g, uni.students st, uni.subjects su, uni.rooms r, uni.time_slots ts, uni.schedule_items si " + 
-                    " where  si.id_teacher = t.id  and st.id_person = p.id    and si.id_group = g.id  and g.id = st.id_group  " +   
+                    " where  si.id_teacher = t.id_teacher  and st.id_person = p.id_person  and si.id_group = g.id  and g.id = st.id_group  " +   
                     " and si.id_subject = su.id  and si.id_room = r.id  and si.id_time_slot = ts.id  and p.last_name = ? " +
                     " order by ts.serial_number ",
                     scheduleMapper, lastName);

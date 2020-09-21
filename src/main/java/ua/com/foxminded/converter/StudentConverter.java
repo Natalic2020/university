@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.enums.StudyStatus;
@@ -16,13 +15,11 @@ public class StudentConverter {
     public Student convertDtoToEntity(StudentDto studentDto) {    
         
         Student student = new Student();
-        Optional.ofNullable(studentDto.getIdStudent()).ifPresent(ss -> student.setId(ss.toString()));
-        Person person = new Person();
-        Optional.ofNullable(studentDto.getIdPerson()).ifPresent(ss -> person.setId(ss.toString()));
-        
-          student.setPerson(person.setFirstName(studentDto.getFirstName())
-                        .setLastName(studentDto.getLastName()))
-        .setCitizenship(studentDto.getCitizenship())
+        Optional.ofNullable(studentDto.getIdStudent()).ifPresent(ss -> student.setIdStudent(ss.toString()));
+        Optional.ofNullable(studentDto.getIdPerson()).ifPresent(ss -> student.setIdPerson(ss.toString()));        
+         student.setFirstName(studentDto.getFirstName())
+                        .setLastName(studentDto.getLastName());
+        student.setCitizenship(studentDto.getCitizenship())
         .setGrant(studentDto.getGrant())
         .setStartOfStudy(studentDto.getStartOfStudy())
         .setStudyStatus(studentDto.getStudyStatus().name());
@@ -33,10 +30,10 @@ public class StudentConverter {
     public StudentDto convertEntityToDto(Student student) {
         StudentDto  studentDto = 
         ((StudentDto) new StudentDto()
-                .setIdStudent(UUID.fromString(student.getId()))
-                .setIdPerson(UUID.fromString(student.getPerson().getId()))
-                .setFirstName(student.getPerson().getFirstName())
-                .setLastName(student.getPerson().getLastName()))  
+                .setIdStudent(UUID.fromString(student.getIdStudent()))
+                .setIdPerson(UUID.fromString(student.getIdPerson()))
+                .setFirstName(student.getFirstName())
+                .setLastName(student.getLastName()))  
         .setCitizenship(student.getCitizenship())
         .setGrant(student.getGrant())
         .setStartOfStudy(student.getStartOfStudy());

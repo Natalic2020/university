@@ -3,10 +3,12 @@ package ua.com.foxminded.dao.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Student {
+import ua.com.foxminded.model.dto.PersonDto;
+
+public class Student extends Person{
     
-    private String id;
-    private Person person;
+    private String idStudent;
+//    private Person person;
     private Group group;
     private String studyStatus;
     private LocalDate startOfStudy;
@@ -17,23 +19,23 @@ public class Student {
        
     }
 
-    public String getId() {
-        return id;
+    public String getIdStudent() {
+        return idStudent;
     }
 
-    public Student setId(String id) {
-        this.id = id;
+    public Student setIdStudent(String idStudent) {
+        this.idStudent = idStudent;
         return this;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
-    public Student setPerson(Person person) {
-        this.person = person;
-        return this;
-    }
+//    public Person getPerson() {
+//        return person;
+//    }
+//
+//    public Student setPerson(Person person) {
+//        this.person = person;
+//        return this;
+//    }
 
     public Group getGroup() {
         return group;
@@ -83,11 +85,11 @@ public class Student {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        int result = super.hashCode();
         result = prime * result + ((citizenship == null) ? 0 : citizenship.hashCode());
         result = prime * result + ((grant == null) ? 0 : grant.hashCode());
         result = prime * result + ((group == null) ? 0 : group.hashCode());
-        result = prime * result + ((person == null) ? 0 : person.hashCode());
+        result = prime * result + ((idStudent == null) ? 0 : idStudent.hashCode());
         result = prime * result + ((startOfStudy == null) ? 0 : startOfStudy.hashCode());
         result = prime * result + ((studyStatus == null) ? 0 : studyStatus.hashCode());
         return result;
@@ -97,7 +99,7 @@ public class Student {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (!super.equals(obj))
             return false;
         if (getClass() != obj.getClass())
             return false;
@@ -117,10 +119,10 @@ public class Student {
                 return false;
         } else if (!group.equals(other.group))
             return false;
-        if (person == null) {
-            if (other.person != null)
+        if (idStudent == null) {
+            if (other.idStudent != null)
                 return false;
-        } else if (!person.equals(other.person))
+        } else if (!idStudent.equals(other.idStudent))
             return false;
         if (startOfStudy == null) {
             if (other.startOfStudy != null)
@@ -133,8 +135,6 @@ public class Student {
         } else if (!studyStatus.equals(other.studyStatus))
             return false;
         return true;
-    }
-    
-    
+    } 
     
 }

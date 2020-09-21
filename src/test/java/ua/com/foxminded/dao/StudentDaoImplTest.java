@@ -53,15 +53,14 @@ class StudentDaoImplTest {
     void Init() throws Exception {
         creatDB();
         student = new Student()
-                .setId(studentUUID)
+                .setIdStudent(studentUUID)
                 .setStudyStatus(StudyStatus.FINISHED.toString())
                 .setCitizenship("German")
                 .setGrant(new BigDecimal(100))
-                .setStartOfStudy(LocalDate.of(2015, 12, 31))
-                .setPerson(new Person()
-                                       .setId(personUUID)
+                .setStartOfStudy(LocalDate.of(2015, 12, 31));
+        student.setIdPerson(personUUID)
                                        .setFirstName("Nina")
-                                       .setLastName("Ivan"));
+                                       .setLastName("Ivan");
     }
 
     public void creatDB() {
@@ -150,7 +149,7 @@ class StudentDaoImplTest {
     }
     
     @Test
-    void addStudent_shouldThrowNullPointerException_whenInputStudentOnlyWithID() {
-        assertThrows(NullPointerException.class, () -> studentDao.addStudent(new Student().setPerson(new Person())));
+    void addStudent_shouldThrowNoClassDefFoundError_whenInputStudentOnlyWithID() {
+        assertThrows(NoClassDefFoundError.class, () -> studentDao.addStudent(new Student()));
     }   
 }

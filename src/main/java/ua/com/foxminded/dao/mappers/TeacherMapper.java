@@ -16,10 +16,10 @@ public class TeacherMapper  implements RowMapper<Teacher>  {
     @Override
     public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
         Teacher teacher = new Teacher();
-        teacher.setId(rs.getString("id"));
-        teacher.setPerson(new Person().setId(rs.getString("id_person"))
+        teacher.setIdTeacher(rs.getString("id_teacher"));
+        teacher.setIdPerson(rs.getString("id_person"))
                 .setFirstName(rs.getString("first_name"))
-                .setLastName(rs.getString("last_name")));
+                .setLastName(rs.getString("last_name"));
         teacher.setDegree(rs.getString("degree"));
         teacher.setDepartment(rs.getString("department"));
         teacher.setPermanent(rs.getBoolean("permanent"));
