@@ -21,17 +21,13 @@ public class ScheduleMapper implements RowMapper<ScheduleItem> {
 
     @Override
     public ScheduleItem mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Person person = new Person().setFirstName(rs.getString("first_name")).setLastName(rs.getString("last_name"));
-        Teacher teacher = new Teacher().setPerson(person);
-        
+      
         Group group = new Group().setName(rs.getString("name_group"));
         Room room = new Room().setName(rs.getString("name_room"));
         Subject subject = new Subject().setName(rs.getString("name_subject"));
         TimeSlot timeSlot = new TimeSlot().setSerialNumber(rs.getInt("serial_number"));
         ScheduleItem scheduleItem = new ScheduleItem().setDayOfWeek(rs.getString("day_of_week"))
-        .setGroup(group).setRoom(room).setSubject(subject).setTimeSlot(timeSlot).setTeacher(teacher);
-//        ScheduleItemTeacher scheduleItemTeacher = new ScheduleItemTeacher().setScheduleItem(scheduleItem).setTeacher(teacher);
-//        Schedule schedule = new Schedule().setScheduleItemTeacher(scheduleItemTeacher);
+        .setGroup(group).setRoom(room).setSubject(subject).setTimeSlot(timeSlot);
         return scheduleItem;
     }
 }

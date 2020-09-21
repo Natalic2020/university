@@ -38,13 +38,6 @@ public class Application {
         report.testStudent();
         report.testTeacher();
 
-        System.out.println("********TeacherSchedule******************");
-        System.out.println("Chavan");
-        report.outputTeacherSchedule( "Chavan", LocalDate.of(2019, 9, 12));
-        System.out.println("***********************************");
-        System.out.println("********StudentSchedule******************");
-        System.out.println("Svitlychna");
-        report.outputStudentSchedule( "Svitlychna", LocalDate.of(2019, 9, 4));
     }  
     
     public void createDB() {

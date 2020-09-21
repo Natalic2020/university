@@ -76,4 +76,62 @@ public class ScheduleItem {
         this.teacher = teacher;
         return this;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((dayOfWeek == null) ? 0 : dayOfWeek.hashCode());
+        result = prime * result + ((group == null) ? 0 : group.hashCode());
+        result = prime * result + ((room == null) ? 0 : room.hashCode());
+        result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+        result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+        result = prime * result + ((timeSlot == null) ? 0 : timeSlot.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ScheduleItem other = (ScheduleItem) obj;
+        if (dayOfWeek == null) {
+            if (other.dayOfWeek != null)
+                return false;
+        } else if (!dayOfWeek.equals(other.dayOfWeek))
+            return false;
+        if (group == null) {
+            if (other.group != null)
+                return false;
+        } else if (!group.equals(other.group))
+            return false;
+        if (room == null) {
+            if (other.room != null)
+                return false;
+        } else if (!room.equals(other.room))
+            return false;
+        if (subject == null) {
+            if (other.subject != null)
+                return false;
+        } else if (!subject.equals(other.subject))
+            return false;
+        if (teacher == null) {
+            if (other.teacher != null)
+                return false;
+        } else if (!teacher.equals(other.teacher))
+            return false;
+        if (timeSlot == null) {
+            if (other.timeSlot != null)
+                return false;
+        } else if (!timeSlot.equals(other.timeSlot))
+            return false;
+        return true;
+    }
+
+  
+    
 }
