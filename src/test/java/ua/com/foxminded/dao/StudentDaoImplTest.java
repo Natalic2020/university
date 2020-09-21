@@ -19,6 +19,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -150,6 +151,6 @@ class StudentDaoImplTest {
     
     @Test
     void addStudent_shouldThrowNoClassDefFoundError_whenInputStudentOnlyWithID() {
-        assertThrows(NoClassDefFoundError.class, () -> studentDao.addStudent(new Student()));
+        assertThrows(DataAccessException.class, () -> studentDao.addStudent(new Student()));
     }   
 }

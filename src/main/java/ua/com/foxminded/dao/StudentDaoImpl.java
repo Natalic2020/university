@@ -38,7 +38,6 @@ public class StudentDaoImpl implements StudentDao {
                         ps.setString(1,student.getIdPerson());  
                         ps.setString(2,student.getFirstName());
                         ps.setString(3,student.getLastName());
-                    
                 
                     return ps.execute();  
                 }  

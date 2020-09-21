@@ -62,6 +62,12 @@ public class Report {
         System.out.println("Find All");
         studentService.findAllStudent().forEach(System.out::println);
 
+        studentService.addStudent(((StudentDto) new StudentDto().setIdStudent(UUID.fromString("ea9f0dc7-a81f-44ba-a032-b4c3dde4fe18")).setCitizenship("Russia")
+                .setIdPerson(UUID.fromString("5c42a0c0-fc26-11ea-adc1-0242ac120002")).setFirstName("efsfdesf").setLastName("dfdsgfd"))
+                                           .setStudyStatus(StudyStatus.FINISHED)
+                                           .setGrant(new BigDecimal(10))
+                                           .setStartOfStudy(LocalDate.of(1999, 02, 02)));
+        
         System.out.println("Delete person Id = 3");
         studentService.deleteStudent(UUID.fromString("47357b8a-1971-419e-bdad-1c34bb9c6a26"));
 
