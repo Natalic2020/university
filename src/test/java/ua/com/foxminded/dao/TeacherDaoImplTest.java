@@ -24,6 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ua.com.foxminded.config.ApplicationConfigTest;
 import ua.com.foxminded.dao.entity.Person;
+import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
 import ua.com.foxminded.util.FileParser;
@@ -145,10 +146,15 @@ public class TeacherDaoImplTest {
         List<Teacher> expected = new ArrayList<>();
         List<Teacher> actual = teacherDao.findTeacher("Ivanovna");
         assertEquals(expected, actual);   
-    }
+    } 
     
     @Test
-    void addTeacher_shouldThrowNoClassDefFoundError_whenInputTeacherOnlyWithID() {
-        assertThrows(NoClassDefFoundError.class, () -> teacherDao.addTeacher(new Teacher()));
+    void addTeacher_shouldNotChangeListAllTeacher_whenInputTeacherWithoutParameter() {
+        
+        List<Teacher> expected = teacherDao.findAllTeacher();
+        teacherDao.addTeacher(new Teacher());
+        List<Teacher> actual = teacherDao.findAllTeacher();
+        
+        assertEquals(expected, actual);   
     }   
 }

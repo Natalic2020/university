@@ -150,7 +150,12 @@ class StudentDaoImplTest {
     }
     
     @Test
-    void addStudent_shouldThrowNoClassDefFoundError_whenInputStudentOnlyWithID() {
-        assertThrows(DataAccessException.class, () -> studentDao.addStudent(new Student()));
+    void addStudent_shouldNotChangeListAllStudent_whenInputStudentWithoutParameter() {
+        
+        List<Student> expected = studentDao.findAllStudent();
+        studentDao.addStudent(new Student());
+        List<Student> actual = studentDao.findAllStudent();
+        
+        assertEquals(expected, actual);   
     }   
 }
