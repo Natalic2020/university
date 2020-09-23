@@ -1,10 +1,8 @@
-package ua.com.foxminded.model.dto;
+package ua.com.foxminded.dao.entity;
 
-import java.util.UUID;
+public abstract class Person {
 
-public class Person {
-
-	private UUID id;
+	private String idPerson;
 	private String firstName;
 	private String lastName;
 	private ContactInfo contactInfo;
@@ -13,18 +11,12 @@ public class Person {
         
     }
 
-    public Person(Person person) {
-        this.firstName = person.firstName;
-        this.lastName = person.lastName;
-        this.contactInfo = new ContactInfo(person.getContactInfo());
+    public String getIdPerson() {
+        return idPerson;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public Person setId(UUID id) {
-        this.id = id;
+    public Person setIdPerson(String idPerson) {
+        this.idPerson = idPerson;
         return this;
     }
 
@@ -91,10 +83,5 @@ public class Person {
             return false;
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", contactInfo="
-                + contactInfo + "]";
-    }	
+    
 }

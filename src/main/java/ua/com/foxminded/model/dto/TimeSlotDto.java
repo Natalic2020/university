@@ -1,28 +1,39 @@
 package ua.com.foxminded.model.dto;
 
 import java.time.LocalTime;
+import java.util.UUID;
 
-public class TimeSlot {
+public class TimeSlotDto {
     
+    private UUID id;
     private int serialNumber;
     private LocalTime startTime;
     private LocalTime finishTime;
     
-    public TimeSlot() {
+    public TimeSlotDto() {
     
     }
 
-    public TimeSlot(TimeSlot timeSlot) {
+    public TimeSlotDto(TimeSlotDto timeSlot) {
         this.serialNumber = timeSlot.serialNumber;
         this.startTime = LocalTime.of(timeSlot.getStartTime().getHour(), timeSlot.getStartTime().getMinute());
         this.finishTime = LocalTime.of(timeSlot.getFinishTime().getHour(), timeSlot.getFinishTime().getMinute());  
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public TimeSlotDto setId(UUID id) {
+        this.id = id;
+        return this;
+    }
+    
     public int getSerialNumber() {
         return serialNumber;
     }
 
-    public TimeSlot setSerialNumber(int serialNumber) {
+    public TimeSlotDto setSerialNumber(int serialNumber) {
         this.serialNumber = serialNumber;
         return this;
     }
@@ -31,7 +42,7 @@ public class TimeSlot {
         return startTime;
     }
 
-    public TimeSlot setStartTime(LocalTime startTime) {
+    public TimeSlotDto setStartTime(LocalTime startTime) {
         this.startTime = startTime;
         return this;
     }
@@ -40,7 +51,7 @@ public class TimeSlot {
         return finishTime;
     }
 
-    public TimeSlot setFinishTime(LocalTime finishTime) {
+    public TimeSlotDto setFinishTime(LocalTime finishTime) {
         this.finishTime = finishTime;
         return this;
     }
@@ -63,7 +74,7 @@ public class TimeSlot {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        TimeSlot other = (TimeSlot) obj;
+        TimeSlotDto other = (TimeSlotDto) obj;
         if (finishTime == null) {
             if (other.finishTime != null)
                 return false;
@@ -81,7 +92,7 @@ public class TimeSlot {
 
     @Override
     public String toString() {
-        return "TimeSlot [serialNumber=" + serialNumber + ", startTime=" + startTime + ", finishTime=" + finishTime
-                + "]";
-    }
+        return "TimeSlotDto [id=" + id + ", serialNumber=" + serialNumber + ", startTime=" + startTime + ", finishTime="
+                + finishTime + "]";
+    } 
 }

@@ -1,33 +1,23 @@
-package ua.com.foxminded.model.dto;
+package ua.com.foxminded.dao.entity;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import ua.com.foxminded.model.enums.Specialty;
 
 public class Group {
     
-    private UUID id;
+    private String id;
     private String name;
-    private Specialty specialty;
+    private String specialty;
     private List<Student> students;
     
     public Group() {
       
     }
 
-    public Group(Group group) {
-        this.name = group.name;
-        this.specialty = group.specialty;
-        this.students = group.students.stream().collect(Collectors.toList());
-    }
-
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public Group setId(UUID id) {
+    public Group setId(String id) {
         this.id = id;
         return this;
     }
@@ -41,11 +31,11 @@ public class Group {
         return this;
     }
 
-    public Specialty getSpecialty() {
+    public String getSpecialty() {
         return specialty;
     }
 
-    public Group setSpecialty(Specialty specialty) {
+    public Group setSpecialty(String specialty) {
         this.specialty = specialty;
         return this;
     }
@@ -65,6 +55,7 @@ public class Group {
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((specialty == null) ? 0 : specialty.hashCode());
+        result = prime * result + ((students == null) ? 0 : students.hashCode());
         return result;
     }
 
@@ -82,13 +73,16 @@ public class Group {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (specialty != other.specialty)
+        if (specialty == null) {
+            if (other.specialty != null)
+                return false;
+        } else if (!specialty.equals(other.specialty))
+            return false;
+        if (students == null) {
+            if (other.students != null)
+                return false;
+        } else if (!students.equals(other.students))
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Group [id=" + id + ", name=" + name + ", specialty=" + specialty + ", students=" + students + "]";
     }
 }

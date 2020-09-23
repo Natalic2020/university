@@ -1,43 +1,54 @@
 package ua.com.foxminded.model.dto;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
 
-public class Teacher extends Person{
+public class TeacherDto extends PersonDto{
     
+    private UUID idTeacher;
     private Degree degree;
-    private Department departament;
+    private Department department;
     private boolean isPermanent;
     private BigDecimal salary;
    
-    public Teacher() {
+    public TeacherDto() {
      
     }
 
-    public Teacher(Teacher teacher) {
+    public TeacherDto(TeacherDto teacher) {
         this.degree = teacher.degree;
-        this.departament = teacher.departament;
+        this.department = teacher.department;
         this.isPermanent = teacher.isPermanent;
         this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
+    }
+
+    public UUID getIdTeacher() {
+        return idTeacher;
+    }
+
+    public TeacherDto setIdTeacher(UUID idTeacher) {
+        this.idTeacher = idTeacher;
+        return this;
     }
 
     public Degree getDegree() {
         return degree;
     }
 
-    public Teacher setDegree(Degree degree) {
+    public TeacherDto setDegree(Degree degree) {
         this.degree = degree;
         return this;
     }
 
-    public Department getDepartament() {
-        return departament;
+    public Department getDepartment() {
+        return department;
     }
 
-    public Teacher setDepartament(Department departament) {
-        this.departament = departament;
+    public TeacherDto setDepartment(Department department) {
+        this.department = department;
         return this;
     }
 
@@ -45,16 +56,17 @@ public class Teacher extends Person{
         return isPermanent;
     }
 
-    public Teacher setPermanent(boolean isPermanent) {
+    public TeacherDto setPermanent(boolean isPermanent) {
         this.isPermanent = isPermanent;
         return this;
     }
+   
 
     public BigDecimal getSalary() {
         return salary;
     }
 
-    public Teacher setSalary(BigDecimal salary) {
+    public TeacherDto setSalary(BigDecimal salary) {
         this.salary = salary;
         return this;
     }
@@ -64,7 +76,7 @@ public class Teacher extends Person{
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((degree == null) ? 0 : degree.hashCode());
-        result = prime * result + ((departament == null) ? 0 : departament.hashCode());
+        result = prime * result + ((department == null) ? 0 : department.hashCode());
         result = prime * result + (isPermanent ? 1231 : 1237);
         result = prime * result + ((salary == null) ? 0 : salary.hashCode());
         return result;
@@ -78,10 +90,10 @@ public class Teacher extends Person{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Teacher other = (Teacher) obj;
+        TeacherDto other = (TeacherDto) obj;
         if (degree != other.degree)
             return false;
-        if (departament != other.departament)
+        if (department != other.department)
             return false;
         if (isPermanent != other.isPermanent)
             return false;
@@ -95,7 +107,8 @@ public class Teacher extends Person{
 
     @Override
     public String toString() {
-        return "Teacher [degree=" + degree + ", departament=" + departament + ", isPermanent=" + isPermanent
-                + ", salary=" + salary + "]";
-    }
+        return "TeacherDto [idTeacher=" + idTeacher + ", degree=" + degree + ", department=" + department
+                + ", isPermanent=" + isPermanent + ", salary=" + salary + ", idPerson=" + super.getIdPerson() + ", firstName="
+                + super.getFirstName() + ", lastName=" + super.getLastName() + ", contactInfo=" + super.getContactInfo() + "]";
+    }  
 }

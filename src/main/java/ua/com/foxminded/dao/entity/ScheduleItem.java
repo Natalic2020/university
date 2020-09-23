@@ -1,47 +1,25 @@
-package ua.com.foxminded.model.dto;
-
-import java.util.UUID;
-
-import ua.com.foxminded.model.enums.DayOfWeek;
+package ua.com.foxminded.dao.entity;
 
 public class ScheduleItem {
     
-    private UUID id;
-    private Teacher teacher;
+    private String id;
     private Group group;
     private Subject subject;
-    private DayOfWeek dayOWeek;
+    private String dayOfWeek;
     private TimeSlot timeSlot;
     private Room room;
+    private Teacher teacher;
     
     public ScheduleItem() {
         
     }
 
-    public ScheduleItem(ScheduleItem scheduleItem) {
-        this.teacher = new Teacher(scheduleItem.getTeacher())  ;
-        this.group = new Group(scheduleItem.getGroup()) ;
-        this.subject = new Subject(scheduleItem.getSubject());
-        this.dayOWeek = scheduleItem.dayOWeek;
-        this.timeSlot = new TimeSlot(scheduleItem.getTimeSlot());
-        this.room = new Room(scheduleItem.getRoom());
-    }
-
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public ScheduleItem setId(UUID id) {
+    public ScheduleItem setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public ScheduleItem setTeacher(Teacher teacher) {
-        this.teacher = teacher;
         return this;
     }
 
@@ -63,12 +41,12 @@ public class ScheduleItem {
         return this;
     }
 
-    public DayOfWeek getDayOWeek() {
-        return dayOWeek;
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public ScheduleItem setDayOWeek(DayOfWeek dayOWeek) {
-        this.dayOWeek = dayOWeek;
+    public ScheduleItem setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
         return this;
     }
 
@@ -90,11 +68,20 @@ public class ScheduleItem {
         return this;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public ScheduleItem setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+        return this;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((dayOWeek == null) ? 0 : dayOWeek.hashCode());
+        result = prime * result + ((dayOfWeek == null) ? 0 : dayOfWeek.hashCode());
         result = prime * result + ((group == null) ? 0 : group.hashCode());
         result = prime * result + ((room == null) ? 0 : room.hashCode());
         result = prime * result + ((subject == null) ? 0 : subject.hashCode());
@@ -112,7 +99,10 @@ public class ScheduleItem {
         if (getClass() != obj.getClass())
             return false;
         ScheduleItem other = (ScheduleItem) obj;
-        if (dayOWeek != other.dayOWeek)
+        if (dayOfWeek == null) {
+            if (other.dayOfWeek != null)
+                return false;
+        } else if (!dayOfWeek.equals(other.dayOfWeek))
             return false;
         if (group == null) {
             if (other.group != null)
@@ -142,9 +132,6 @@ public class ScheduleItem {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "ScheduleItem [id=" + id + ", teacher=" + teacher + ", group=" + group + ", subject=" + subject
-                + ", dayOWeek=" + dayOWeek + ", timeSlot=" + timeSlot + ", room=" + room + "]";
-    }   
+  
+    
 }

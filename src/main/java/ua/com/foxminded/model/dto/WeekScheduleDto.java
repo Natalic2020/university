@@ -3,25 +3,35 @@ package ua.com.foxminded.model.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WeekSchedule {
+public class WeekScheduleDto {
     
-    private List<ScheduleItem> schedules;
+    private List<ScheduleItemDto> schedules;
+    private PeriodDto period; 
 
-    public WeekSchedule() {
+    public WeekScheduleDto() {
        
     }
 
-    public WeekSchedule(WeekSchedule weekSchedule) {
+    public WeekScheduleDto(WeekScheduleDto weekSchedule) {
         this.schedules = weekSchedule.getSchedules().stream().collect(Collectors.toList());
        
     }
 
-    public List<ScheduleItem> getSchedules() {
+    public List<ScheduleItemDto> getSchedules() {
         return schedules;
     }
 
-    public WeekSchedule setSchedules(List<ScheduleItem> schedules) {
+    public WeekScheduleDto setSchedules(List<ScheduleItemDto> schedules) {
         this.schedules = schedules;
+        return this;
+    }
+
+    public PeriodDto getPeriod() {
+        return period;
+    }
+
+    public WeekScheduleDto setPeriod(PeriodDto period) {
+        this.period = period;
         return this;
     }
 
@@ -29,6 +39,7 @@ public class WeekSchedule {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((period == null) ? 0 : period.hashCode());
         result = prime * result + ((schedules == null) ? 0 : schedules.hashCode());
         return result;
     }
@@ -41,7 +52,12 @@ public class WeekSchedule {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        WeekSchedule other = (WeekSchedule) obj;
+        WeekScheduleDto other = (WeekScheduleDto) obj;
+        if (period == null) {
+            if (other.period != null)
+                return false;
+        } else if (!period.equals(other.period))
+            return false;
         if (schedules == null) {
             if (other.schedules != null)
                 return false;
@@ -52,6 +68,6 @@ public class WeekSchedule {
 
     @Override
     public String toString() {
-        return "WeekSchedule [schedules=" + schedules + "]";
-    } 
+        return String.format("%s%n%s", getPeriod().getStartDate(), schedules.stream().map((schedule)->schedule.toString()).collect(Collectors.joining()));
+    }
 }

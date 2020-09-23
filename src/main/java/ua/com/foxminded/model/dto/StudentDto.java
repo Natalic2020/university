@@ -4,32 +4,45 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
 
 import ua.com.foxminded.model.enums.StudyStatus;
 
-public class Student extends Person{
-    
+public class StudentDto extends PersonDto {
+
+    private UUID idStudent;
     private StudyStatus studyStatus;
     private LocalDate startOfStudy;
     private String citizenship;
     private BigDecimal grant;
-    
-    public Student() {
-       
+
+    public StudentDto() {
+
     }
 
-    public Student(Student student) {
+    public StudentDto(StudentDto student) {
         this.studyStatus = student.studyStatus;
-        this.startOfStudy = LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(), student.getStartOfStudy().getDayOfMonth());
+        this.startOfStudy =  LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(),
+                student.getStartOfStudy().getDayOfMonth()) ;
         this.citizenship = student.citizenship;
         this.grant = BigDecimal.valueOf(student.getGrant().longValue());
+    }
+
+    public UUID getIdStudent() {
+        return idStudent;
+    }
+
+    public StudentDto setIdStudent(UUID idStudent) {
+        this.idStudent = idStudent;
+        return this;
     }
 
     public StudyStatus getStudyStatus() {
         return studyStatus;
     }
 
-    public Student setStudyStatus(StudyStatus studyStatus) {
+    public StudentDto setStudyStatus(StudyStatus studyStatus) {
         this.studyStatus = studyStatus;
         return this;
     }
@@ -38,7 +51,7 @@ public class Student extends Person{
         return startOfStudy;
     }
 
-    public Student setStartOfStudy(LocalDate startOfStudy) {
+    public StudentDto setStartOfStudy(LocalDate startOfStudy) {
         this.startOfStudy = startOfStudy;
         return this;
     }
@@ -47,7 +60,7 @@ public class Student extends Person{
         return citizenship;
     }
 
-    public Student setCitizenship(String citizenship) {
+    public StudentDto setCitizenship(String citizenship) {
         this.citizenship = citizenship;
         return this;
     }
@@ -56,7 +69,7 @@ public class Student extends Person{
         return grant;
     }
 
-    public Student setGrant(BigDecimal grant) {
+    public StudentDto setGrant(BigDecimal grant) {
         this.grant = grant;
         return this;
     }
@@ -80,7 +93,7 @@ public class Student extends Person{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Student other = (Student) obj;
+        StudentDto other = (StudentDto) obj;
         if (citizenship == null) {
             if (other.citizenship != null)
                 return false;
@@ -103,7 +116,10 @@ public class Student extends Person{
 
     @Override
     public String toString() {
-        return "Student [studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy + ", citizenship=" + citizenship
-                + ", grant=" + grant + "]";
+        return "StudentDto [idStudent=" + idStudent + ", studyStatus=" + studyStatus + ", startOfStudy=" + startOfStudy
+                + ", citizenship=" + citizenship + ", grant=" + grant + ", getFirstName()=" + getFirstName()
+                + ", getLastName()=" + getLastName() + "]";
     }
+
+   
 }

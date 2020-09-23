@@ -2,33 +2,30 @@ package ua.com.foxminded.model.dto;
 
 import java.util.UUID;
 
-public class Subject {
+public class RoomDto {
     
     private UUID id;
     private String name;
     
-    public Subject() {
-       
+    public RoomDto() {
+      
     }
-
-    public Subject(Subject subject) {
-        this.name = subject.name;
+    
+    public RoomDto(RoomDto room) {
+        this.name = room.name;
     }
 
     public UUID getId() {
         return id;
     }
-
-    public Subject setId(UUID id) {
+    public RoomDto setId(UUID id) {
         this.id = id;
         return this;
     }
-
     public String getName() {
         return name;
     }
-
-    public Subject setName(String name) {
+    public RoomDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -49,7 +46,7 @@ public class Subject {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Subject other = (Subject) obj;
+        RoomDto other = (RoomDto) obj;
         if (name == null) {
             if (other.name != null)
                 return false;
@@ -60,6 +57,6 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "Subject [id=" + id + ", name=" + name + "]";
-    } 
+        return "Room [id=" + id + ", name=" + name + "]";
+    }      
 }
