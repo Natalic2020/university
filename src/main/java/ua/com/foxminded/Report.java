@@ -89,7 +89,7 @@ public class Report {
         System.out.println("Find All");
         teacherService.findAllTeacher().forEach(System.out::println);
 
-        System.out.println("Delete theacher Id = 3");
+        System.out.println("Delete teacher Id = 3");
         teacherService.deleteTeacher(UUID.fromString("fd65ef4a-2b85-4730-869e-a70a3364031e"));
 
         System.out.println("Update person Id = 1");

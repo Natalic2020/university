@@ -72,10 +72,10 @@ class StudentDaoImplTest {
     @Order(1)
     void addStudent_schoudReturnStudent_whenAddStudent() {
 
-        studentDao.addStudent(student);
-
         List<Student> expected = new ArrayList<>();
         expected.add(student);
+        
+        studentDao.addStudent(student);
 
         List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
@@ -127,14 +127,12 @@ class StudentDaoImplTest {
     @Order(4)
     @DependsOn({"addStudent_schoudReturnStudent_whenAddStudent"})
     void editStudent_schoudReturnStudent_whenEditStudent() {
-        
-       student.setCitizenship("Egypt");
-                                       
-        studentDao.editStudent(student);
-
         List<Student> expected = new ArrayList<>();
         expected.add(student);
-
+        
+       student.setCitizenship("Egypt");         
+       studentDao.editStudent(student);
+       
         List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
     }
@@ -143,8 +141,9 @@ class StudentDaoImplTest {
     @Order(5)
     @DependsOn({"editStudent_schoudReturnStudent_whenEditStudent"})
     void deleteStudent__schoudReturnEmpty_whenDeleteStudent() {
-        studentDao.deleteStudent(studentUUID);
         List<Student> expected = new ArrayList<>();
+        studentDao.deleteStudent(studentUUID);
+        
         List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);   
     }
