@@ -6,19 +6,19 @@ public enum DayOfWeek {
     public String toString() {
         switch (this) {
         case MONDAY:
-            return "Monday";
+            return "MONDAY";
         case TUESDAY:
-            return "Tuesday";    
+            return "TUESDAY";    
         case WENDNESDAY:
-            return "Wendnesday";
+            return "WENDNESDAY";
         case THURSDAY:
-            return "Thursday";
+            return "THURSDAY";
         case FRIDAY:
-            return "Friday";
+            return "FRIDAY";
         case SATURDAY:
-            return "Saturday";
+            return "SATURDAY";
         case SUNDAY:
-            return "Sunday";
+            return "SUNDAY";
         default:
             return "";
         }    

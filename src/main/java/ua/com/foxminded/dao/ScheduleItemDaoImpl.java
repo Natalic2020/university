@@ -1,7 +1,9 @@
 package ua.com.foxminded.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -92,6 +94,38 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao{
                     scheduleMapper, lastName);
         } catch (DataAccessException e) {
             System.out.println(" I can't find schedule student . Last name " + lastName + ". Reason: " + e.getMessage());
+        }
+        return scheduleItems;
+    }
+    
+    @Override
+    public List<ScheduleItem> findWeekScheduleTeacher(UUID id) {
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
+        try {
+            scheduleItems = jdbcTemplate.query("Select * " + 
+                    " from uni.persons p,  uni.teachers t,  uni.groups g,  uni.subjects su, uni.rooms r, uni.time_slots ts, uni.schedule_items si " + 
+                    " where si.id_teacher = t.id_teacher and t.id_person = p.id_person  and si.id_group = g.id    and si.id_subject = su.id " +
+                    " and si.id_room = r.id  and si.id_time_slot = ts.id  and t.id_teacher = ?  " + 
+                    " order by ts.serial_number ",
+                    scheduleMapper, id);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find schedule teacher . id " + id  + ". Reason: " + e.getMessage());
+        }
+        return scheduleItems;
+    }
+    
+    @Override
+    public List<ScheduleItem> findWeekScheduleStudent(UUID id) {
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
+        try {
+            scheduleItems = jdbcTemplate.query("Select * " + 
+                    "from uni.persons p,  uni.teachers t,  uni.groups g, uni.students st, uni.subjects su, uni.rooms r, uni.time_slots ts, uni.schedule_items si " + 
+                    " where  si.id_teacher = t.id_teacher  and st.id_person = p.id_person  and si.id_group = g.id  and g.id = st.id_group  " +   
+                    " and si.id_subject = su.id  and si.id_room = r.id  and si.id_time_slot = ts.id  and st.id_student = ? " +
+                    " order by ts.serial_number ",
+                    scheduleMapper, id);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find schedule student . id " + id + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
     }
