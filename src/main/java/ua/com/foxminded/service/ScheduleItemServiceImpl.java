@@ -15,6 +15,7 @@ import ua.com.foxminded.service.interfaces.ScheduleItemService;
 
 @Service("scheduleItemService")
 public class ScheduleItemServiceImpl implements ScheduleItemService{
+    
     @Autowired
     ScheduleItemDao scheduleItemDao;
 
