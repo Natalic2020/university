@@ -70,7 +70,7 @@ class StudentDaoImplTest {
 
     @Test
     @Order(1)
-    void addStudent_schoudReturnStudent_whenAddStudent() {
+    void addStudent_shouldReturnStudent_whenAddStudent() {
 
         List<Student> expected = new ArrayList<>();
         expected.add(student);
@@ -83,7 +83,7 @@ class StudentDaoImplTest {
     
     @Test
     @Order(2)
-    void findStudent_schoudReturnStudent_whenLookForLastName() {
+    void findStudent_shouldReturnStudent_whenLookForLastName() {
 
         List<Student> expected = new ArrayList<>();
         expected.add(student);
@@ -94,7 +94,7 @@ class StudentDaoImplTest {
     
     @Test
     @Order(2)
-    void findStudent_schoudReturnEmpty_whenLookForNonExistentStudent() {
+    void findStudent_shouldReturnEmpty_whenLookForNonExistentStudent() {
 
         List<Student> expected = new ArrayList<>();
 
@@ -104,7 +104,7 @@ class StudentDaoImplTest {
     
     @Test
     @Order(2)
-    void findStudent_schoudReturnEmpty_whenLookForNull() {
+    void findStudent_shouldReturnEmpty_whenLookForNull() {
 
         List<Student> expected = new ArrayList<>();
 
@@ -114,7 +114,7 @@ class StudentDaoImplTest {
     
     @Test
     @Order(3)
-    void findAllStudent_schoudReturnAllStudent_whenLookForAllStudents() {
+    void findAllStudent_shouldReturnAllStudent_whenLookForAllStudents() {
 
         List<Student> expected = new ArrayList<>();
         expected.add(student);
@@ -125,8 +125,8 @@ class StudentDaoImplTest {
     
     @Test
     @Order(4)
-    @DependsOn({"addStudent_schoudReturnStudent_whenAddStudent"})
-    void editStudent_schoudReturnStudent_whenEditStudent() {
+    @DependsOn({"addStudent_shouldReturnStudent_whenAddStudent"})
+    void editStudent_shouldReturnStudent_whenEditStudent() {
         List<Student> expected = new ArrayList<>();
         expected.add(student);
         
@@ -139,8 +139,8 @@ class StudentDaoImplTest {
     
     @Test
     @Order(5)
-    @DependsOn({"editStudent_schoudReturnStudent_whenEditStudent"})
-    void deleteStudent__schoudReturnEmpty_whenDeleteStudent() {
+    @DependsOn({"editStudent_shouldReturnStudent_whenEditStudent"})
+    void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
         List<Student> expected = new ArrayList<>();
         studentDao.deleteStudent(studentUUID);
         

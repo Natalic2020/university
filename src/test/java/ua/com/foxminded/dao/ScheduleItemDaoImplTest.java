@@ -78,7 +78,7 @@ class ScheduleItemDaoImplTest {
 
     @Test
     @Order(1)
-    void addScheduleItem_schoudReturnScheduleItem_whenAddScheduleItem() {
+    void addScheduleItem_shouldReturnScheduleItem_whenAddScheduleItem() {
         List<ScheduleItem> expected = new ArrayList<>();
         expected.add(scheduleItemExpected);
         
@@ -89,7 +89,7 @@ class ScheduleItemDaoImplTest {
 
     @Test
     @Order(2)
-    void findScheduleTeacher_schoudReturnScheduleTeacher_whenLookForLastName() {
+    void findScheduleTeacher_shouldReturnScheduleTeacher_whenLookForLastName() {
         List<ScheduleItem> expected = new ArrayList<>();
 
         expected.add(scheduleItemExpected);
@@ -102,7 +102,7 @@ class ScheduleItemDaoImplTest {
 
     @Test
     @Order(2)
-    void findScheduleTeacher_schoudReturnEmpty_whenLookForNonExistentTeacher() {
+    void findScheduleTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
 
         List<Student> expected = new ArrayList<>();
 
@@ -112,7 +112,7 @@ class ScheduleItemDaoImplTest {
     
     @Test
     @Order(3)
-    void findScheduleStudent_schoudReturnScheduleStudent_whenLookForLastName() {
+    void findScheduleStudent_shouldReturnScheduleStudent_whenLookForLastName() {
         List<ScheduleItem> expected = new ArrayList<>();
 
         expected.add(scheduleItemExpected);
@@ -124,7 +124,7 @@ class ScheduleItemDaoImplTest {
     
     @Test
     @Order(4)
-    void editScheduleItem_schoudReturnDayOfWeek_whenEditDayOfWeek() {
+    void editScheduleItem_shouldReturnDayOfWeek_whenEditDayOfWeek() {
 
         scheduleItemDao.editScheduleItem(scheduleItem.setDayOfWeek("WENDNESDAY"));
         List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
@@ -133,7 +133,7 @@ class ScheduleItemDaoImplTest {
     
     @Test
     @Order(5)
-    void deleteScheduleItem_schoudReturnEmpty_whenDeleteScheduleItem() {
+    void deleteScheduleItem_shouldReturnEmpty_whenDeleteScheduleItem() {
         List<ScheduleItem> expected = new ArrayList<>();
         scheduleItemDao.deleteScheduleItem(scheduleItemUUID);
         List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");

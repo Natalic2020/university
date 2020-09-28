@@ -68,7 +68,7 @@ public class TeacherDaoImplTest {
 
     @Test
     @Order(1)
-    void addTeacher_schoudReturnTeacher_whenAddTeacher() {
+    void addTeacher_shouldReturnTeacher_whenAddTeacher() {
         
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
@@ -81,7 +81,7 @@ public class TeacherDaoImplTest {
     
     @Test
     @Order(2)
-    void findTeacher_schoudReturnTeacher_whenLookForLastName() {
+    void findTeacher_shouldReturnTeacher_whenLookForLastName() {
 
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
@@ -92,7 +92,7 @@ public class TeacherDaoImplTest {
     
     @Test
     @Order(2)
-    void findTeacher_schoudReturnEmpty_whenLookForNonExistentTeacher() {
+    void findTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
         List<Teacher> expected = new ArrayList<>();
 
         List<Teacher> actual = teacherDao.findTeacher("Ivan123");
@@ -101,7 +101,7 @@ public class TeacherDaoImplTest {
     
     @Test
     @Order(2)
-    void findTeacher_schoudReturnEmpty_whenLookForNull() {
+    void findTeacher_shouldReturnEmpty_whenLookForNull() {
         List<Teacher> expected = new ArrayList<>();
 
         List<Teacher> actual = teacherDao.findTeacher(null);
@@ -110,7 +110,7 @@ public class TeacherDaoImplTest {
     
     @Test
     @Order(3)
-    void findAllTeacher_schoudReturnAllTeacher_whenLookForAllTeachers() {
+    void findAllTeacher_shouldReturnAllTeacher_whenLookForAllTeachers() {
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
 
@@ -121,8 +121,8 @@ public class TeacherDaoImplTest {
     
     @Test
     @Order(4)
-    @DependsOn({"addTeacher_schoudReturnTeacher_whenAddTeacher"})
-    void editTeacher_schoudReturnTeacher_whenEditTeacher() {
+    @DependsOn({"addTeacher_shouldReturnTeacher_whenAddTeacher"})
+    void editTeacher_shouldReturnTeacher_whenEditTeacher() {
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
         
@@ -135,8 +135,8 @@ public class TeacherDaoImplTest {
     
     @Test
     @Order(5)
-    @DependsOn({"editTeacher_schoudReturnTeacher_whenEditTeacher"})
-    void deleteTeacher_schoudReturnEmpty_whenDeleteTeacher() {
+    @DependsOn({"editTeacher_shouldReturnTeacher_whenEditTeacher"})
+    void deleteTeacher_shouldReturnEmpty_whenDeleteTeacher() {
         List<Teacher> expected = new ArrayList<>();
         teacherDao.deleteTeacher(teacherUUID);
         

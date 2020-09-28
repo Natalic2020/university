@@ -31,73 +31,131 @@ import ua.com.foxminded.dao.entity.ScheduleItem;
 import ua.com.foxminded.dao.entity.Subject;
 import ua.com.foxminded.dao.entity.TimeSlot;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
+import ua.com.foxminded.model.dto.GroupDto;
+import ua.com.foxminded.model.dto.RoomDto;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
+import ua.com.foxminded.model.dto.SubjectDto;
+import ua.com.foxminded.model.dto.TimeSlotDto;
+import ua.com.foxminded.model.enums.DayOfWeek;
+import ua.com.foxminded.service.ScheduleServiceImpl;
 import ua.com.foxminded.service.interfaces.ScheduleService;
 
-
-//@ActiveProfiles("test")
-//@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
-//@ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = { ScheduleItemDaoImplTestConfiguration.class })
-//@TestInstance(Lifecycle.PER_CLASS)
-//@ContextConfiguration(classes = { ApplicationConfigTest.class })
 @SpringJUnitConfig(ScheduleItemDaoImplTestConfiguration.class)
 class ScheduleServiceImplTest {
 
-//    @Autowired
     ScheduleService scheduleService;
     
-    ScheduleItemDao scheduleItemDao;
-
+    static ScheduleItemDao scheduleItemDao;
     
-//    @Autowired
-//    ScheduleItemDaoImpl scheduleItemDaoImpl;
-//  
-//    List<ScheduleItem> scheduleItems;
-    
-    public ScheduleServiceImplTest(ScheduleItemDao scheduleItemDao, ScheduleService scheduleService) {
-        this.scheduleItemDao = scheduleItemDao;
-        this.scheduleService = scheduleService;
-    }
-
     static List<ScheduleItem> scheduleItems;
-
     
+    public ScheduleServiceImplTest() {
+//        this.scheduleItemDao = scheduleItemDao;
+//        this.scheduleService = scheduleService;
+    }
+ 
     @BeforeAll
     public static void  setUpBeforeClass() throws Exception {
 
-//        MockitoAnnotations.initMocks(this);
         scheduleItems = new ArrayList<>();
-        scheduleItems.add(new ScheduleItem().setDayOfWeek("THUESDAY")
+        scheduleItems.add(new ScheduleItem().setDayOfWeek("TUESDAY")
                 .setGroup(new Group().setName("gr-1"))
                 .setRoom(new Room().setName("room 1"))
                 .setSubject(new Subject().setName("Maths"))
                 .setTimeSlot(new TimeSlot().setSerialNumber(1)));
+        
+        scheduleItemDao = new ScheduleItemDaoImplTestConfiguration().scheduleItemDao();
+            
     }
 
     @Test
-    void test() {
-//        ScheduleItemDaoImpl   scheduleItemDaoImpl =  Mockito.mock(ScheduleItemDaoImpl.class);
+    void findWeekcheduleStudent_shoudReturnScheduleItemWeek_whenLookForWeekScheduleStudent() {
+
+        List<ScheduleItemDto> expected = new ArrayList<>();
         
-        Mockito.when(scheduleItemDao.findWeekScheduleStudent(UUID.randomUUID())).thenReturn(scheduleItems);
+        expected.add(new ScheduleItemDto().setDayOfWeek(DayOfWeek.TUESDAY)
+                .setGroup(new GroupDto().setName("gr-1"))
+                .setRoom(new RoomDto().setName("room 1"))
+                .setSubject(new SubjectDto().setName("Maths"))
+                .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
         
-        List<ScheduleItemDto> scheduleItem  = scheduleService.findWeekScheduleStudent(UUID.randomUUID());
-        Map<String, List<ScheduleItemDto>> schedule = scheduleService.findMonthScheduleStudent(UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6"), LocalDate.of(1999, 02, 02));
+        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        
+        Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
+        
+        scheduleService = new ScheduleServiceImpl(scheduleItemDao);
+        
+        List<ScheduleItemDto> actual  = scheduleService.findWeekScheduleStudent(uuid1);
+        assertEquals(expected, actual);
        
-        
-//        assertEquals(expected, "");
     }
 
     @Test
-    void test2() {
+    void findMonthcheduleStudent_shoudReturnScheduleItemMonth_whenLookForMonthScheduleStudent() {
 
-        List<ScheduleItem> expected = new ArrayList<>();
-
-        Map<String, List<ScheduleItemDto>> schedule = scheduleService.findMonthScheduleStudent(
-                UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6"), LocalDate.of(1999, 02, 02));
-
-        assertEquals(expected, "");
+        List<ScheduleItemDto> expected = new ArrayList<>();
+        
+        expected.add(new ScheduleItemDto().setDayOfWeek(DayOfWeek.TUESDAY)
+                .setGroup(new GroupDto().setName("gr-1"))
+                .setRoom(new RoomDto().setName("room 1"))
+                .setSubject(new SubjectDto().setName("Maths"))
+                .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
+        
+        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        
+        Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
+        
+        scheduleService = new ScheduleServiceImpl(scheduleItemDao);
+        
+        Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleStudent(uuid1, LocalDate.of(1999, 02, 02));
+        
+        assertEquals(expected, actual.get("1999-02-09 TUESDAY"));
     }
 
+    @Test
+    void findWeekScheduleTeacher_shoudReturnScheduleItemWeek_whenLookForWeekScheduleTeacher() {
+
+        List<ScheduleItemDto> expected = new ArrayList<>();
+        
+        expected.add(new ScheduleItemDto().setDayOfWeek(DayOfWeek.TUESDAY)
+                .setGroup(new GroupDto().setName("gr-1"))
+                .setRoom(new RoomDto().setName("room 1"))
+                .setSubject(new SubjectDto().setName("Maths"))
+                .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
+        
+        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        
+        Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
+        
+        scheduleService = new ScheduleServiceImpl(scheduleItemDao);
+        
+        List<ScheduleItemDto> actual  = scheduleService.findWeekScheduleTeacher(uuid1);
+        assertEquals(expected, actual);
+       
+    }
+
+    @Test
+    void findMonthcheduleTeacher_shoudReturnScheduleItemMonth_whenLookForMonthScheduleTeacher() {
+
+        List<ScheduleItemDto> expected = new ArrayList<>();
+        
+        expected.add(new ScheduleItemDto().setDayOfWeek(DayOfWeek.TUESDAY)
+                .setGroup(new GroupDto().setName("gr-1"))
+                .setRoom(new RoomDto().setName("room 1"))
+                .setSubject(new SubjectDto().setName("Maths"))
+                .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
+        
+        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        
+        Mockito.when(scheduleItemDao.findWeekScheduleTeacher(uuid1)).thenReturn(scheduleItems);
+        
+        scheduleService = new ScheduleServiceImpl(scheduleItemDao);
+        
+        Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleTeacher(uuid1, LocalDate.of(1999, 02, 02));
+        
+        assertEquals(expected, actual.get("1999-02-09 TUESDAY"));
+    }
+    
 }
