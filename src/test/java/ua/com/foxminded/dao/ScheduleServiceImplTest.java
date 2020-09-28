@@ -69,7 +69,7 @@ class ScheduleServiceImplTest {
         Mockito.when(scheduleItemDaoImpl.findWeekScheduleStudent(UUID.randomUUID())).thenReturn(scheduleItems);
         
         List<ScheduleItemDto> scheduleItem  = scheduleService.findWeekScheduleStudent(UUID.randomUUID());
-//        Map<String, List<ScheduleItemDto>> schedule = scheduleService.findMonthScheduleStudent(UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6"), LocalDate.of(1999, 02, 02));
+        Map<String, List<ScheduleItemDto>> schedule = scheduleService.findMonthScheduleStudent(UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6"), LocalDate.of(1999, 02, 02));
        
         
 //        assertEquals(expected, "");
