@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import ua.com.foxminded.config.ScheduleItemDaoImplTestConfiguration;
 import ua.com.foxminded.dao.entity.Group;
@@ -29,31 +30,44 @@ import ua.com.foxminded.dao.entity.Room;
 import ua.com.foxminded.dao.entity.ScheduleItem;
 import ua.com.foxminded.dao.entity.Subject;
 import ua.com.foxminded.dao.entity.TimeSlot;
+import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
 import ua.com.foxminded.service.interfaces.ScheduleService;
 
 
-@ActiveProfiles("test")
-@ExtendWith(MockitoExtension.class)
+//@ActiveProfiles("test")
+//@ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { ScheduleItemDaoImplTestConfiguration.class })
-@TestInstance(Lifecycle.PER_CLASS)
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = { ScheduleItemDaoImplTestConfiguration.class })
+//@TestInstance(Lifecycle.PER_CLASS)
 //@ContextConfiguration(classes = { ApplicationConfigTest.class })
-//@SpringApplicationConfiguration(classes = MocksApplication.class)
+@SpringJUnitConfig(ScheduleItemDaoImplTestConfiguration.class)
 class ScheduleServiceImplTest {
 
-    @Autowired
+//    @Autowired
     ScheduleService scheduleService;
     
-    @Autowired
-    ScheduleItemDaoImpl scheduleItemDaoImpl;
-  
-    List<ScheduleItem> scheduleItems;
+    ScheduleItemDao scheduleItemDao;
+
+    
+//    @Autowired
+//    ScheduleItemDaoImpl scheduleItemDaoImpl;
+//  
+//    List<ScheduleItem> scheduleItems;
+    
+    public ScheduleServiceImplTest(ScheduleItemDao scheduleItemDao, ScheduleService scheduleService) {
+        this.scheduleItemDao = scheduleItemDao;
+        this.scheduleService = scheduleService;
+    }
+
+    static List<ScheduleItem> scheduleItems;
+
     
     @BeforeAll
-    void setUpBeforeClass() throws Exception {
-        MockitoAnnotations.initMocks(this);
+    public static void  setUpBeforeClass() throws Exception {
+
+//        MockitoAnnotations.initMocks(this);
         scheduleItems = new ArrayList<>();
         scheduleItems.add(new ScheduleItem().setDayOfWeek("THUESDAY")
                 .setGroup(new Group().setName("gr-1"))
@@ -66,7 +80,7 @@ class ScheduleServiceImplTest {
     void test() {
 //        ScheduleItemDaoImpl   scheduleItemDaoImpl =  Mockito.mock(ScheduleItemDaoImpl.class);
         
-        Mockito.when(scheduleItemDaoImpl.findWeekScheduleStudent(UUID.randomUUID())).thenReturn(scheduleItems);
+        Mockito.when(scheduleItemDao.findWeekScheduleStudent(UUID.randomUUID())).thenReturn(scheduleItems);
         
         List<ScheduleItemDto> scheduleItem  = scheduleService.findWeekScheduleStudent(UUID.randomUUID());
         Map<String, List<ScheduleItemDto>> schedule = scheduleService.findMonthScheduleStudent(UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6"), LocalDate.of(1999, 02, 02));
