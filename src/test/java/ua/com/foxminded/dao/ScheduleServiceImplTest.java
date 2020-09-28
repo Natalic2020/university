@@ -51,10 +51,11 @@ class ScheduleServiceImplTest {
     
     static List<ScheduleItem> scheduleItems;
     
-    public ScheduleServiceImplTest() {
+//    public ScheduleServiceImplTest(ScheduleItemDao scheduleItemDao, ScheduleService scheduleService) {
 //        this.scheduleItemDao = scheduleItemDao;
 //        this.scheduleService = scheduleService;
-    }
+//    }
+
  
     @BeforeAll
     public static void  setUpBeforeClass() throws Exception {
