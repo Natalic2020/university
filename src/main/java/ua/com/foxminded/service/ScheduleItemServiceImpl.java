@@ -14,37 +14,49 @@ import ua.com.foxminded.model.dto.ScheduleItemDto;
 import ua.com.foxminded.service.interfaces.ScheduleItemService;
 
 @Service("scheduleItemService")
-public class ScheduleItemServiceImpl implements ScheduleItemService{
-    
+public class ScheduleItemServiceImpl implements ScheduleItemService {
+
     @Autowired
     ScheduleItemDao scheduleItemDao;
 
     @Autowired
     ScheduleItemConverter scheduleItemConverter;
-        
+
     @Override
     public void addScheduleItem(ScheduleItemDto scheduleItemDto) {
-        scheduleItemDao.addScheduleItem(scheduleItemConverter.convertDtoToEntity(scheduleItemDto));
+        scheduleItemDao
+                       .addScheduleItem(scheduleItemConverter
+                                                             .convertDtoToEntity(scheduleItemDto));
     }
 
     @Override
     public void editScheduleItem(ScheduleItemDto scheduleItemDto) {
-        scheduleItemDao.editScheduleItem(scheduleItemConverter.convertDtoToEntity(scheduleItemDto));
-        
+        scheduleItemDao
+                       .editScheduleItem(scheduleItemConverter
+                                                              .convertDtoToEntity(scheduleItemDto));
+
     }
 
     @Override
     public void deleteScheduleItem(UUID id) {
-        scheduleItemDao.deleteScheduleItem(id.toString());  
-    }   
+        scheduleItemDao.deleteScheduleItem(id.toString());
+    }
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleStudent(String lastName, LocalDate date) {
-       return scheduleItemDao.findScheduleStudent(lastName).stream().map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem)).collect(Collectors.toList()); 
+        return scheduleItemDao
+                              .findScheduleStudent(lastName)
+                              .stream()
+                              .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
+                              .collect(Collectors.toList());
     }
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleTeacher(String lastName, LocalDate date) {
-        return scheduleItemDao.findScheduleTeacher(lastName).stream().map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem)).collect(Collectors.toList()); 
-    } 
+        return scheduleItemDao
+                              .findScheduleTeacher(lastName)
+                              .stream()
+                              .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
+                              .collect(Collectors.toList());
+    }
 }

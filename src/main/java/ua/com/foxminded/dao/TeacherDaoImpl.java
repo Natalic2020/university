@@ -30,7 +30,9 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void addTeacher(Teacher teacher) {
         try {
-            jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) values (?, ?, ?)", new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) " +
+                    " values (?, ?, ?)",
+                    new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
@@ -42,7 +44,9 @@ public class TeacherDaoImpl implements TeacherDao {
                 }  
                 });  
             
-            jdbcTemplate.execute("INSERT INTO uni.teachers (id_teacher, id_person, degree, department, permanent, salary ) values (?, ?, ?, ?, ?, ?)",new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("INSERT INTO uni.teachers (id_teacher, id_person, degree, " +
+              " department, permanent, salary ) values (?, ?, ?, ?, ?, ?)", 
+                  new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
@@ -65,7 +69,8 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void editTeacher(Teacher teacher) {
         try {
-            jdbcTemplate.execute("UPDATE uni.teachers t SET degree = ?, department = ?, permanent = ? , salary = ?  WHERE t.id_teacher = ? ",
+            jdbcTemplate.execute("UPDATE uni.teachers t SET degree = ?, department = ?, " + 
+                    " permanent = ? , salary = ?  WHERE t.id_teacher = ? ",
                     new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
@@ -87,7 +92,8 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void deleteTeacher(String id) {
         try {
-            jdbcTemplate.execute("DELETE from uni.teachers s WHERE s.id_teacher = ? ", new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("DELETE from uni.teachers s WHERE s.id_teacher = ? ",
+                    new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
@@ -106,9 +112,11 @@ public class TeacherDaoImpl implements TeacherDao {
         List<Teacher> teacher = new ArrayList<>();
         try {
             teacher = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
-                    "  where t.id_person = p.id_person and t.id_teacher = ? ", teacherMapper, id);
+                    "  where t.id_person = p.id_person and t.id_teacher = ? ", 
+                    teacherMapper, id);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find the teacher id = " + id +". Reason: " + e.getMessage());
+            System.out.println(" I can't find the teacher id = " + id + 
+                    ". Reason: " + e.getMessage());
         }
             return teacher;
     }

@@ -16,8 +16,10 @@ public class TeacherConverter {
 
     public Teacher convertDtoToEntity(TeacherDto teacherDto) {  
         Teacher teacher = new Teacher();
-        Optional.ofNullable(teacherDto.getIdTeacher()).ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
-        Optional.ofNullable(teacherDto.getIdPerson()).ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
+        Optional.ofNullable(teacherDto.getIdTeacher())
+        .ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
+        Optional.ofNullable(teacherDto.getIdPerson())
+        .ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
                   
         teacher.setFirstName(teacherDto.getFirstName())
                 .setLastName(teacherDto.getLastName());            
@@ -33,14 +35,12 @@ public class TeacherConverter {
                                              .setIdPerson(UUID.fromString(teacher.getIdPerson()))
                                              .setFirstName(teacher.getFirstName())
                                              .setLastName(teacher.getLastName()))
-                                                                                             .setDegree(Degree.valueOf(
-                                                                                                     teacher.getDegree()))
-                                                                                             .setDepartment(
-                                                                                                     Department.valueOf(
-                                                                                                             teacher.getDepartment()))
-                                                                                             .setPermanent(
-                                                                                                     teacher.isPermanent())
-                                                                                             .setSalary(
-                                                                                                     teacher.getSalary());
+                                             .setDegree(Degree.valueOf( teacher.getDegree()))
+                                             .setDepartment( Department.valueOf(
+                                               teacher.getDepartment()))
+                                              .setPermanent(
+                                                     teacher.isPermanent())
+                                              .setSalary(
+                                             teacher.getSalary());
     }
 }

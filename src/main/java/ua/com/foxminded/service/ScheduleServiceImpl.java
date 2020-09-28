@@ -36,7 +36,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleStudent(UUID id) {
-        return  scheduleItemDao.findWeekScheduleStudent(id).stream().map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem)).collect(Collectors.toList()); 
+        return  scheduleItemDao.findWeekScheduleStudent(id).stream()
+                .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
+                .collect(Collectors.toList()); 
     }
 
     @Override
@@ -48,7 +50,9 @@ public class ScheduleServiceImpl implements ScheduleService{
         Map<String, List<ScheduleItemDto>> scheduleMonthStudent = new HashMap<>();
         for (LocalDate dateN = dateStart; dateN.isBefore(dateFinish); dateN = dateN.plusDays(1)) {
             String dayOfWeek = dateN.getDayOfWeek().toString();
-            List<ScheduleItemDto> scheduleDayOfWeek = ScheduleItems.stream().filter(e -> e.getDayOfWeek().toString().equals(dayOfWeek)).collect(Collectors.toList());
+            List<ScheduleItemDto> scheduleDayOfWeek = ScheduleItems.stream()
+                    .filter(e -> e.getDayOfWeek().toString().equals(dayOfWeek))
+                    .collect(Collectors.toList());
             scheduleMonthStudent.put(dateN.toString() + " " + dayOfWeek, scheduleDayOfWeek);   
         }
         return scheduleMonthStudent;
@@ -56,7 +60,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleTeacher(UUID id) {
-        return scheduleItemDao.findWeekScheduleTeacher(id).stream().map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem)).collect(Collectors.toList()); 
+        return scheduleItemDao.findWeekScheduleTeacher(id).stream()
+                .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
+                .collect(Collectors.toList()); 
     }
 
     @Override
@@ -68,7 +74,9 @@ public class ScheduleServiceImpl implements ScheduleService{
         Map<String, List<ScheduleItemDto>> scheduleMonthTeacher = new HashMap<>();
         for (LocalDate dateN = dateStart; dateN.isBefore(dateFinish); dateN = dateN.plusDays(1)) {
             String dayOfWeek = dateN.getDayOfWeek().toString();
-            List<ScheduleItemDto> scheduleDayOfWeek = ScheduleItems.stream().filter(e -> e.getDayOfWeek().toString().equals(dayOfWeek)).collect(Collectors.toList());
+            List<ScheduleItemDto> scheduleDayOfWeek = ScheduleItems.stream()
+                    .filter(e -> e.getDayOfWeek().toString().equals(dayOfWeek))
+                    .collect(Collectors.toList());
             scheduleMonthTeacher.put(dateN.toString() + " " + dayOfWeek, scheduleDayOfWeek);   
         }
         return scheduleMonthTeacher;

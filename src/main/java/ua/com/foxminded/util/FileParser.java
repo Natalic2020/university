@@ -32,7 +32,8 @@ public class FileParser {
             throw new IllegalArgumentException("File " + file + " doesn't exist");
         }
         if (isNotFile(file)) {
-            throw new IllegalArgumentException("Directory is  not allowed  " + file + " Wait for a file ....");
+            throw new IllegalArgumentException("Directory is  not allowed  " 
+        + file + " Wait for a file ....");
         }
     }
 
@@ -41,7 +42,9 @@ public class FileParser {
 
         ClassLoader classLoader = getClass().getClassLoader();
 
-        File file = Optional.ofNullable(classLoader.getResource(fileName)).map(URL::getFile).map(File::new)
+        File file = Optional.ofNullable(classLoader.getResource(fileName))
+                .map(URL::getFile)
+                .map(File::new)
                 .orElseThrow(() -> new IllegalArgumentException("File doesn't exis"));
 
         checkFile(file);

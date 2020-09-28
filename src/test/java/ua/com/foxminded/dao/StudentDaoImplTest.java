@@ -49,23 +49,23 @@ class StudentDaoImplTest {
     private String studentUUID = "961a9d3c-fb10-11ea-adc1-0242ac120002";
     private String personUUID = "69c4623a-fb11-11ea-adc1-0242ac120002";
     private Student student;
-    
+
     @BeforeAll
     void Init() throws Exception {
         creatDB();
         student = new Student()
-                .setIdStudent(studentUUID)
-                .setStudyStatus(StudyStatus.FINISHED.toString())
-                .setCitizenship("German")
-                .setGrant(new BigDecimal(100))
-                .setStartOfStudy(LocalDate.of(2015, 12, 31));
+                               .setIdStudent(studentUUID)
+                               .setStudyStatus(StudyStatus.FINISHED.toString())
+                               .setCitizenship("German")
+                               .setGrant(new BigDecimal(100))
+                               .setStartOfStudy(LocalDate.of(2015, 12, 31));
         student.setIdPerson(personUUID)
-                                       .setFirstName("Nina")
-                                       .setLastName("Ivan");
+               .setFirstName("Nina")
+               .setLastName("Ivan");
     }
 
     public void creatDB() {
-        jdbcTemplate.batchUpdate( file.readFileToLines("sql_test.script")); 
+        jdbcTemplate.batchUpdate(file.readFileToLines("sql_test.script"));
     }
 
     @Test
@@ -74,13 +74,13 @@ class StudentDaoImplTest {
 
         List<Student> expected = new ArrayList<>();
         expected.add(student);
-        
+
         studentDao.addStudent(student);
 
         List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(2)
     void findStudent_shouldReturnStudent_whenLookForLastName() {
@@ -91,7 +91,7 @@ class StudentDaoImplTest {
         List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(2)
     void findStudent_shouldReturnEmpty_whenLookForNonExistentStudent() {
@@ -101,7 +101,7 @@ class StudentDaoImplTest {
         List<Student> actual = studentDao.findStudent("Ivan123");
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(2)
     void findStudent_shouldReturnEmpty_whenLookForNull() {
@@ -111,7 +111,7 @@ class StudentDaoImplTest {
         List<Student> actual = studentDao.findStudent(null);
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(3)
     void findAllStudent_shouldReturnAllStudent_whenLookForAllStudents() {
@@ -122,39 +122,39 @@ class StudentDaoImplTest {
         List<Student> actual = studentDao.findAllStudent();
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(4)
-    @DependsOn({"addStudent_shouldReturnStudent_whenAddStudent"})
+    @DependsOn({ "addStudent_shouldReturnStudent_whenAddStudent" })
     void editStudent_shouldReturnStudent_whenEditStudent() {
         List<Student> expected = new ArrayList<>();
         expected.add(student);
-        
-       student.setCitizenship("Egypt");         
-       studentDao.editStudent(student);
-       
+
+        student.setCitizenship("Egypt");
+        studentDao.editStudent(student);
+
         List<Student> actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(5)
-    @DependsOn({"editStudent_shouldReturnStudent_whenEditStudent"})
+    @DependsOn({ "editStudent_shouldReturnStudent_whenEditStudent" })
     void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
         List<Student> expected = new ArrayList<>();
         studentDao.deleteStudent(studentUUID);
-        
+
         List<Student> actual = studentDao.findStudent("Ivan");
-        assertEquals(expected, actual);   
+        assertEquals(expected, actual);
     }
-    
+
     @Test
     void addStudent_shouldNotChangeListAllStudent_whenInputStudentWithoutParameter() {
-        
+
         List<Student> expected = studentDao.findAllStudent();
         studentDao.addStudent(new Student());
         List<Student> actual = studentDao.findAllStudent();
-        
-        assertEquals(expected, actual);   
-    }   
+
+        assertEquals(expected, actual);
+    }
 }

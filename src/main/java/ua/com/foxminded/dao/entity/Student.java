@@ -8,7 +8,6 @@ import ua.com.foxminded.model.dto.PersonDto;
 public class Student extends Person{
     
     private String idStudent;
-//    private Person person;
     private Group group;
     private String studyStatus;
     private LocalDate startOfStudy;
@@ -27,15 +26,6 @@ public class Student extends Person{
         this.idStudent = idStudent;
         return this;
     }
-
-//    public Person getPerson() {
-//        return person;
-//    }
-//
-//    public Student setPerson(Person person) {
-//        this.person = person;
-//        return this;
-//    }
 
     public Group getGroup() {
         return group;

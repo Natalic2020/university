@@ -180,8 +180,10 @@ public class ContactInfoDto {
 
     @Override
     public String toString() {
-        return "ContactInfo [index=" + index + ", country=" + country + ", city=" + city + ", street=" + street
-                + ", house=" + house + ", apartment=" + apartment + ", phone1=" + phone1 + ", phone2=" + phone2
+        return "ContactInfo [index=" + index + ", country=" + country + ", city="
+                + city + ", street=" + street
+                + ", house=" + house + ", apartment=" + apartment + ", phone1="
+                + phone1 + ", phone2=" + phone2
                 + ", email=" + email + "]";
     }
 }

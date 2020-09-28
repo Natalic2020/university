@@ -68,6 +68,9 @@ public class WeekScheduleDto {
 
     @Override
     public String toString() {
-        return String.format("%s%n%s", getPeriod().getStartDate(), schedules.stream().map((schedule)->schedule.toString()).collect(Collectors.joining()));
+        return String.format("%s%n%s", getPeriod().getStartDate(),
+                schedules.stream()
+                .map((schedule)->schedule.toString())
+                .collect(Collectors.joining()));
     }
 }

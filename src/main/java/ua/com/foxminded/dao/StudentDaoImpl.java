@@ -30,7 +30,8 @@ public class StudentDaoImpl implements StudentDao {
     public void addStudent(Student student) {
         
         try {
-            jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) values (?, ?, ?)",
+            jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) " + 
+                    " values (?, ?, ?)",
                     new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
@@ -44,7 +45,8 @@ public class StudentDaoImpl implements StudentDao {
                 });  
 
             jdbcTemplate.execute(
-                    "INSERT INTO uni.students (id_student, id_person, study_status, start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO uni.students (id_student, id_person, study_status, " +
+                            "start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?, ?)",
                     new PreparedStatementCallback<Boolean>(){
                         @Override  
                         public Boolean doInPreparedStatement(PreparedStatement ps)  
@@ -67,7 +69,8 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void editStudent(Student student) {
         try {
-            jdbcTemplate.execute("UPDATE uni.students s SET citizenship = ?, study_status = ?, grants = ?, start_of_study = ?  WHERE s.id_student = ? ",
+            jdbcTemplate.execute("UPDATE uni.students s SET citizenship = ?, study_status = ?, " +
+                    " grants = ?, start_of_study = ?  WHERE s.id_student = ? ",
                     new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
@@ -89,7 +92,8 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void deleteStudent(String id) {
         try {
-            jdbcTemplate.execute("DELETE from uni.students s WHERE s.id_student = ? ", new PreparedStatementCallback<Boolean>(){
+            jdbcTemplate.execute("DELETE from uni.students s WHERE s.id_student = ? ", 
+                    new PreparedStatementCallback<Boolean>(){
                 @Override  
                 public Boolean doInPreparedStatement(PreparedStatement ps)  
                         throws SQLException, DataAccessException {                 
@@ -109,9 +113,11 @@ public class StudentDaoImpl implements StudentDao {
         List<Student> students = new ArrayList<>();
         try {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
-                    " where s.id_person = p.id_person and p.last_name = ? ", studentMapper , lastName);
+                    " where s.id_person = p.id_person and p.last_name = ? ", 
+                    studentMapper , lastName);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find the student id = " + lastName +". Reason: " + e.getMessage());
+            System.out.println(" I can't find the student id = " + lastName 
+                    + ". Reason: " + e.getMessage());
         }
         return students;
     }

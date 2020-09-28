@@ -73,7 +73,7 @@ class ScheduleItemDaoImplTest {
                                                  .setRoom(new Room().setName("room 1"))
                                                  .setSubject(new Subject().setName("Maths"))
                                                  .setTimeSlot(new TimeSlot().setSerialNumber(1));
-                                               
+
     }
 
     @Test
@@ -81,7 +81,7 @@ class ScheduleItemDaoImplTest {
     void addScheduleItem_shouldReturnScheduleItem_whenAddScheduleItem() {
         List<ScheduleItem> expected = new ArrayList<>();
         expected.add(scheduleItemExpected);
-        
+
         scheduleItemDao.addScheduleItem(scheduleItem);
         List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
         assertEquals(expected, actual);
@@ -109,7 +109,7 @@ class ScheduleItemDaoImplTest {
         List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan99");
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(3)
     void findScheduleStudent_shouldReturnScheduleStudent_whenLookForLastName() {
@@ -119,9 +119,9 @@ class ScheduleItemDaoImplTest {
 
         List<ScheduleItem> actual = scheduleItemDao.findScheduleStudent("Svitlychna");
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual.get(2));
     }
-    
+
     @Test
     @Order(4)
     void editScheduleItem_shouldReturnDayOfWeek_whenEditDayOfWeek() {
@@ -130,7 +130,7 @@ class ScheduleItemDaoImplTest {
         List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
         assertEquals("WENDNESDAY", actual.get(0).getDayOfWeek());
     }
-    
+
     @Test
     @Order(5)
     void deleteScheduleItem_shouldReturnEmpty_whenDeleteScheduleItem() {
@@ -139,5 +139,5 @@ class ScheduleItemDaoImplTest {
         List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
         assertEquals(expected, actual);
     }
-     
+
 }
