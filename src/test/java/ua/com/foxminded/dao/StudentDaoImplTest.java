@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -98,7 +99,7 @@ class StudentDaoImplTest {
 
         List<Student> expected = new ArrayList<>();
 
-        List<Student> actual = studentDao.findStudent("Ivan123");
+        List<Student> actual = studentDao.findStudent("d7599e42-0263-11eb-adc1-0242ac120002");
         assertEquals(expected, actual);
     }
 
