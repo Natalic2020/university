@@ -31,6 +31,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public void addScheduleItem(ScheduleItem scheduleItem) {
+        logger.info("Add schedule with UUID  = " + scheduleItem.getId());
         try {
             jdbcTemplate.update(
                     "INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, " + 
@@ -43,41 +44,44 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
             logger.info("ScheduleItem Added!!");
         } catch (DataAccessException e) {
-            logger.error("Scheduleitem didn't add!!  Reason: " + e.getMessage());
+            logger.debug("Scheduleitem didn't add!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
     public void editScheduleItem(ScheduleItem scheduleItem) {
+        logger.info("Edit schedule with UUID  = " + scheduleItem.getId());
         try {
             jdbcTemplate.update(
-                    "UPDATE  uni.schedule_items SET id = ?, id_group= ?, id_subject= ?, id_room= ?,  " +
-                            " id_time_slot= ?, id_teacher= ?, day_of_week= ? ",
-                    scheduleItem.getId(), scheduleItem.getGroup().getId(),
+                    "UPDATE  uni.schedule_items sch  SET sch.id_group= ?, sch.id_subject= ?, sch.id_room= ?,  " +
+                            " sch.id_time_slot= ?, sch.id_teacher= ?, sch.day_of_week= ? WHERE sch.id = ? ",
+                    scheduleItem.getGroup().getId(),
                     scheduleItem.getSubject().getId(), scheduleItem.getRoom().getId(),
                     scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
-                    scheduleItem.getDayOfWeek());
+                    scheduleItem.getDayOfWeek(), scheduleItem.getId());
 
             logger.info("ScheduleItem Updated!!");
         } catch (DataAccessException e) {
-            logger.error("Scheduleitem didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Scheduleitem didn't update!!  Reason: " + e.getMessage());
         }
 
     }
 
     @Override
     public void deleteScheduleItem(String id) {
+        logger.info("Delete schedule with UUID  = " + id);
         try {
             jdbcTemplate.update("DELETE  from uni.schedule_items s where s.id = ? ", id);
             logger.info("ScheduleItem Updated!!");
         } catch (DataAccessException e) {
-            logger.error("Scheduleitem didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Scheduleitem didn't update!!  Reason: " + e.getMessage());
         }
 
     }
 
     @Override
     public List<ScheduleItem> findScheduleTeacher(String lastName) {
+        logger.info("Find schedule for teacher with lastName  = " + lastName);
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
             scheduleItems = jdbcTemplate.query("Select * " +
@@ -89,7 +93,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, lastName);
         } catch (DataAccessException e) {
-            logger.error(
+            logger.debug(
                     " I can't find schedule teacher . Last name " + lastName + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
@@ -97,6 +101,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public List<ScheduleItem> findScheduleStudent(String lastName) {
+        logger.info("Find schedule for student with lastName = " + lastName);
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
             scheduleItems = jdbcTemplate.query("Select * " +
@@ -109,7 +114,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, lastName);
         } catch (DataAccessException e) {
-            logger.error(
+            logger.debug(
                     " I can't find schedule student . Last name " + lastName + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
@@ -117,6 +122,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public List<ScheduleItem> findWeekScheduleTeacher(UUID id) {
+        logger.info("Find schedule for teacher with id  = " + id);
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
             scheduleItems = jdbcTemplate.query("Select * " +
@@ -128,13 +134,14 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, id);
         } catch (DataAccessException e) {
-            logger.error(" I can't find schedule teacher . id " + id + ". Reason: " + e.getMessage());
+            logger.debug(" I can't find schedule teacher . id " + id + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
     }
 
     @Override
     public List<ScheduleItem> findWeekScheduleStudent(UUID id) {
+        logger.info("Find schedule for student with id  = " + id);
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
             scheduleItems = jdbcTemplate.query("Select * " +
@@ -147,7 +154,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, id);
         } catch (DataAccessException e) {
-            logger.error(" I can't find schedule student . id " + id + ". Reason: " + e.getMessage());
+            logger.debug(" I can't find schedule student . id " + id + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
     }

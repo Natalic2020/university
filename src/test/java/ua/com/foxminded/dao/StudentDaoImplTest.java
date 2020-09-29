@@ -77,18 +77,18 @@ class StudentDaoImplTest {
 
         studentDao.addStudent(student);
 
-        List<Student> actual = studentDao.findStudent("Ivan");
+        List<Student> actual = studentDao.findStudent(studentUUID);
         assertEquals(expected, actual);
     }
 
     @Test
     @Order(2)
-    void findStudent_shouldReturnStudent_whenLookForLastName() {
+    void findStudent_shouldReturnStudent_whenFindWithUUID() {
 
         List<Student> expected = new ArrayList<>();
         expected.add(student);
 
-        List<Student> actual = studentDao.findStudent("Ivan");
+        List<Student> actual = studentDao.findStudent(studentUUID);
         assertEquals(expected, actual);
     }
 
@@ -133,7 +133,7 @@ class StudentDaoImplTest {
         student.setCitizenship("Egypt");
         studentDao.editStudent(student);
 
-        List<Student> actual = studentDao.findStudent("Ivan");
+        List<Student> actual = studentDao.findStudent(studentUUID);
         assertEquals(expected, actual);
     }
 

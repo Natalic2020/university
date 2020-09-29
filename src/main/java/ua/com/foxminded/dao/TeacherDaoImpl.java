@@ -32,6 +32,8 @@ public class TeacherDaoImpl implements TeacherDao {
     
     @Override
     public void addTeacher(Teacher teacher) {
+        logger.info("Get teacher with UUID = " + teacher.getIdTeacher() + " , " 
+                + teacher.getLastName());
         try {
             jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) " +
                     " values (?, ?, ?)",
@@ -63,14 +65,15 @@ public class TeacherDaoImpl implements TeacherDao {
                 }  
                 });  
                   
-            logger.info("Teacher Added!!");
+            logger.info("Teacher added sucessfully.");
         } catch (DataAccessException e) {
-            logger.error("Teacher didn't add!!  Reason: " + e.getMessage());
+            logger.debug("Teacher didn't add!!  Reason: " + e.getMessage());
         } 
     }
 
     @Override
     public void editTeacher(Teacher teacher) {
+        logger.info("Edit teacher with UUID = " + teacher.getIdTeacher());
         try {
             jdbcTemplate.execute("UPDATE uni.teachers t SET degree = ?, department = ?, " + 
                     " permanent = ? , salary = ?  WHERE t.id_teacher = ? ",
@@ -86,14 +89,15 @@ public class TeacherDaoImpl implements TeacherDao {
                     return ps.execute();  
                 }  
                 });  
-            logger.info("Teacher Update");
+            logger.info("Teacher updated sucessfully.");
         } catch (DataAccessException e) {
-            logger.error("Teacher didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Teacher didn't update!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
     public void deleteTeacher(String id) {
+        logger.info("Delete teacher with UUID = " + id);
         try {
             jdbcTemplate.execute("DELETE from uni.teachers s WHERE s.id_teacher = ? ",
                     new PreparedStatementCallback<Boolean>(){
@@ -104,21 +108,23 @@ public class TeacherDaoImpl implements TeacherDao {
                     return ps.execute();  
                 }  
                 });  
-            logger.info("Teacher Deleted!!");
+            logger.info("Teacher deleted sucessfully.");
         } catch (DataAccessException e) {
-            logger.error("Teacher didn't delete!!  Reason: " + e.getMessage());
+            logger.debug("Teacher didn't delete!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
     public List<Teacher> findTeacher(String id) {
+        logger.info("Find teacher with id  = " + id);
         List<Teacher> teacher = new ArrayList<>();
         try {
             teacher = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
                     "  where t.id_person = p.id_person and t.id_teacher = ? ", 
                     teacherMapper, id);
+            logger.info("Teacher found sucessfully.");
         } catch (DataAccessException e) {
-            logger.error(" I can't find the teacher id = " + id + 
+            logger.debug(" I can't find the teacher id = " + id + 
                     ". Reason: " + e.getMessage());
         }
             return teacher;
@@ -126,12 +132,14 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public List<Teacher> findAllTeacher() {
+        logger.info("Find all teachers. ");
         List<Teacher> teachers = new ArrayList<>();
         try {
             teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
                     "where t.id_person = p.id_person", teacherMapper);
+            logger.info("Teachers found sucessfully.");
         } catch (DataAccessException e) {
-            logger.error(" I can't find all teachers . Reason: " + e.getMessage());
+            logger.debug(" I can't find all teachers . Reason: " + e.getMessage());
         }
         return teachers; 
     }

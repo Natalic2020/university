@@ -32,6 +32,8 @@ public class StudentDaoImpl implements StudentDao {
     
     @Override
     public void addStudent(Student student) {
+        logger.info("Get student with UUID = " + student.getIdStudent() + " , " 
+                                               + student.getLastName());
         
         try {
             jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) " + 
@@ -64,14 +66,15 @@ public class StudentDaoImpl implements StudentDao {
                             return ps.execute();  
                         }  
                         });  
-            logger.info("Student Added!!");
+            logger.info("Student added sucessfully.");
         } catch (DataAccessException e) {
-            logger.error("Student didn't add!!  Reason: " + e.getMessage());
+            logger.debug("Student didn't add!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
     public void editStudent(Student student) {
+        logger.info("Edit student with UUID = " + student.getIdStudent());
         try {
             jdbcTemplate.execute("UPDATE uni.students s SET citizenship = ?, study_status = ?, " +
                     " grants = ?, start_of_study = ?  WHERE s.id_student = ? ",
@@ -87,14 +90,15 @@ public class StudentDaoImpl implements StudentDao {
                     return ps.execute();  
                 }  
                 });  
-            logger.info("Student Updated!!");
+            logger.info("Student updated sucessfully.");
         } catch (DataAccessException e) {
-            logger.error("Student didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Student didn't update!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
     public void deleteStudent(String id) {
+        logger.info("Delete student with UUID = " + id);
         try {
             jdbcTemplate.execute("DELETE from uni.students s WHERE s.id_student = ? ", 
                     new PreparedStatementCallback<Boolean>(){
@@ -106,21 +110,23 @@ public class StudentDaoImpl implements StudentDao {
                 }  
                 });  
       
-            logger.info("Student Deleted!!");
+            logger.info("Student deleted sucessfully.");
         } catch (DataAccessException e) {
-            logger.error("Student didn't delete!!  Reason: " + e.getMessage());
+            logger.debug("Student didn't delete!!  Reason: " + e.getMessage());
         }
     }
 
     @Override
-    public List<Student> findStudent(String lastName) {
+    public List<Student> findStudent(String id) {
+        logger.info("Find student with last name  = " + id);
         List<Student> students = new ArrayList<>();
         try {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
-                    " where s.id_person = p.id_person and p.last_name = ? ", 
-                    studentMapper , lastName);
+                    " where s.id_person = p.id_person and s.id_student = ? ", 
+                    studentMapper , id);
+            logger.info("Student found sucessfully.");
         } catch (DataAccessException e) {
-            logger.error(" I can't find the student id = " + lastName 
+            logger.debug(" I can't find the student id = " + id 
                     + ". Reason: " + e.getMessage());
         }
         return students;
@@ -128,12 +134,14 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Student> findAllStudent() {
+        logger.info("Find all students. ");
         List<Student> students = new ArrayList<>();
         try {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
                     " where s.id_person = p.id_person", studentMapper);
+            logger.info("Students found sucessfully.");
         } catch (DataAccessException e) {
-            logger.error(" I can't find all students. Reason: " + e.getMessage());
+            logger.debug(" I can't find all students. Reason: " + e.getMessage());
         }
         return students;
     }
