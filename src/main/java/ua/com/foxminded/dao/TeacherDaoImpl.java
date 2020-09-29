@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -26,6 +28,7 @@ public class TeacherDaoImpl implements TeacherDao {
     @Autowired
     TeacherMapper teacherMapper;
     
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
     
     @Override
     public void addTeacher(Teacher teacher) {
@@ -60,9 +63,9 @@ public class TeacherDaoImpl implements TeacherDao {
                 }  
                 });  
                   
-             System.out.println("Teacher Added!!");
+            logger.info("Teacher Added!!");
         } catch (DataAccessException e) {
-            System.out.println("Teacher didn't add!!  Reason: " + e.getMessage());
+            logger.error("Teacher didn't add!!  Reason: " + e.getMessage());
         } 
     }
 
@@ -83,9 +86,9 @@ public class TeacherDaoImpl implements TeacherDao {
                     return ps.execute();  
                 }  
                 });  
-                System.out.println("Teacher Update");
+            logger.info("Teacher Update");
         } catch (DataAccessException e) {
-            System.out.println("Teacher didn't update!!  Reason: " + e.getMessage());
+            logger.error("Teacher didn't update!!  Reason: " + e.getMessage());
         }
     }
 
@@ -101,9 +104,9 @@ public class TeacherDaoImpl implements TeacherDao {
                     return ps.execute();  
                 }  
                 });  
-            System.out.println("Teacher Deleted!!");
+            logger.info("Teacher Deleted!!");
         } catch (DataAccessException e) {
-            System.out.println("Teacher didn't delete!!  Reason: " + e.getMessage());
+            logger.error("Teacher didn't delete!!  Reason: " + e.getMessage());
         }
     }
 
@@ -115,7 +118,7 @@ public class TeacherDaoImpl implements TeacherDao {
                     "  where t.id_person = p.id_person and t.id_teacher = ? ", 
                     teacherMapper, id);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find the teacher id = " + id + 
+            logger.error(" I can't find the teacher id = " + id + 
                     ". Reason: " + e.getMessage());
         }
             return teacher;
@@ -128,7 +131,7 @@ public class TeacherDaoImpl implements TeacherDao {
             teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " + 
                     "where t.id_person = p.id_person", teacherMapper);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find all teachers . Reason: " + e.getMessage());
+            logger.error(" I can't find all teachers . Reason: " + e.getMessage());
         }
         return teachers; 
     }

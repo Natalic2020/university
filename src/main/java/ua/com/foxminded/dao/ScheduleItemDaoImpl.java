@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -24,6 +26,8 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Autowired
     ScheduleMapper scheduleMapper;
+    
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
 
     @Override
     public void addScheduleItem(ScheduleItem scheduleItem) {
@@ -37,9 +41,9 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
                     scheduleItem.getDayOfWeek());
 
-            System.out.println("ScheduleItem Added!!");
+            logger.info("ScheduleItem Added!!");
         } catch (DataAccessException e) {
-            System.out.println("Scheduleitem didn't add!!  Reason: " + e.getMessage());
+            logger.error("Scheduleitem didn't add!!  Reason: " + e.getMessage());
         }
     }
 
@@ -54,9 +58,9 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
                     scheduleItem.getDayOfWeek());
 
-            System.out.println("ScheduleItem Updated!!");
+            logger.info("ScheduleItem Updated!!");
         } catch (DataAccessException e) {
-            System.out.println("Scheduleitem didn't update!!  Reason: " + e.getMessage());
+            logger.error("Scheduleitem didn't update!!  Reason: " + e.getMessage());
         }
 
     }
@@ -65,9 +69,9 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
     public void deleteScheduleItem(String id) {
         try {
             jdbcTemplate.update("DELETE  from uni.schedule_items s where s.id = ? ", id);
-            System.out.println("ScheduleItem Updated!!");
+            logger.info("ScheduleItem Updated!!");
         } catch (DataAccessException e) {
-            System.out.println("Scheduleitem didn't update!!  Reason: " + e.getMessage());
+            logger.error("Scheduleitem didn't update!!  Reason: " + e.getMessage());
         }
 
     }
@@ -85,7 +89,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, lastName);
         } catch (DataAccessException e) {
-            System.out.println(
+            logger.error(
                     " I can't find schedule teacher . Last name " + lastName + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
@@ -105,7 +109,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, lastName);
         } catch (DataAccessException e) {
-            System.out.println(
+            logger.error(
                     " I can't find schedule student . Last name " + lastName + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
@@ -124,7 +128,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, id);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find schedule teacher . id " + id + ". Reason: " + e.getMessage());
+            logger.error(" I can't find schedule teacher . id " + id + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
     }
@@ -143,7 +147,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " order by ts.serial_number ",
                     scheduleMapper, id);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find schedule student . id " + id + ". Reason: " + e.getMessage());
+            logger.error(" I can't find schedule student . id " + id + ". Reason: " + e.getMessage());
         }
         return scheduleItems;
     }

@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -25,6 +27,8 @@ public class StudentDaoImpl implements StudentDao {
 
     @Autowired
     StudentMapper studentMapper;
+    
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
     
     @Override
     public void addStudent(Student student) {
@@ -60,9 +64,9 @@ public class StudentDaoImpl implements StudentDao {
                             return ps.execute();  
                         }  
                         });  
-            System.out.println("Student Added!!");
+            logger.info("Student Added!!");
         } catch (DataAccessException e) {
-            System.out.println("Student didn't add!!  Reason: " + e.getMessage());
+            logger.error("Student didn't add!!  Reason: " + e.getMessage());
         }
     }
 
@@ -83,9 +87,9 @@ public class StudentDaoImpl implements StudentDao {
                     return ps.execute();  
                 }  
                 });  
-            System.out.println("Student Updated!!");
+            logger.info("Student Updated!!");
         } catch (DataAccessException e) {
-            System.out.println("Student didn't update!!  Reason: " + e.getMessage());
+            logger.error("Student didn't update!!  Reason: " + e.getMessage());
         }
     }
 
@@ -102,9 +106,9 @@ public class StudentDaoImpl implements StudentDao {
                 }  
                 });  
       
-            System.out.println("Student Deleted!!");
+            logger.info("Student Deleted!!");
         } catch (DataAccessException e) {
-            System.out.println("Student didn't delete!!  Reason: " + e.getMessage());
+            logger.error("Student didn't delete!!  Reason: " + e.getMessage());
         }
     }
 
@@ -116,7 +120,7 @@ public class StudentDaoImpl implements StudentDao {
                     " where s.id_person = p.id_person and p.last_name = ? ", 
                     studentMapper , lastName);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find the student id = " + lastName 
+            logger.error(" I can't find the student id = " + lastName 
                     + ". Reason: " + e.getMessage());
         }
         return students;
@@ -129,7 +133,7 @@ public class StudentDaoImpl implements StudentDao {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
                     " where s.id_person = p.id_person", studentMapper);
         } catch (DataAccessException e) {
-            System.out.println(" I can't find all students. Reason: " + e.getMessage());
+            logger.error(" I can't find all students. Reason: " + e.getMessage());
         }
         return students;
     }

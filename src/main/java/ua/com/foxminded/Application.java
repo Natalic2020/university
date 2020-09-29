@@ -2,6 +2,8 @@ package ua.com.foxminded;
 
 import java.time.LocalDate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -35,6 +37,8 @@ public class Application {
     
     public void run() {
 
+        Logger logger = LoggerFactory.getLogger("SampleLogger");
+        logger.info("Hi This is my first SLF4J program");
         report.testStudent();
         report.testTeacher();
 

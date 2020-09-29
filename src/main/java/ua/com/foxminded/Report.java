@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ import ua.com.foxminded.service.interfaces.TeacherService;
 @Component
 public class Report {
 
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
+    
     @Autowired
     ScheduleItemService scheduleItemService;
 
@@ -47,26 +51,26 @@ public class Report {
                 .setId(UUID.fromString("c38685d8-5c63-46af-8584-6001273a775a")));
                   
  
-        System.out.println("--------------Week------------------");
+        logger.info("--------------Week------------------");
         List<ScheduleItemDto> schedule1 = scheduleItemService
                 .findWeekScheduleTeacher(lastName, startPeriod);
                 
-        schedule1.forEach(e -> System.out.println(e.toString()));
+        schedule1.forEach(e -> logger.info(e.toString()));
        
     }
 
     public void outputStudentSchedule(String lastName, LocalDate startPeriod) {
 
-        System.out.println("--------------Week------------------");
+        logger.info("--------------Week------------------");
         List<ScheduleItemDto> schedule1 = scheduleItemService
                 .findWeekScheduleStudent(lastName, startPeriod);
-        schedule1.forEach(e -> System.out.println(e.toString()));
+        schedule1.forEach(e -> logger.info(e.toString()));
        
     }
     
     public void testStudent() {
-        System.out.println("Find All");
-        studentService.findAllStudent().forEach(System.out::println);
+        logger.info("Find All");
+        studentService.findAllStudent().forEach(e -> logger.info(e.toString()));
 
         studentService.addStudent(((StudentDto) new StudentDto()
                 .setIdStudent(UUID.fromString("ea9f0dc7-a81f-44ba-a032-b4c3dde4fe18"))
@@ -78,10 +82,10 @@ public class Report {
                                            .setGrant(new BigDecimal(10))
                                            .setStartOfStudy(LocalDate.of(1999, 02, 02)));
         
-        System.out.println("Delete person Id = 3");
+        logger.info("Delete person Id = 3");
         studentService.deleteStudent(UUID.fromString("47357b8a-1971-419e-bdad-1c34bb9c6a26"));
 
-        System.out.println("Update person Id = 1");
+        logger.info("Update person Id = 1");
         studentService.editStudent(new StudentDto()
                 .setIdStudent(UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6"))
                 .setCitizenship("Russia")
@@ -89,32 +93,32 @@ public class Report {
                                            .setGrant(new BigDecimal(10))
                                            .setStartOfStudy(LocalDate.of(1999, 02, 02)));
 
-        System.out.println("Find person Id = 2");
-        studentService.findStudent("Loza").forEach(System.out::println);
+        logger.info("Find person Id = 2");
+        studentService.findStudent("Loza").forEach(e -> logger.info(e.toString()));
 
-        System.out.println("Find All Again");
-        studentService.findAllStudent().forEach(System.out::println); 
+        logger.info("Find All Again");
+        studentService.findAllStudent().forEach(e -> logger.info(e.toString())); 
     }
     
     public void testTeacher() {
         
-        System.out.println("Find All");
-        teacherService.findAllTeacher().forEach(System.out::println);
+        logger.info("Find All");
+        teacherService.findAllTeacher().forEach(e -> logger.info(e.toString()));
 
-        System.out.println("Delete teacher Id = 3");
+        logger.info("Delete teacher Id = 3");
         teacherService.deleteTeacher(UUID.fromString("fd65ef4a-2b85-4730-869e-a70a3364031e"));
 
-        System.out.println("Update person Id = 1");
+        logger.info("Update person Id = 1");
         teacherService.editTeacher(new TeacherDto()
                 .setIdTeacher(UUID.fromString("95d5a598-4fa1-4937-acf7-382a878d19fa"))
                 .setDegree(Degree.PROFESSOR)
                 .setDepartment(Department.ARCHITECTURE));
 
-        System.out.println("Find person Id = 2");
+        logger.info("Find person Id = 2");
         teacherService.findTeacher(UUID.fromString("c64e0102-c812-441b-9ef9-c9f478e18745"))
-        .forEach(System.out::println);
+        .forEach(e -> logger.info(e.toString()));
 
-        System.out.println("Find All Again");
-        teacherService.findAllTeacher().forEach(System.out::println);
+        logger.info("Find All Again");
+        teacherService.findAllTeacher().forEach(e -> logger.info(e.toString()));
     }
 }
