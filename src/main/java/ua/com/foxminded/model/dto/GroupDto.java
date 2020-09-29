@@ -89,6 +89,7 @@ public class GroupDto {
 
     @Override
     public String toString() {
-        return "Group [id=" + id + ", name=" + name + ", specialty=" + specialty + ", students=" + students + "]";
+        return "Group [id=" + id + ", name=" + name + ", specialty=" + specialty 
+                + ", students=" + students + "]";
     }
 }

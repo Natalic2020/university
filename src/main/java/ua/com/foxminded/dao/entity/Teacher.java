@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 public class Teacher extends Person{
 
     private String idTeacher;
-//    private Person Person;
     private String degree;
     private String department;
     private boolean isPermanent;

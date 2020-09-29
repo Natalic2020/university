@@ -25,7 +25,9 @@ public class StudentServiceImpl implements StudentService {
     
     @Override
     public void addStudent(StudentDto studentDto) {
-        studentDao.addStudent(studentConverter.convertDtoToEntity((StudentDto) studentDto.setIdStudent(UUID.randomUUID()).setIdPerson(UUID.randomUUID())));
+        studentDao.addStudent(studentConverter.convertDtoToEntity((StudentDto) studentDto
+                .setIdStudent(UUID.randomUUID())
+                .setIdPerson(UUID.randomUUID())));
     }
 
     @Override
@@ -40,11 +42,15 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDto> findStudent(String text) {
-        return studentDao.findStudent(text).stream().map(studentConverter::convertEntityToDto).collect(Collectors.toList());
+        return studentDao.findStudent(text).stream()
+                .map(studentConverter::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<StudentDto> findAllStudent() {
-        return studentDao.findAllStudent().stream().map(studentConverter::convertEntityToDto).collect(Collectors.toList());
+        return studentDao.findAllStudent().stream()
+                .map(studentConverter::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 }

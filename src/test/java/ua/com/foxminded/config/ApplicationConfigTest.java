@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @ComponentScan(basePackages = "ua.com.foxminded.util")
+@ComponentScan(basePackages = "ua.com.foxminded.service")
+@ComponentScan(basePackages = "ua.com.foxminded.converter")
 @ComponentScan(basePackages = "ua.com.foxminded.dao")
 @PropertySource(value = { "classpath:db_test.properties" })
 public class ApplicationConfigTest {

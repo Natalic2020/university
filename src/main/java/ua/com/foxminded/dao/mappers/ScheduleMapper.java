@@ -24,10 +24,16 @@ public class ScheduleMapper implements RowMapper<ScheduleItem> {
       
         Group group = new Group().setName(rs.getString("name_group"));
         Room room = new Room().setName(rs.getString("name_room"));
-        Subject subject = new Subject().setName(rs.getString("name_subject"));
-        TimeSlot timeSlot = new TimeSlot().setSerialNumber(rs.getInt("serial_number"));
-        ScheduleItem scheduleItem = new ScheduleItem().setDayOfWeek(rs.getString("day_of_week"))
-        .setGroup(group).setRoom(room).setSubject(subject).setTimeSlot(timeSlot);
+        Subject subject = new Subject()
+                .setName(rs.getString("name_subject"));
+        TimeSlot timeSlot = new TimeSlot()
+                .setSerialNumber(rs.getInt("serial_number"));
+        ScheduleItem scheduleItem = new ScheduleItem()
+                .setDayOfWeek(rs.getString("day_of_week"))
+                .setGroup(group)
+                .setRoom(room)
+                .setSubject(subject)
+                .setTimeSlot(timeSlot);
         return scheduleItem;
     }
 }

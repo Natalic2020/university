@@ -92,7 +92,8 @@ public class TimeSlotDto {
 
     @Override
     public String toString() {
-        return "TimeSlotDto [id=" + id + ", serialNumber=" + serialNumber + ", startTime=" + startTime + ", finishTime="
+        return "TimeSlotDto [id=" + id + ", serialNumber=" + serialNumber 
+                + ", startTime=" + startTime + ", finishTime="
                 + finishTime + "]";
     } 
 }

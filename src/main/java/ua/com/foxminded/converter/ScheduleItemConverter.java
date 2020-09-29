@@ -32,29 +32,34 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
             scheduleItemDto.getGroup().getStudents().forEach(studentDto ->
                 {   
                     Student student = new Student();
-                    Optional.ofNullable(studentDto.getIdStudent()).ifPresent(ss -> student.setIdStudent(ss.toString()));
-                    Optional.ofNullable(studentDto.getIdPerson()).ifPresent(ss -> student.setIdStudent(ss.toString()));
+                    Optional.ofNullable(studentDto.getIdStudent())
+                    .ifPresent(ss -> student.setIdStudent(ss.toString()));
+                    Optional.ofNullable(studentDto.getIdPerson())
+                    .ifPresent(ss -> student.setIdStudent(ss.toString()));
                    student.setFirstName(studentDto.getFirstName())
                     .setLastName(studentDto.getLastName());
                     students.add(student);
                 });
 
             
-            Optional.ofNullable(scheduleItemDto.getGroup().getId()).ifPresent(ss -> group.setId(ss.toString()));
+            Optional.ofNullable(scheduleItemDto.getGroup().getId())
+            .ifPresent(ss -> group.setId(ss.toString()));
             group.setName(scheduleItemDto.getGroup().getName())
                  .setStudents(students);
             }
             
             Room room = new Room();
             if (scheduleItemDto.getRoom()!= null) {
-                Optional.ofNullable(scheduleItemDto.getRoom().getId()).ifPresent(ss -> room.setId(ss.toString()));
+                Optional.ofNullable(scheduleItemDto.getRoom().getId())
+                .ifPresent(ss -> room.setId(ss.toString()));
                 room.setName(scheduleItemDto.getRoom().getName());
             }
             
             Subject subject = new Subject();
             
             if (scheduleItemDto.getSubject()!= null) {
-                Optional.ofNullable(scheduleItemDto.getSubject().getId()).ifPresent(ss -> subject.setId(ss.toString()));
+                Optional.ofNullable(scheduleItemDto.getSubject().getId())
+                .ifPresent(ss -> subject.setId(ss.toString()));
                 subject.setName(scheduleItemDto.getSubject().getName());
             }
             
@@ -63,25 +68,32 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
             if (scheduleItemDto.getTimeSlot() != null) {
                 Optional.ofNullable(scheduleItemDto.getTimeSlot().getId())
                         .ifPresent(ss -> timeSlot.setId(ss.toString()));
-                timeSlot.setSerialNumber(scheduleItemDto.getTimeSlot().getSerialNumber())
-                        .setStartTime(scheduleItemDto.getTimeSlot().getStartTime())
-                        .setFinishTime(scheduleItemDto.getTimeSlot().getFinishTime());
+                timeSlot.setSerialNumber(scheduleItemDto.getTimeSlot()
+                        .getSerialNumber())
+                        .setStartTime(scheduleItemDto.getTimeSlot()
+                                .getStartTime())
+                        .setFinishTime(scheduleItemDto.getTimeSlot()
+                                .getFinishTime());
             }
             
             
 
             Teacher teacher = new Teacher();
-            Optional.ofNullable(scheduleItemDto.getTeacher().getIdTeacher()).ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
-            Optional.ofNullable(scheduleItemDto.getTeacher().getIdPerson()).ifPresent(ss -> teacher.setIdPerson(ss.toString()));
+            Optional.ofNullable(scheduleItemDto.getTeacher().getIdTeacher())
+            .ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
+            Optional.ofNullable(scheduleItemDto.getTeacher().getIdPerson())
+            .ifPresent(ss -> teacher.setIdPerson(ss.toString()));
 
             teacher.setFirstName(scheduleItemDto.getTeacher().getFirstName())
                   .setLastName(scheduleItemDto.getTeacher().getLastName());
             
             ScheduleItem scheduleItem = new ScheduleItem();
             
-            Optional.ofNullable(scheduleItemDto.getId()).ifPresent(ss -> scheduleItem.setId(ss.toString()));
+            Optional.ofNullable(scheduleItemDto.getId())
+            .ifPresent(ss -> scheduleItem.setId(ss.toString()));
             
-            Optional.ofNullable(scheduleItemDto.getDayOfWeek()).ifPresent(ss -> scheduleItem.setDayOfWeek(ss.name()));
+            Optional.ofNullable(scheduleItemDto.getDayOfWeek())
+            .ifPresent(ss -> scheduleItem.setDayOfWeek(ss.name()));
             scheduleItem.setGroup(group)
                         .setRoom(room)
                         .setSubject(subject)

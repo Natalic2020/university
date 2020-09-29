@@ -47,114 +47,110 @@ public class TeacherDaoImplTest {
     private String teacherUUID = "2901a714-fb14-11ea-adc1-0242ac120002";
     private String personUUID = "2d44565a-fb14-11ea-adc1-0242ac120002";
     private Teacher teacher;
-    
+
     @BeforeAll
     void Init() throws Exception {
         creatDB();
         teacher = new Teacher()
-                .setIdTeacher(teacherUUID)
-                .setDegree("DOCENT")
-                .setDepartment("MATHEMATICS")
-                .setPermanent(true)
-                .setSalary(new BigDecimal(9999));
-                teacher.setIdPerson(personUUID)
-                                       .setFirstName("Maria")
-                                       .setLastName("Ivanovna");
+                               .setIdTeacher(teacherUUID)
+                               .setDegree("DOCENT")
+                               .setDepartment("MATHEMATICS")
+                               .setPermanent(true)
+                               .setSalary(new BigDecimal(9999));
+        teacher.setIdPerson(personUUID)
+               .setFirstName("Maria")
+               .setLastName("Ivanovna");
     }
 
     public void creatDB() {
-        jdbcTemplate.batchUpdate( file.readFileToLines("sql_test.script")); 
+        jdbcTemplate.batchUpdate(file.readFileToLines("sql_test.script"));
     }
 
     @Test
     @Order(1)
-    void addTeacher_schoudReturnTeacher_whenAddTeacher() {
-        
+    void addTeacher_shouldReturnTeacher_whenAddTeacher() {
+
+        List<Teacher> expected = new ArrayList<>();
+        expected.add(teacher);
+
         teacherDao.addTeacher(teacher);
 
+        List<Teacher> actual = teacherDao.findTeacher(teacherUUID);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @Order(2)
+    void findTeacher_shouldReturnTeacher_whenLookForLastName() {
+
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
 
         List<Teacher> actual = teacherDao.findTeacher(teacherUUID);
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(2)
-    void findTeacher_schoudReturnTeacher_whenLookForLastName() {
-
-        List<Teacher> expected = new ArrayList<>();
-        expected.add(teacher);
-
-        List<Teacher> actual = teacherDao.findTeacher(teacherUUID);
-        assertEquals(expected, actual);
-    }
-    
-    @Test
-    @Order(2)
-    void findTeacher_schoudReturnEmpty_whenLookForNonExistentTeacher() {
-
+    void findTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
         List<Teacher> expected = new ArrayList<>();
 
         List<Teacher> actual = teacherDao.findTeacher("Ivan123");
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(2)
-    void findTeacher_schoudReturnEmpty_whenLookForNull() {
-
+    void findTeacher_shouldReturnEmpty_whenLookForNull() {
         List<Teacher> expected = new ArrayList<>();
 
         List<Teacher> actual = teacherDao.findTeacher(null);
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(3)
-    void findAllTeacher_schoudReturnAllTeacher_whenLookForAllTeachers() {
-
+    void findAllTeacher_shouldReturnAllTeacher_whenLookForAllTeachers() {
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
 
         List<Teacher> actual = teacherDao.findAllTeacher();
         assertEquals(expected, actual);
     }
-    
-    
+
     @Test
     @Order(4)
-    @DependsOn({"addTeacher_schoudReturnTeacher_whenAddTeacher"})
-    void editTeacher_schoudReturnTeacher_whenEditTeacher() {
-        
-     teacher.setDegree("DOCTOR");
-
-        teacherDao.editTeacher(teacher);
-
+    @DependsOn({ "addTeacher_shouldReturnTeacher_whenAddTeacher" })
+    void editTeacher_shouldReturnTeacher_whenEditTeacher() {
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
+
+        teacher.setDegree("DOCTOR");
+        teacherDao.editTeacher(teacher);
 
         List<Teacher> actual = teacherDao.findTeacher(teacherUUID);
         assertEquals(expected, actual);
     }
-    
+
     @Test
     @Order(5)
-    @DependsOn({"editTeacher_schoudReturnTeacher_whenEditTeacher"})
-    void deleteTeacher_schoudReturnEmpty_whenDeleteTeacher() {
-        teacherDao.deleteTeacher(teacherUUID);
+    @DependsOn({ "editTeacher_shouldReturnTeacher_whenEditTeacher" })
+    void deleteTeacher_shouldReturnEmpty_whenDeleteTeacher() {
         List<Teacher> expected = new ArrayList<>();
+        teacherDao.deleteTeacher(teacherUUID);
+
         List<Teacher> actual = teacherDao.findTeacher("Ivanovna");
-        assertEquals(expected, actual);   
-    } 
-    
+        assertEquals(expected, actual);
+    }
+
     @Test
     void addTeacher_shouldNotChangeListAllTeacher_whenInputTeacherWithoutParameter() {
-        
+
         List<Teacher> expected = teacherDao.findAllTeacher();
         teacherDao.addTeacher(new Teacher());
+
         List<Teacher> actual = teacherDao.findAllTeacher();
-        
-        assertEquals(expected, actual);   
-    }   
+
+        assertEquals(expected, actual);
+    }
 }

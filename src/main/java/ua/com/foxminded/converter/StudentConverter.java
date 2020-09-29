@@ -15,8 +15,10 @@ public class StudentConverter {
     public Student convertDtoToEntity(StudentDto studentDto) {    
         
         Student student = new Student();
-        Optional.ofNullable(studentDto.getIdStudent()).ifPresent(ss -> student.setIdStudent(ss.toString()));
-        Optional.ofNullable(studentDto.getIdPerson()).ifPresent(ss -> student.setIdPerson(ss.toString()));        
+        Optional.ofNullable(studentDto.getIdStudent())
+        .ifPresent(ss -> student.setIdStudent(ss.toString()));
+        Optional.ofNullable(studentDto.getIdPerson())
+        .ifPresent(ss -> student.setIdPerson(ss.toString()));        
          student.setFirstName(studentDto.getFirstName())
                         .setLastName(studentDto.getLastName());
         student.setCitizenship(studentDto.getCitizenship())
@@ -37,7 +39,8 @@ public class StudentConverter {
         .setCitizenship(student.getCitizenship())
         .setGrant(student.getGrant())
         .setStartOfStudy(student.getStartOfStudy());
-        Optional.ofNullable(student.getStudyStatus()).ifPresent(ss -> studentDto.setStudyStatus(StudyStatus.valueOf(ss)));      
+        Optional.ofNullable(student.getStudyStatus())
+        .ifPresent(ss -> studentDto.setStudyStatus(StudyStatus.valueOf(ss)));      
         return studentDto;
     }
 }
