@@ -31,7 +31,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public void addScheduleItem(ScheduleItem scheduleItem) {
-        logger.info("Add schedule with UUID  = " + scheduleItem.getId());
+        logger.info("Add cheduleItem with UUID  = " + scheduleItem.getId());
         try {
             jdbcTemplate.update(
                     "INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, " + 
@@ -42,9 +42,10 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
                     scheduleItem.getDayOfWeek());
 
-            logger.info("ScheduleItem Added!!");
+            logger.info("ScheduleItem with UUID  = " + scheduleItem.getId() + " added sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Scheduleitem didn't add!!  Reason: " + e.getMessage());
+            logger.debug("Scheduleitem with UUID  = " + scheduleItem.getId() + "didn't add!!  Reason: "
+                    + e.getMessage());
         }
     }
 
@@ -60,9 +61,10 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
                     scheduleItem.getDayOfWeek(), scheduleItem.getId());
 
-            logger.info("ScheduleItem Updated!!");
+            logger.info("ScheduleItem with UUID  = " + scheduleItem.getId() + " updated sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Scheduleitem didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Scheduleitem with UUID  = " + scheduleItem.getId() + " didn't update!!  Reason: " 
+                    + e.getMessage());
         }
 
     }
@@ -72,9 +74,9 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
         logger.info("Delete schedule with UUID  = " + id);
         try {
             jdbcTemplate.update("DELETE  from uni.schedule_items s where s.id = ? ", id);
-            logger.info("ScheduleItem Updated!!");
+            logger.info("ScheduleItem with UUID  = " + id + " updated sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Scheduleitem didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Scheduleitem with UUID  = " + id + " didn't update!!  Reason: " + e.getMessage());
         }
 
     }

@@ -69,9 +69,10 @@ public class StudentDaoImpl implements StudentDao {
                             return ps.execute();
                         }
                     });
-            logger.info("Student added sucessfully.");
+            logger.info("Student with UUID = " + student.getIdStudent() + " added sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Student didn't add!!  Reason: " + e.getMessage());
+            logger.debug("Student  with UUID = " + student.getIdStudent() + " didn't add!!  Reason: "
+                    + e.getMessage());
         }
     }
 
@@ -93,9 +94,10 @@ public class StudentDaoImpl implements StudentDao {
                             return ps.execute();
                         }
                     });
-            logger.info("Student updated sucessfully.");
+            logger.info("Student with UUID = " + student.getIdStudent() + " updated sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Student didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Student with UUID = " + student.getIdStudent() + " didn't update!!  Reason: "
+                    + e.getMessage());
         }
     }
 
@@ -113,9 +115,9 @@ public class StudentDaoImpl implements StudentDao {
                         }
                     });
 
-            logger.info("Student deleted sucessfully.");
+            logger.info("Student with UUID = " + id + " deleted sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Student didn't delete!!  Reason: " + e.getMessage());
+            logger.debug("Student with UUID = " + id + "  didn't delete!!  Reason: " + e.getMessage());
         }
     }
 
@@ -129,7 +131,7 @@ public class StudentDaoImpl implements StudentDao {
                     studentMapper, id);
 
             if (students.size() > 0) {
-                logger.info("Student found sucessfully.");
+                logger.info("Student with last name  = " + id + " found sucessfully.");
             } else {
                 throw new NoSuchStudentException(id);
             }

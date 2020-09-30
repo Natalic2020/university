@@ -70,9 +70,9 @@ public class TeacherDaoImpl implements TeacherDao {
                         }
                     });
 
-            logger.info("Teacher added sucessfully.");
+            logger.info("Teacher with UUID = " + teacher.getIdTeacher() + " added sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Teacher didn't add!!  Reason: " + e.getMessage());
+            logger.debug("Teacher with UUID = " + teacher.getIdTeacher() + "didn't add!!  Reason: " + e.getMessage());
         }
     }
 
@@ -94,9 +94,10 @@ public class TeacherDaoImpl implements TeacherDao {
                             return ps.execute();
                         }
                     });
-            logger.info("Teacher updated sucessfully.");
+            logger.info("Teacher with UUID = " + teacher.getIdTeacher() + " updated sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Teacher didn't update!!  Reason: " + e.getMessage());
+            logger.debug("Teacher with UUID = " + teacher.getIdTeacher() + "didn't update!!  Reason: " 
+                    + e.getMessage());
         }
     }
 
@@ -113,9 +114,10 @@ public class TeacherDaoImpl implements TeacherDao {
                             return ps.execute();
                         }
                     });
-            logger.info("Teacher deleted sucessfully.");
+            logger.info("Teacher teacher with UUID = " + id + " deleted sucessfully.");
         } catch (DataAccessException e) {
-            logger.debug("Teacher didn't delete!!  Reason: " + e.getMessage());
+            logger.debug("Teacher teacher with UUID = " + id + " didn't delete!!  Reason: " 
+                    + e.getMessage());
         }
     }
 
@@ -128,7 +130,7 @@ public class TeacherDaoImpl implements TeacherDao {
                     "  where t.id_person = p.id_person and t.id_teacher = ? ",
                     teacherMapper, id);
             if (teacher.size() > 0) {
-                logger.info("Teacher found sucessfully.");
+                logger.info("Teacher with id  = " + id +" found sucessfully.");
             } else {
                 throw new NoSuchTeacherException(id);
             }
