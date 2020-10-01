@@ -11,8 +11,6 @@ public interface ScheduleItemDao {
     public void  addScheduleItem(ScheduleItem  scheduleItem);
     public void  editScheduleItem(ScheduleItem scheduleItem);
     public void  deleteScheduleItem(String string);
-    public List<ScheduleItem> findScheduleTeacher(String lastName);
-    public List<ScheduleItem> findScheduleStudent(String lastName);
-    public List<ScheduleItem> findWeekScheduleTeacher(UUID id);
-    public List<ScheduleItem> findWeekScheduleStudent(UUID id);
+    public List<ScheduleItem> findWeekScheduleTeacher(String id);
+    public List<ScheduleItem> findWeekScheduleStudent(String id);
 }

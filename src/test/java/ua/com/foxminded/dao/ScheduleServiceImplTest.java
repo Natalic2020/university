@@ -81,13 +81,13 @@ class ScheduleServiceImplTest {
                                           .setSubject(new SubjectDto().setName("Maths"))
                                           .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
 
-        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        String uuid1 = "a17f83c5-a85a-4420-8423-23b86d0463c6";
 
         Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
 
         scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
-        List<ScheduleItemDto> actual = scheduleService.findWeekScheduleStudent(uuid1);
+        List<ScheduleItemDto> actual = scheduleService.findWeekScheduleStudent(UUID.fromString(uuid1));
         assertEquals(expected, actual);
 
     }
@@ -103,14 +103,14 @@ class ScheduleServiceImplTest {
                                           .setSubject(new SubjectDto().setName("Maths"))
                                           .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
 
-        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        String uuid1 = "a17f83c5-a85a-4420-8423-23b86d0463c6";
 
         Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
 
         scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
-        Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleStudent(uuid1,
-                LocalDate.of(1999, 02, 02));
+        Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleStudent(UUID.fromString(uuid1),
+                                                                           LocalDate.of(1999, 02, 02));
 
         assertEquals(expected, actual.get("1999-02-09 TUESDAY"));
     }
@@ -126,13 +126,13 @@ class ScheduleServiceImplTest {
                                           .setSubject(new SubjectDto().setName("Maths"))
                                           .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
 
-        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        String uuid1 = "a17f83c5-a85a-4420-8423-23b86d0463c6";
 
         Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
 
         scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
-        List<ScheduleItemDto> actual = scheduleService.findWeekScheduleTeacher(uuid1);
+        List<ScheduleItemDto> actual = scheduleService.findWeekScheduleTeacher(UUID.fromString(uuid1));
         assertEquals(expected, actual);
 
     }
@@ -148,14 +148,14 @@ class ScheduleServiceImplTest {
                                           .setSubject(new SubjectDto().setName("Maths"))
                                           .setTimeSlot(new TimeSlotDto().setSerialNumber(1)));
 
-        UUID uuid1 = UUID.fromString("a17f83c5-a85a-4420-8423-23b86d0463c6");
+        String uuid1 = "a17f83c5-a85a-4420-8423-23b86d0463c6";
 
         Mockito.when(scheduleItemDao.findWeekScheduleTeacher(uuid1)).thenReturn(scheduleItems);
 
         scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
-        Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleTeacher(uuid1,
-                LocalDate.of(1999, 02, 02));
+        Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleTeacher(UUID.fromString(uuid1),
+                                                                           LocalDate.of(1999, 02, 02));
 
         assertEquals(expected, actual.get("1999-02-09 TUESDAY"));
     }

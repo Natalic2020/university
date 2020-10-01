@@ -10,6 +10,4 @@ public interface ScheduleItemService {
     public void addScheduleItem(ScheduleItemDto scheduleItemDto);
     public void editScheduleItem(ScheduleItemDto scheduleItemDto);
     public void deleteScheduleItem(UUID id);
-    public List<ScheduleItemDto> findWeekScheduleStudent(String lastName, LocalDate date);
-    public List<ScheduleItemDto> findWeekScheduleTeacher(String lastName, LocalDate date);
 }
