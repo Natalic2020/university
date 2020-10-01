@@ -49,7 +49,7 @@ public class StudentDaoImpl implements StudentDao {
                             " values (?, ?, ?)",
                student.getIdPerson(), student.getFirstName(), student.getLastName());
                            
-            if (Objects.nonNull(countPersonInserted) && countPersonInserted == 0) {
+            if (countPersonInserted == 0) {
                 throw new DbObjectNotInsertedException(student);
             }
             logger.info(format("Person with UUID = %s added successfully.", personId));
@@ -60,7 +60,7 @@ public class StudentDaoImpl implements StudentDao {
                             "start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?, ?)",
                            student.getIdStudent(), student.getIdPerson(), student.getStudyStatus(), 
                            Date.valueOf(student.getStartOfStudy()), student.getCitizenship(), student.getGrant());
-            if (Objects.nonNull(countStudentInserted) && countStudentInserted == 0) {
+            if ( countStudentInserted == 0) {
                 throw new DbObjectNotInsertedException(student);
             }
             logger.info(format("Student with UUID = %s added successfully.", studentId));
@@ -82,7 +82,7 @@ public class StudentDaoImpl implements StudentDao {
                     student.getCitizenship(), student.getStudyStatus(), student.getGrant(), 
                     Date.valueOf(student.getStartOfStudy()), studentId);
                           
-            if (Objects.nonNull(countUpdated) && countUpdated == 0) {
+            if (countUpdated == 0) {
                 throw new NoSuchStudentException(studentId);
             }
             logger.info(format("Student with UUID = %s updated sucessfully.", studentId));
@@ -101,7 +101,7 @@ public class StudentDaoImpl implements StudentDao {
             int countDeleted = jdbcTemplate.update("DELETE from uni.students s WHERE s.id_student = ? ",
                      studentId);
                          
-            if (Objects.nonNull(countDeleted) && countDeleted == 0) {
+            if (countDeleted == 0) {
                 throw new NoSuchStudentException(studentId);
             }
             logger.info(format("Student with UUID = %s deleted sucessfully.", studentId));

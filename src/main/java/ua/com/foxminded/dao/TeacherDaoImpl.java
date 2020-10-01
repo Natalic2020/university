@@ -46,7 +46,7 @@ public class TeacherDaoImpl implements TeacherDao {
                             " values (?, ?, ?)",
                     teacher.getIdPerson(), teacher.getFirstName(), teacher.getLastName());
                            
-            if (Objects.nonNull(countPersonInserted) && countPersonInserted == 0) {
+            if (countPersonInserted == 0) {
                 throw new DbObjectNotInsertedException(teacher);
             }
             logger.info(format("Person with UUID = %s added successfully.", personId));
@@ -58,7 +58,7 @@ public class TeacherDaoImpl implements TeacherDao {
                    teacher.getIdTeacher(), teacher.getIdPerson(), teacher.getDegree(),
                    teacher.getDepartment(), teacher.isPermanent(), teacher.getSalary());
                           
-            if (Objects.nonNull(countTeacherInserted) && countTeacherInserted == 0) {
+            if (countTeacherInserted == 0) {
                 throw new DbObjectNotInsertedException(teacher);
             }
             logger.info(format("Teacher with UUID = %s added successfully.", teacherId));
@@ -80,7 +80,7 @@ public class TeacherDaoImpl implements TeacherDao {
                     teacher.getDegree(), teacher.getDepartment(), teacher.isPermanent(),
                     teacher.getSalary(), teacher.getIdTeacher());
                          
-            if (Objects.nonNull(countUpdated) && countUpdated == 0) {
+            if (countUpdated == 0) {
                 throw new NoSuchTeacherException(teacherId);
             }
             logger.info(format("Teacher with UUID = %s updated sucessfully.", teacherId));
@@ -99,7 +99,7 @@ public class TeacherDaoImpl implements TeacherDao {
             int countDeleted = jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_teacher = ? ",
                      teacherId);
                            
-            if (Objects.nonNull(countDeleted) && countDeleted == 0) {
+            if (countDeleted == 0) {
                 throw new NoSuchTeacherException(teacherId);
             }
             logger.info(format("Teacher teacher with UUID = %s deleted sucessfully.", teacherId));

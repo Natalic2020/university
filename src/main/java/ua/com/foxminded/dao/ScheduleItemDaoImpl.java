@@ -45,7 +45,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                    scheduleItem.getRoom().getId(), scheduleItem.getTimeSlot().getId(), 
                    scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek());
                         
-            if (Objects.nonNull(countInserted) && countInserted == 0) {
+            if (countInserted == 0) {
                 throw new DbObjectNotInsertedException(scheduleItem);
             }
             logger.info(format("ScheduleItem with UUID   = %s added successfully.", scheduleItemId));
@@ -69,7 +69,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
                     scheduleItem.getDayOfWeek(), scheduleItem.getId());
                         
-            if (Objects.nonNull(countUpdated) && countUpdated == 0) {
+            if (countUpdated == 0) {
                 throw new NoSuchScheduleItemException(scheduleItemId);
             }
             logger.info(format("ScheduleItem with UUID = %s updated sucessfully.",  scheduleItemId));
@@ -88,7 +88,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
         try {
             int countDeleted = jdbcTemplate.update("DELETE  from uni.schedule_items s where s.id = ? ", 
                     scheduleItemId);
-            if (Objects.nonNull(countDeleted) && countDeleted == 0) {
+            if (countDeleted == 0) {
                 throw new NoSuchScheduleItemException(scheduleItemId);
             }
             logger.info(format("ScheduleItem with UUID = %s deleted sucessfully.", scheduleItemId));
