@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.StudentDao;
 import ua.com.foxminded.dao.mappers.StudentMapper;
-import ua.com.foxminded.exception.NoStudentFoundException;
+import ua.com.foxminded.exception.NoStudentsFoundException;
 import ua.com.foxminded.exception.NoSuchStudentException;
 
 @Repository
@@ -155,9 +155,9 @@ public class StudentDaoImpl implements StudentDao {
             if (students.size() > 0) {
                 logger.info("Students found sucessfully.");
             } else {
-                throw new NoStudentFoundException();
+                throw new NoStudentsFoundException();
             }
-        } catch (NoStudentFoundException e) {
+        } catch (NoStudentsFoundException e) {
             logger.debug(e.getMessage());
         }catch (DataAccessException  e) {
             logger.debug("No database connection established or no data access. Reason: " + e.getMessage());

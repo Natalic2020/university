@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
 import ua.com.foxminded.dao.mappers.TeacherMapper;
-import ua.com.foxminded.exception.NoStudentFoundException;
+import ua.com.foxminded.exception.NoStudentsFoundException;
 import ua.com.foxminded.exception.NoSuchStudentException;
 import ua.com.foxminded.exception.NoSuchTeacherException;
 import ua.com.foxminded.exception.NoTeacherFoundException;
