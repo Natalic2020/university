@@ -38,23 +38,16 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
         String scheduleItemId = scheduleItem.getId();
         logger.info(format("Add scheduleItem with UUID  = %s", scheduleItemId));
         try {
-            Boolean isScheduleItemInserted = jdbcTemplate.execute(
+            int countInserted = jdbcTemplate.update(
                     "INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, " +
                             " id_teacher, day_of_week) values (?, ?, ?, ?, ?, ?, ? )",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, scheduleItem.getId());
-                            ps.setString(2, scheduleItem.getGroup().getId());
-                            ps.setString(3, scheduleItem.getSubject().getId());
-                            ps.setString(4, scheduleItem.getRoom().getId());
-                            ps.setString(5, scheduleItem.getTimeSlot().getId());
-                            ps.setString(6, scheduleItem.getTeacher().getIdTeacher());
-                            ps.setString(7, scheduleItem.getDayOfWeek());
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isScheduleItemInserted) && !isScheduleItemInserted) {
-//                throw new DbObjectNotInsertedException(scheduleItem);
-//            }
+                   scheduleItem.getId(), scheduleItem.getGroup().getId(), scheduleItem.getSubject().getId(), 
+                   scheduleItem.getRoom().getId(), scheduleItem.getTimeSlot().getId(), 
+                   scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek());
+                        
+            if (Objects.nonNull(countInserted) && countInserted == 0) {
+                throw new DbObjectNotInsertedException(scheduleItem);
+            }
             logger.info(format("ScheduleItem with UUID   = %s added successfully.", scheduleItemId));
         } catch (DataAccessException e) {
             logger.debug(format("Scheduleitem with UUID = %s was not added.  Reason: %s", scheduleItemId,
@@ -69,23 +62,16 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
         String scheduleItemId = scheduleItem.getId();
         logger.info(format("Edit schedule with UUID  = %s", scheduleItemId));
         try {
-            Boolean isUpdated = jdbcTemplate.execute(
+            int countUpdated = jdbcTemplate.update(
                     "UPDATE  uni.schedule_items sch  SET sch.id_group= ?, sch.id_subject= ?, sch.id_room= ?,  " +
                             " sch.id_time_slot= ?, sch.id_teacher= ?, sch.day_of_week= ? WHERE sch.id = ? ",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, scheduleItem.getGroup().getId());
-                            ps.setString(2, scheduleItem.getSubject().getId());
-                            ps.setString(3, scheduleItem.getRoom().getId());
-                            ps.setString(4, scheduleItem.getTimeSlot().getId());
-                            ps.setString(5, scheduleItem.getTeacher().getIdTeacher());
-                            ps.setString(6, scheduleItem.getDayOfWeek());
-                            ps.setString(7, scheduleItem.getId());
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isUpdated) && !isUpdated) {
-//                throw new NoSuchScheduleItemException(scheduleItemId);
-//            }
+                    scheduleItem.getGroup().getId(), scheduleItem.getSubject().getId(), scheduleItem.getRoom().getId(),
+                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
+                    scheduleItem.getDayOfWeek(), scheduleItem.getId());
+                        
+            if (Objects.nonNull(countUpdated) && countUpdated == 0) {
+                throw new NoSuchScheduleItemException(scheduleItemId);
+            }
             logger.info(format("ScheduleItem with UUID = %s updated sucessfully.",  scheduleItemId));
         } catch (DataAccessException e) {
             logger.debug(format("Scheduleitem with UUID = %s was not updated.  Reason: %s", scheduleItemId ,
@@ -100,15 +86,11 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
     public void deleteScheduleItem(String scheduleItemId) {
         logger.info(format("Delete scheduleItemId with UUID = %s", scheduleItemId));
         try {
-            Boolean isDeleted = jdbcTemplate.execute("DELETE  from uni.schedule_items s where s.id = ? ", 
-                    (PreparedStatementCallback<Boolean>) ps ->
-            {
-                ps.setString(1, scheduleItemId);
-                return ps.execute();
-            });
-//            if (Objects.nonNull(isDeleted) && !isDeleted) {
-//                throw new NoSuchScheduleItemException(scheduleItemId);
-//            }
+            int countDeleted = jdbcTemplate.update("DELETE  from uni.schedule_items s where s.id = ? ", 
+                    scheduleItemId);
+            if (Objects.nonNull(countDeleted) && countDeleted == 0) {
+                throw new NoSuchScheduleItemException(scheduleItemId);
+            }
             logger.info(format("ScheduleItem with UUID = %s deleted sucessfully.", scheduleItemId));
         } catch (DataAccessException e) {
             logger.debug(format("Scheduleitem with UUID= %s was not delete.  Reason: %s", scheduleItemId ,

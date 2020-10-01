@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.dao.entity.Teacher;
@@ -38,39 +37,30 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public void addTeacher(Teacher teacher) {
+        String personId = teacher.getIdPerson();
         String teacherId = teacher.getIdTeacher();
         logger.info(format("Add teacher with UUID = %s", teacherId));
         try {
-            Boolean isPersonInserted = jdbcTemplate.execute(
+            int countPersonInserted = jdbcTemplate.update(
                     "INSERT INTO uni.persons (id_person, first_name, last_name) " +
                             " values (?, ?, ?)",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, teacher.getIdPerson());
-                            ps.setString(2, teacher.getFirstName());
-                            ps.setString(3, teacher.getLastName());
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isPersonInserted) && !isPersonInserted) {
-//                throw new DbObjectNotInsertedException(teacher);
-//            }
-
-            Boolean isTeacherInserted = jdbcTemplate.execute(
+                    teacher.getIdPerson(), teacher.getFirstName(), teacher.getLastName());
+                           
+            if (Objects.nonNull(countPersonInserted) && countPersonInserted == 0) {
+                throw new DbObjectNotInsertedException(teacher);
+            }
+            logger.info(format("Person with UUID = %s added successfully.", personId));
+            
+            logger.info(format("Add teacher with UUID = %s", teacherId));
+            int countTeacherInserted = jdbcTemplate.update(
                     "INSERT INTO uni.teachers (id_teacher, id_person, degree, " +
                             " department, permanent, salary ) values (?, ?, ?, ?, ?, ?)",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, teacher.getIdTeacher());
-                            ps.setString(2, teacher.getIdPerson());
-                            ps.setString(3, teacher.getDegree());
-                            ps.setString(4, teacher.getDepartment());
-                            ps.setBoolean(5, teacher.isPermanent());
-                            ps.setBigDecimal(6, teacher.getSalary());
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isTeacherInserted) && !isTeacherInserted) {
-//                throw new DbObjectNotInsertedException(teacher);
-//            }
+                   teacher.getIdTeacher(), teacher.getIdPerson(), teacher.getDegree(),
+                   teacher.getDepartment(), teacher.isPermanent(), teacher.getSalary());
+                          
+            if (Objects.nonNull(countTeacherInserted) && countTeacherInserted == 0) {
+                throw new DbObjectNotInsertedException(teacher);
+            }
             logger.info(format("Teacher with UUID = %s added successfully.", teacherId));
         } catch (DataAccessException e) {
             logger.debug(
@@ -85,20 +75,14 @@ public class TeacherDaoImpl implements TeacherDao {
         String teacherId = teacher.getIdTeacher();
         logger.info(format("Edit teacher with UUID = %s", teacherId));
         try {
-            Boolean isUpdated = jdbcTemplate.execute("UPDATE uni.teachers t SET degree = ?, department = ?, " +
+            int countUpdated = jdbcTemplate.update("UPDATE uni.teachers t SET degree = ?, department = ?, " +
                     " permanent = ? , salary = ?  WHERE t.id_teacher = ? ",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, teacher.getDegree());
-                            ps.setString(2, teacher.getDepartment());
-                            ps.setBoolean(3, teacher.isPermanent());
-                            ps.setBigDecimal(4, teacher.getSalary());
-                            ps.setString(5, teacher.getIdTeacher());
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isUpdated) && !isUpdated) {
-//                throw new NoSuchTeacherException(teacherId);
-//            }
+                    teacher.getDegree(), teacher.getDepartment(), teacher.isPermanent(),
+                    teacher.getSalary(), teacher.getIdTeacher());
+                         
+            if (Objects.nonNull(countUpdated) && countUpdated == 0) {
+                throw new NoSuchTeacherException(teacherId);
+            }
             logger.info(format("Teacher with UUID = %s updated sucessfully.", teacherId));
         } catch (DataAccessException e) {
             logger.debug(format("Teacher with UUID = %s was not updated.  Reason: %s", teacherId,
@@ -112,15 +96,12 @@ public class TeacherDaoImpl implements TeacherDao {
     public void deleteTeacher(String teacherId) {
         logger.info(format("Delete teacher with UUID = %s", teacherId));
         try {
-            Boolean isDeleted = jdbcTemplate.execute("DELETE from uni.teachers s WHERE s.id_teacher = ? ",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, teacherId);
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isDeleted) && !isDeleted) {
-//                throw new NoSuchTeacherException(teacherId);
-//            }
+            int countDeleted = jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_teacher = ? ",
+                     teacherId);
+                           
+            if (Objects.nonNull(countDeleted) && countDeleted == 0) {
+                throw new NoSuchTeacherException(teacherId);
+            }
             logger.info(format("Teacher teacher with UUID = %s deleted sucessfully.", teacherId));
         } catch (DataAccessException e) {
             logger.debug(format("Teacher teacher with UUID = %s was not delete.  Reason: %s", teacherId,

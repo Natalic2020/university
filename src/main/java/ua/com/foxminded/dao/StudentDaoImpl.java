@@ -44,38 +44,23 @@ public class StudentDaoImpl implements StudentDao {
         logger.info(format("Add person with UUID = %s", personId));
 
         try {
-            Boolean isPersonInserted = jdbcTemplate.execute(
+            int countPersonInserted = jdbcTemplate.update(
                     "INSERT INTO uni.persons (id_person, first_name, last_name) " +
                             " values (?, ?, ?)",
-                            new PreparedStatementCallback<Boolean>() {
-                                @Override
-                                public Boolean doInPreparedStatement(PreparedStatement ps)
-                                        throws SQLException, DataAccessException {
-                                    ps.setString(1, student.getIdPerson());
-                                    ps.setString(2, student.getFirstName());
-                                    ps.setString(3, student.getLastName());
-
-                                    return ps.execute();
-                                }
-                            });
-//            if (Objects.nonNull(isPersonInserted) && !isPersonInserted) {
-//                throw new DbObjectNotInsertedException(student);
-//            }
+               student.getIdPerson(), student.getFirstName(), student.getLastName());
+                           
+            if (Objects.nonNull(countPersonInserted) && countPersonInserted == 0) {
+                throw new DbObjectNotInsertedException(student);
+            }
             logger.info(format("Person with UUID = %s added successfully.", personId));
+            
             logger.info(format("Add student with UUID = %s", studentId));
-            Boolean isStudentInserted = jdbcTemplate.execute(
+            int countStudentInserted = jdbcTemplate.update(
                     "INSERT INTO uni.students (id_student, id_person, study_status, " +
                             "start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?, ?)",
-                            (PreparedStatementCallback<Boolean>) ps -> {
-                            ps.setString(1, student.getIdStudent());
-                            ps.setString(2, student.getIdPerson());
-                            ps.setString(3, student.getStudyStatus());
-                            ps.setDate(4, Date.valueOf(student.getStartOfStudy()));
-                            ps.setString(5, student.getCitizenship());
-                            ps.setBigDecimal(6, student.getGrant());
-                            return ps.execute();
-                    });
-            if (Objects.nonNull(isStudentInserted) && !isStudentInserted) {
+                           student.getIdStudent(), student.getIdPerson(), student.getStudyStatus(), 
+                           Date.valueOf(student.getStartOfStudy()), student.getCitizenship(), student.getGrant());
+            if (Objects.nonNull(countStudentInserted) && countStudentInserted == 0) {
                 throw new DbObjectNotInsertedException(student);
             }
             logger.info(format("Student with UUID = %s added successfully.", studentId));
@@ -92,20 +77,14 @@ public class StudentDaoImpl implements StudentDao {
         String studentId = student.getIdStudent();
         logger.info(format("Edit student with UUID = %s", studentId));
         try {
-            Boolean isUpdated = jdbcTemplate.execute("UPDATE uni.students s SET citizenship = ?, study_status = ?, " +
+            int countUpdated = jdbcTemplate.update("UPDATE uni.students s SET citizenship = ?, study_status = ?, " +
                     " grants = ?, start_of_study = ?  WHERE s.id_student = ? ",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, student.getCitizenship());
-                            ps.setString(2, student.getStudyStatus());
-                            ps.setBigDecimal(3, student.getGrant());
-                            ps.setDate(4, Date.valueOf(student.getStartOfStudy()));
-                            ps.setString(5, studentId);
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isUpdated) && !isUpdated) {
-//                throw new NoSuchStudentException(studentId);
-//            }
+                    student.getCitizenship(), student.getStudyStatus(), student.getGrant(), 
+                    Date.valueOf(student.getStartOfStudy()), studentId);
+                          
+            if (Objects.nonNull(countUpdated) && countUpdated == 0) {
+                throw new NoSuchStudentException(studentId);
+            }
             logger.info(format("Student with UUID = %s updated sucessfully.", studentId));
         } catch (DataAccessException e) {
             logger.debug(format("Student with UUID = %s was not updated.  Reason: %s", studentId,
@@ -119,15 +98,12 @@ public class StudentDaoImpl implements StudentDao {
     public void deleteStudent(String studentId) {
         logger.info(format("Delete student with UUID = %s", studentId));
         try {
-            Boolean isDeleted = jdbcTemplate.execute("DELETE from uni.students s WHERE s.id_student = ? ",
-                    (PreparedStatementCallback<Boolean>) ps ->
-                        {
-                            ps.setString(1, studentId);
-                            return ps.execute();
-                        });
-//            if (Objects.nonNull(isDeleted) && !isDeleted) {
-//                throw new NoSuchStudentException(studentId);
-//            }
+            int countDeleted = jdbcTemplate.update("DELETE from uni.students s WHERE s.id_student = ? ",
+                     studentId);
+                         
+            if (Objects.nonNull(countDeleted) && countDeleted == 0) {
+                throw new NoSuchStudentException(studentId);
+            }
             logger.info(format("Student with UUID = %s deleted sucessfully.", studentId));
         } catch (DataAccessException e) {
             logger.debug(format("Student with UUID= %s was not delete.  Reason: %s", studentId,
