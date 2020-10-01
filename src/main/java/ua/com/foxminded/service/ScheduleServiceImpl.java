@@ -36,7 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleStudent(UUID id) {
-        return  scheduleItemDao.findWeekScheduleStudent(id).stream()
+        return  scheduleItemDao.findWeekScheduleStudent(id.toString()).stream()
                 .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
                 .collect(Collectors.toList()); 
     }
@@ -60,7 +60,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleTeacher(UUID id) {
-        return scheduleItemDao.findWeekScheduleTeacher(id).stream()
+        return scheduleItemDao.findWeekScheduleTeacher(id.toString()).stream()
                 .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
                 .collect(Collectors.toList()); 
     }

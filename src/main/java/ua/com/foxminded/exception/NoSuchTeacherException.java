@@ -1,11 +1,11 @@
 package ua.com.foxminded.exception;
 
-import java.util.UUID;
+import static java.lang.String.format;
 
 public class NoSuchTeacherException extends RuntimeException{
 
     public NoSuchTeacherException(String id) {
-        super(String.format("Teacher with uuid=%s not found", id));
+        super(format("Teacher with uuid=%s not found", id));
     }   
     
 }

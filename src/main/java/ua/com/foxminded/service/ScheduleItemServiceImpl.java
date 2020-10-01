@@ -42,21 +42,4 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
         scheduleItemDao.deleteScheduleItem(id.toString());
     }
 
-    @Override
-    public List<ScheduleItemDto> findWeekScheduleStudent(String lastName, LocalDate date) {
-        return scheduleItemDao
-                              .findScheduleStudent(lastName)
-                              .stream()
-                              .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
-                              .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ScheduleItemDto> findWeekScheduleTeacher(String lastName, LocalDate date) {
-        return scheduleItemDao
-                              .findScheduleTeacher(lastName)
-                              .stream()
-                              .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
-                              .collect(Collectors.toList());
-    }
 }

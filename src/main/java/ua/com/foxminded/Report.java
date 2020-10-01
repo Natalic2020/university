@@ -52,19 +52,19 @@ public class Report {
                   
  
         logger.info("--------------Week------------------");
-        List<ScheduleItemDto> schedule1 = scheduleItemService
-                .findWeekScheduleTeacher(lastName, startPeriod);
-                
-        schedule1.forEach(e -> logger.info(e.toString()));
+//        List<ScheduleItemDto> schedule1 = scheduleItemService
+//                .findWeekScheduleTeacher(lastName, startPeriod);
+//                
+//        schedule1.forEach(e -> logger.info(e.toString()));
        
     }
 
     public void outputStudentSchedule(String lastName, LocalDate startPeriod) {
 
         logger.info("--------------Week------------------");
-        List<ScheduleItemDto> schedule1 = scheduleItemService
-                .findWeekScheduleStudent(lastName, startPeriod);
-        schedule1.forEach(e -> logger.info(e.toString()));
+//        List<ScheduleItemDto> schedule1 = scheduleItemService
+//                .findWeekScheduleStudent(lastName, startPeriod);
+//        schedule1.forEach(e -> logger.info(e.toString()));
        
     }
     

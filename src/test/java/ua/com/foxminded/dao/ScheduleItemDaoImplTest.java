@@ -83,22 +83,10 @@ class ScheduleItemDaoImplTest {
         expected.add(scheduleItemExpected);
 
         scheduleItemDao.addScheduleItem(scheduleItem);
-        List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
+        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID);
         assertEquals(expected, actual);
     }
 
-    @Test
-    @Order(2)
-    void findScheduleTeacher_shouldReturnScheduleTeacher_whenLookForLastName() {
-        List<ScheduleItem> expected = new ArrayList<>();
-
-        expected.add(scheduleItemExpected);
-
-        List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
-
-        assertEquals(expected, actual);
-
-    }
 
     @Test
     @Order(2)
@@ -106,20 +94,8 @@ class ScheduleItemDaoImplTest {
 
         List<Student> expected = new ArrayList<>();
 
-        List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan99");
+        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher("Chavan99");
         assertEquals(expected, actual);
-    }
-
-    @Test
-    @Order(3)
-    void findScheduleStudent_shouldReturnScheduleStudent_whenLookForLastName() {
-        List<ScheduleItem> expected = new ArrayList<>();
-
-        expected.add(scheduleItemExpected);
-
-        List<ScheduleItem> actual = scheduleItemDao.findScheduleStudent("Svitlychna");
-
-        assertEquals(expected.get(0), actual.get(2));
     }
 
     @Test
@@ -127,17 +103,17 @@ class ScheduleItemDaoImplTest {
     void editScheduleItem_shouldReturnDayOfWeek_whenEditDayOfWeek() {
 
         scheduleItemDao.editScheduleItem(scheduleItem.setDayOfWeek("WENDNESDAY"));
-        List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
+        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID);
         assertEquals("WENDNESDAY", actual.get(0).getDayOfWeek());
     }
 
-//    @Test
-//    @Order(5)
-//    void deleteScheduleItem_shouldReturnEmpty_whenDeleteScheduleItem() {
-//        List<ScheduleItem> expected = new ArrayList<>();
-//        scheduleItemDao.deleteScheduleItem(scheduleItemUUID);
-//        List<ScheduleItem> actual = scheduleItemDao.findScheduleTeacher("Chavan");
-//        assertEquals(expected, actual);
-//    }
+    @Test
+    @Order(5)
+    void deleteScheduleItem_shouldReturnEmpty_whenDeleteScheduleItem() {
+        List<ScheduleItem> expected = new ArrayList<>();
+        scheduleItemDao.deleteScheduleItem(scheduleItemUUID);
+        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID);
+        assertEquals(expected, actual);
+    }
 
 }
