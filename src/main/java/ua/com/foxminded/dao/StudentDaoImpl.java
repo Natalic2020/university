@@ -1,11 +1,8 @@
 package ua.com.foxminded.dao;
 
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.dao.entity.Student;
@@ -122,11 +118,10 @@ public class StudentDaoImpl implements StudentDao {
                     " where s.id_person = p.id_person and s.id_student = ? ",
                     studentMapper, studentId);
 
-            if (students.size() > 0) {
-                logger.info(format("Student with UUID = %s found sucessfully.", studentId));
-            } else {
-                throw new NoSuchStudentException(studentId);
-            }
+            if (students.size() == 0) {
+                throw new NoSuchStudentException(studentId);     
+            }  
+            logger.info(format("Student with UUID = %s found sucessfully.", studentId));
         } catch (DataAccessException e) {
             logger.debug(format("Student with UUID = %s was not found.  Reason: %s", studentId,
                     e.getMessage()));
@@ -143,17 +138,15 @@ public class StudentDaoImpl implements StudentDao {
         try {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " +
                     " where s.id_person = p.id_person", studentMapper);
-            if (students.size() > 0) {
-                logger.info("Students found sucessfully.");
-            } else {
-                throw new NoStudentsFoundException();
+            if (students.size() == 0) {
+                throw new NoStudentsFoundException();    
             }
+            logger.info("Students found sucessfully.");
         } catch (DataAccessException e) {
             logger.debug("No database connection established or no data access. Reason: %s", e.getMessage());
         } catch (NoStudentsFoundException e) {
             logger.debug(e.getMessage());
         }
-
         return students;
     }
 }

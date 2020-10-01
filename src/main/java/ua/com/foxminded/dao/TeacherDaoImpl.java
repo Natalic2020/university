@@ -4,7 +4,6 @@ import static java.lang.String.format;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,18 +119,16 @@ public class TeacherDaoImpl implements TeacherDao {
                     "  where t.id_person = p.id_person and t.id_teacher = ? ",
                     teacherMapper, teacherId);
 
-            if (teacher.size() > 0) {
-                logger.info(format("Teacher with UUID = %s found sucessfully.", teacherId));
-            } else {
-                throw new NoSuchTeacherException(teacherId);
-            }
+            if (teacher.size() == 0) {
+                throw new NoSuchTeacherException(teacherId);  
+            } 
+            logger.info(format("Teacher with UUID = %s found sucessfully.", teacherId));
         } catch (DataAccessException e) {
             logger.debug(format("Teacher with UUID = %s was not found.  Reason: %s", teacherId,
                     e.getMessage()));
         } catch (NoSuchTeacherException e) {
             logger.debug(e.getMessage());
         }
-
         return teacher;
     }
 
@@ -143,17 +140,15 @@ public class TeacherDaoImpl implements TeacherDao {
             teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " +
                     "where t.id_person = p.id_person", teacherMapper);
 
-            if (teachers.size() > 0) {
-                logger.info("Teachers found sucessfully.");
-            } else {
-                throw new NoTeachersFoundException();
-            }
+            if (teachers.size() == 0) {
+                throw new NoTeachersFoundException();    
+            } 
+            logger.info("Teachers found sucessfully.");
         } catch (DataAccessException e) {
             logger.debug(format("No database connection established or no data access. Reason: %s", e.getMessage()));
         } catch (NoTeachersFoundException e) {
             logger.debug(e.getMessage());
         }
-
         return teachers;
     }
 }

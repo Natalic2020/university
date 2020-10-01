@@ -41,10 +41,10 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
             int countInserted = jdbcTemplate.update(
                     "INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, " +
                             " id_teacher, day_of_week) values (?, ?, ?, ?, ?, ?, ? )",
-                   scheduleItem.getId(), scheduleItem.getGroup().getId(), scheduleItem.getSubject().getId(), 
-                   scheduleItem.getRoom().getId(), scheduleItem.getTimeSlot().getId(), 
-                   scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek());
-                        
+                    scheduleItem.getId(), scheduleItem.getGroup().getId(), scheduleItem.getSubject().getId(),
+                    scheduleItem.getRoom().getId(), scheduleItem.getTimeSlot().getId(),
+                    scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek());
+
             if (countInserted == 0) {
                 throw new DbObjectNotInsertedException(scheduleItem);
             }
@@ -68,32 +68,31 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     scheduleItem.getGroup().getId(), scheduleItem.getSubject().getId(), scheduleItem.getRoom().getId(),
                     scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
                     scheduleItem.getDayOfWeek(), scheduleItem.getId());
-                        
+
             if (countUpdated == 0) {
                 throw new NoSuchScheduleItemException(scheduleItemId);
             }
-            logger.info(format("ScheduleItem with UUID = %s updated sucessfully.",  scheduleItemId));
+            logger.info(format("ScheduleItem with UUID = %s updated sucessfully.", scheduleItemId));
         } catch (DataAccessException e) {
-            logger.debug(format("Scheduleitem with UUID = %s was not updated.  Reason: %s", scheduleItemId ,
-                     e.getMessage()));
-        }   catch (NoSuchScheduleItemException e) {
+            logger.debug(format("Scheduleitem with UUID = %s was not updated.  Reason: %s", scheduleItemId,
+                    e.getMessage()));
+        } catch (NoSuchScheduleItemException e) {
             logger.info(e.getMessage());
         }
-
     }
 
     @Override
     public void deleteScheduleItem(String scheduleItemId) {
         logger.info(format("Delete scheduleItemId with UUID = %s", scheduleItemId));
         try {
-            int countDeleted = jdbcTemplate.update("DELETE  from uni.schedule_items s where s.id = ? ", 
+            int countDeleted = jdbcTemplate.update("DELETE  from uni.schedule_items s where s.id = ? ",
                     scheduleItemId);
             if (countDeleted == 0) {
                 throw new NoSuchScheduleItemException(scheduleItemId);
             }
             logger.info(format("ScheduleItem with UUID = %s deleted sucessfully.", scheduleItemId));
         } catch (DataAccessException e) {
-            logger.debug(format("Scheduleitem with UUID= %s was not delete.  Reason: %s", scheduleItemId ,
+            logger.debug(format("Scheduleitem with UUID= %s was not delete.  Reason: %s", scheduleItemId,
                     e.getMessage()));
         } catch (NoSuchScheduleItemException e) {
             logger.info(e.getMessage());
@@ -102,7 +101,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public List<ScheduleItem> findWeekScheduleTeacher(String teacherId) {
-        logger.info(format("Find scheduleItem for teacher with id  = %s " , teacherId));
+        logger.info(format("Find scheduleItem for teacher with id  = %s ", teacherId));
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
             scheduleItems = jdbcTemplate.query("Select * " +
@@ -113,15 +112,14 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " and si.id_room = r.id  and si.id_time_slot = ts.id  and t.id_teacher = ?  " +
                     " order by ts.serial_number ",
                     scheduleMapper, teacherId);
-            if (scheduleItems.size() > 0) {
-                logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", teacherId));
-            } else {
+            if (scheduleItems.size() == 0) {
                 throw new NoSuchScheduleItemException(teacherId);
             }
+            logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", teacherId));
         } catch (DataAccessException e) {
-            logger.debug(format("ScheduleItem for teacher with UUID = %s was not found.  Reason: %s", teacherId ,
+            logger.debug(format("ScheduleItem for teacher with UUID = %s was not found.  Reason: %s", teacherId,
                     e.getMessage()));
-        }catch (NoSuchScheduleItemException e) {
+        } catch (NoSuchScheduleItemException e) {
             logger.debug(e.getMessage());
         }
         return scheduleItems;
@@ -129,7 +127,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public List<ScheduleItem> findWeekScheduleStudent(String studentId) {
-        logger.info(format("Find scheduleItem for student with id  = %s " , studentId));
+        logger.info(format("Find scheduleItem for student with id  = %s ", studentId));
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         try {
             scheduleItems = jdbcTemplate.query("Select * " +
@@ -141,15 +139,14 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     " and si.id_time_slot = ts.id  and st.id_student = ? " +
                     " order by ts.serial_number ",
                     scheduleMapper, studentId);
-            if (scheduleItems.size() > 0) {
-                logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", studentId));
-            } else {
+            if (scheduleItems.size() == 0) {
                 throw new NoSuchScheduleItemException(studentId);
             }
+            logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", studentId));
         } catch (DataAccessException e) {
             logger.debug(format("ScheduleItem for student with UUID = %s was not found.  Reason: %s", studentId,
                     e.getMessage()));
-        }catch (NoSuchScheduleItemException e) {
+        } catch (NoSuchScheduleItemException e) {
             logger.debug(e.getMessage());
         }
         return scheduleItems;
