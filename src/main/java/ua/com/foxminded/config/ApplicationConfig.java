@@ -10,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @ComponentScan(basePackages = "ua.com.foxminded")
@@ -35,4 +36,12 @@ public class ApplicationConfig {
         jdbcTemplate.setResultsMapCaseInsensitive(true);
         return jdbcTemplate;
     }  
+    
+    @Bean(name = "viewResolver")
+    public InternalResourceViewResolver getViewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
 }
