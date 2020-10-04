@@ -24,7 +24,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
 				<configuration>
-					<warSourceDirectory>WebContent</warSourceDirectory>
+					<warSourceDirectory>src/webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -193,6 +193,13 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>9.0.38</version>
+		</dependency>
+
 
 	</dependencies>
 </project>
