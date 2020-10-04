@@ -13,39 +13,39 @@ import ua.com.foxminded.config.ApplicationConfig;
 import ua.com.foxminded.dao.DatabaseInitializer;
 import ua.com.foxminded.dao.TablesInitializer;
 
-@Component
+//@Component
 public class Application {
   
-    @Autowired
-    Report report;
+//    @Autowired
+//    Report report;
     
-    @Autowired
-    TablesInitializer tableInitializer;
-    
-    @Autowired
-    DatabaseInitializer dbInitializer;
+//    @Autowired
+//    TablesInitializer tableInitializer;
+//    
+//    @Autowired
+//    DatabaseInitializer dbInitializer;
     
     public static void main(String args[]) {
 
-        AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-
-        Application bean = context.getBean(Application.class);
-        bean.createDB();
-        bean.run();
-        context.close();
+//        AbstractApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+//
+//        Application bean = context.getBean(Application.class);
+//        bean.createDB();
+//        bean.run();
+//        context.close();
     }
     
     public void run() {
 
         Logger logger = LoggerFactory.getLogger("SampleLogger");
         logger.info("Hi This is my first SLF4J program");
-        report.testStudent();
-        report.testTeacher();
+//        report.testStudent();
+//        report.testTeacher();
 
     }  
     
     public void createDB() {
-        tableInitializer.createTables();
-        tableInitializer.fillTables();
+//        tableInitializer.createTables();
+//        tableInitializer.fillTables();
     }
 }
