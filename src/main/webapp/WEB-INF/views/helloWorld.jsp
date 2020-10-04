@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+ <title>Hello World</title>
 </head>
-<body>
-	<h1>Hello World</h1>
-</body>
+<<body>
+      <h2>${message}</h2>
+   </body>
 </html>

@@ -15,8 +15,8 @@ import ua.com.foxminded.service.interfaces.StudentService;
 @Controller
 public class StudentController {
     
-    @Autowired
-    StudentService studentService;
+//    @Autowired
+//    StudentService studentService;
     
     Logger logger = LoggerFactory.getLogger("SampleLogger");
     
@@ -25,10 +25,10 @@ public class StudentController {
  
         logger.info("--------------------- I am in ModelAndView                      viewStudents");
         
-        List<StudentDto> students = studentService.findAllStudent();
+//        List<StudentDto> students = studentService.findAllStudent();
        
         ModelAndView studentMV = new ModelAndView("students");
-        studentMV.addObject("students", students);
+//        studentMV.addObject("students", students);
      
         return studentMV;   
     }
