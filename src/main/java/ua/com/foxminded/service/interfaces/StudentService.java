@@ -12,5 +12,6 @@ public interface StudentService {
     public void deleteStudent(UUID id);
     public List<StudentDto> findStudent(String text);
     public List<StudentDto> findAllStudent();
+    public List<StudentDto> findListStudent();
       
 }
