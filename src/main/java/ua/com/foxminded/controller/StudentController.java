@@ -1,6 +1,8 @@
 package ua.com.foxminded.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +17,8 @@ import ua.com.foxminded.service.interfaces.StudentService;
 @Controller
 public class StudentController {
     
-//    @Autowired
-//    StudentService studentService;
+    @Autowired
+    StudentService studentService;
     
     Logger logger = LoggerFactory.getLogger("SampleLogger");
     
@@ -27,8 +29,11 @@ public class StudentController {
         
 //        List<StudentDto> students = studentService.findAllStudent();
        
+        List<StudentDto> students = new ArrayList<>();
+        students.add((StudentDto) new StudentDto().setIdStudent(UUID.fromString("a1f520ba-06fe-11eb-adc1-0242ac120002")).setFirstName("Nata").setLastName("Ivanov"));
+        
         ModelAndView studentMV = new ModelAndView("students");
-//        studentMV.addObject("students", students);
+       studentMV.addObject("students", students);
      
         return studentMV;   
     }

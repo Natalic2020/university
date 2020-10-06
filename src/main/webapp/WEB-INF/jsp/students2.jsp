@@ -7,22 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div align="center">
-    <h2>Students</h2>
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>UUID</th>
-            <th>First name</th>
-            <th>Last name</th>
-        </tr>
-        <c:forEach items="${students}" var="student">
-        <tr>
-            <td>${student.idStudent}</td>
-            <td>${student.firstName}</td>
-            <td>${student.lastName}</td>
-        </tr>
-        </c:forEach>
-    </table>
-</div>   
+	<h1>Hello World!! and Natdddd </h1>
+	<h2>${message}</h2>
 </body>
 </html>
