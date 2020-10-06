@@ -3,6 +3,7 @@ package ua.com.foxminded.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,7 +14,7 @@ public class Student2Controller {
   
   Logger logger = LoggerFactory.getLogger("SampleLogger");
   
-  @RequestMapping("/students2")
+  @GetMapping("/students2")
   public ModelAndView findAllStudent() {
 
       logger.info("--------------------- I am in ModelAndView                      viewStudents");
