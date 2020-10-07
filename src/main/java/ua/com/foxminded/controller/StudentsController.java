@@ -1,8 +1,6 @@
 package ua.com.foxminded.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +15,7 @@ import ua.com.foxminded.service.interfaces.StudentService;
 
 @Controller
 @RequestMapping("/students")
-public class StudentController {
+public class StudentsController {
     
     @Autowired
     StudentService studentService;

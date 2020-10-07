@@ -11,7 +11,7 @@ public class TeacherDto extends PersonDto{
     private UUID idTeacher;
     private Degree degree;
     private Department department;
-    private boolean isPermanent;
+    private boolean permanent;
     private BigDecimal salary;
    
     public TeacherDto() {
@@ -21,7 +21,7 @@ public class TeacherDto extends PersonDto{
     public TeacherDto(TeacherDto teacher) {
         this.degree = teacher.degree;
         this.department = teacher.department;
-        this.isPermanent = teacher.isPermanent;
+        this.permanent = teacher.permanent;
         this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
     }
 
@@ -53,11 +53,11 @@ public class TeacherDto extends PersonDto{
     }
 
     public boolean isPermanent() {
-        return isPermanent;
+        return permanent;
     }
 
-    public TeacherDto setPermanent(boolean isPermanent) {
-        this.isPermanent = isPermanent;
+    public TeacherDto setPermanent(boolean permanent) {
+        this.permanent = permanent;
         return this;
     }
    
@@ -77,7 +77,7 @@ public class TeacherDto extends PersonDto{
         int result = super.hashCode();
         result = prime * result + ((degree == null) ? 0 : degree.hashCode());
         result = prime * result + ((department == null) ? 0 : department.hashCode());
-        result = prime * result + (isPermanent ? 1231 : 1237);
+        result = prime * result + (permanent ? 1231 : 1237);
         result = prime * result + ((salary == null) ? 0 : salary.hashCode());
         return result;
     }
@@ -95,7 +95,7 @@ public class TeacherDto extends PersonDto{
             return false;
         if (department != other.department)
             return false;
-        if (isPermanent != other.isPermanent)
+        if (permanent != other.permanent)
             return false;
         if (salary == null) {
             if (other.salary != null)
@@ -107,11 +107,11 @@ public class TeacherDto extends PersonDto{
 
     @Override
     public String toString() {
-        return "TeacherDto [idTeacher=" + idTeacher + ", degree=" + degree 
-                + ", department=" + department
-                + ", isPermanent=" + isPermanent + ", salary=" + salary 
-                + ", idPerson=" + super.getIdPerson() + ", firstName="
-                + super.getFirstName() + ", lastName=" + super.getLastName() 
-                + ", contactInfo=" + super.getContactInfo() + "]";
-    }  
+        return "TeacherDto [idTeacher=" + idTeacher + ", degree=" + degree + ", department=" + department
+                + ", permanent=" + permanent + ", salary=" + salary + ", getIdPerson()=" + getIdPerson()
+                + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + "]";
+    }
+
+    
+    
 }
