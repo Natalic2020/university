@@ -70,12 +70,11 @@ public class TeacherDaoImplTest {
     @Order(1)
     void addTeacher_shouldReturnTeacher_whenAddTeacher() {
 
-        List<Teacher> expected = new ArrayList<>();
-        expected.add(teacher);
-
+        Teacher expected = teacher;
+        
         teacherDao.addTeacher(teacher);
 
-        List<Teacher> actual = teacherDao.findTeacher(teacherUUID);
+        Teacher actual = teacherDao.findTeacher(teacherUUID);
         assertEquals(expected, actual);
     }
 
@@ -83,10 +82,8 @@ public class TeacherDaoImplTest {
     @Order(2)
     void findTeacher_shouldReturnTeacher_whenLookForLastName() {
 
-        List<Teacher> expected = new ArrayList<>();
-        expected.add(teacher);
-
-        List<Teacher> actual = teacherDao.findTeacher(teacherUUID);
+        Teacher expected = teacher;
+        Teacher actual = teacherDao.findTeacher(teacherUUID);
         assertEquals(expected, actual);
     }
 
@@ -95,7 +92,7 @@ public class TeacherDaoImplTest {
     void findTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
         List<Teacher> expected = new ArrayList<>();
 
-        List<Teacher> actual = teacherDao.findTeacher("Ivan123");
+        Teacher actual = teacherDao.findTeacher("Ivan123");
         assertEquals(expected, actual);
     }
 
@@ -104,7 +101,7 @@ public class TeacherDaoImplTest {
     void findTeacher_shouldReturnEmpty_whenLookForNull() {
         List<Teacher> expected = new ArrayList<>();
 
-        List<Teacher> actual = teacherDao.findTeacher(null);
+       Teacher actual = teacherDao.findTeacher(null);
         assertEquals(expected, actual);
     }
 
@@ -122,13 +119,12 @@ public class TeacherDaoImplTest {
     @Order(4)
     @DependsOn({ "addTeacher_shouldReturnTeacher_whenAddTeacher" })
     void editTeacher_shouldReturnTeacher_whenEditTeacher() {
-        List<Teacher> expected = new ArrayList<>();
-        expected.add(teacher);
+        Teacher expected = teacher;
 
         teacher.setDegree("DOCTOR");
         teacherDao.editTeacher(teacher);
 
-        List<Teacher> actual = teacherDao.findTeacher(teacherUUID);
+       Teacher actual = teacherDao.findTeacher(teacherUUID);
         assertEquals(expected, actual);
     }
 
@@ -136,10 +132,10 @@ public class TeacherDaoImplTest {
     @Order(5)
     @DependsOn({ "editTeacher_shouldReturnTeacher_whenEditTeacher" })
     void deleteTeacher_shouldReturnEmpty_whenDeleteTeacher() {
-        List<Teacher> expected = new ArrayList<>();
+       Teacher expected = new Teacher();
         teacherDao.deleteTeacher(teacherUUID);
 
-        List<Teacher> actual = teacherDao.findTeacher("Ivanovna");
+        Teacher actual = teacherDao.findTeacher("Ivanovna");
         assertEquals(expected, actual);
     }
 

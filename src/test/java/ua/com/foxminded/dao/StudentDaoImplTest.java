@@ -73,23 +73,21 @@ class StudentDaoImplTest {
     @Order(1)
     void addStudent_shouldReturnStudent_whenAddStudent() {
 
-        List<Student> expected = new ArrayList<>();
-        expected.add(student);
+        Student expected = student;
 
         studentDao.addStudent(student);
 
-        List<Student> actual = studentDao.findStudent(studentUUID);
+        Student actual = studentDao.findStudent(studentUUID);
         assertEquals(expected, actual);
     }
 
     @Test
     @Order(2)
     void findStudent_shouldReturnStudent_whenFindWithUUID() {
-
-        List<Student> expected = new ArrayList<>();
-        expected.add(student);
-
-        List<Student> actual = studentDao.findStudent(studentUUID);
+        Student expected = student;
+        
+        Student actual = studentDao.findStudent(studentUUID);
+        
         assertEquals(expected, actual);
     }
 
@@ -97,9 +95,9 @@ class StudentDaoImplTest {
     @Order(2)
     void findStudent_shouldReturnEmpty_whenLookForNonExistentStudent() {
 
-        List<Student> expected = new ArrayList<>();
+        Student expected = new Student();
 
-        List<Student> actual = studentDao.findStudent("d7599e42-0263-11eb-adc1-0242ac120002");
+        Student actual = studentDao.findStudent("d7599e42-0263-11eb-adc1-0242ac120002");
         assertEquals(expected, actual);
     }
 
@@ -107,9 +105,9 @@ class StudentDaoImplTest {
     @Order(2)
     void findStudent_shouldReturnEmpty_whenLookForNull() {
 
-        List<Student> expected = new ArrayList<>();
+        Student expected = new Student();
 
-        List<Student> actual = studentDao.findStudent(null);
+        Student actual = studentDao.findStudent(null);
         assertEquals(expected, actual);
     }
 
@@ -117,8 +115,7 @@ class StudentDaoImplTest {
     @Order(3)
     void findAllStudent_shouldReturnAllStudent_whenLookForAllStudents() {
 
-        List<Student> expected = new ArrayList<>();
-        expected.add(student);
+        Student expected = student;
 
         List<Student> actual = studentDao.findAllStudent();
         assertEquals(expected, actual);
@@ -128,13 +125,12 @@ class StudentDaoImplTest {
     @Order(4)
     @DependsOn({ "addStudent_shouldReturnStudent_whenAddStudent" })
     void editStudent_shouldReturnStudent_whenEditStudent() {
-        List<Student> expected = new ArrayList<>();
-        expected.add(student);
+        Student expected = student;
 
         student.setCitizenship("Egypt");
         studentDao.editStudent(student);
 
-        List<Student> actual = studentDao.findStudent(studentUUID);
+        Student actual = studentDao.findStudent(studentUUID);
         assertEquals(expected, actual);
     }
 
@@ -142,10 +138,11 @@ class StudentDaoImplTest {
     @Order(5)
     @DependsOn({ "editStudent_shouldReturnStudent_whenEditStudent" })
     void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
-        List<Student> expected = new ArrayList<>();
+        Student expected = new Student();
+        
         studentDao.deleteStudent(studentUUID);
 
-        List<Student> actual = studentDao.findStudent("Ivan");
+        Student actual = studentDao.findStudent("Ivan");
         assertEquals(expected, actual);
     }
 

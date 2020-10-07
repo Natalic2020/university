@@ -9,8 +9,8 @@ public interface TeacherService {
 
     public void addTeacher(TeacherDto teacher);
     public void editTeacher(TeacherDto teacher);
-    public void deleteTeacher(UUID id);
-    public List<TeacherDto> findTeacher(UUID id);
+    public void deleteTeacher(UUID uuid);
+    public TeacherDto findTeacher(UUID uuid);
     public List<TeacherDto> findAllTeacher();
     
 }

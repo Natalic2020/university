@@ -37,15 +37,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudent(UUID id) {
-        studentDao.deleteStudent(id.toString());
+    public void deleteStudent(UUID uuid) {
+        studentDao.deleteStudent(uuid.toString());
     }
 
     @Override
-    public List<StudentDto> findStudent(String text) {
-        return studentDao.findStudent(text).stream()
-                .map(studentConverter::convertEntityToDto)
-                .collect(Collectors.toList());
+    public StudentDto findStudent(UUID uuid) {
+        return studentConverter.convertEntityToDto(studentDao.findStudent(uuid.toString()));
     }
 
     @Override
