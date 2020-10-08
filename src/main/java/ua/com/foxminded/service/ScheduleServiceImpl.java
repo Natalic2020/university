@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -47,13 +48,13 @@ public class ScheduleServiceImpl implements ScheduleService{
         LocalDate dateStart = date.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate dateFinish = dateStart.plusMonths(1);
         
-        Map<String, List<ScheduleItemDto>> scheduleMonthStudent = new HashMap<>();
+        Map<String, List<ScheduleItemDto>> scheduleMonthStudent = new LinkedHashMap<>();
         for (LocalDate dateN = dateStart; dateN.isBefore(dateFinish); dateN = dateN.plusDays(1)) {
             String dayOfWeek = dateN.getDayOfWeek().toString();
             List<ScheduleItemDto> scheduleDayOfWeek = ScheduleItems.stream()
                     .filter(e -> e.getDayOfWeek().toString().equals(dayOfWeek))
                     .collect(Collectors.toList());
-            scheduleMonthStudent.put(dateN.toString() + " " + dayOfWeek, scheduleDayOfWeek);   
+            scheduleMonthStudent.put(dateN.toString(), scheduleDayOfWeek);   
         }
         return scheduleMonthStudent;
     }
@@ -71,13 +72,15 @@ public class ScheduleServiceImpl implements ScheduleService{
         LocalDate dateStart = date.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate dateFinish = dateStart.plusMonths(1);
         
-        Map<String, List<ScheduleItemDto>> scheduleMonthTeacher = new HashMap<>();
+        Map<String, List<ScheduleItemDto>> scheduleMonthTeacher = new LinkedHashMap<>();
         for (LocalDate dateN = dateStart; dateN.isBefore(dateFinish); dateN = dateN.plusDays(1)) {
             String dayOfWeek = dateN.getDayOfWeek().toString();
             List<ScheduleItemDto> scheduleDayOfWeek = ScheduleItems.stream()
                     .filter(e -> e.getDayOfWeek().toString().equals(dayOfWeek))
                     .collect(Collectors.toList());
-            scheduleMonthTeacher.put(dateN.toString() + " " + dayOfWeek, scheduleDayOfWeek);   
+            if (scheduleDayOfWeek.size() > 0) {
+            scheduleMonthTeacher.put(dateN.toString() , scheduleDayOfWeek);
+            }
         }
         return scheduleMonthTeacher;
     }   
