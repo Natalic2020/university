@@ -20,45 +20,14 @@ public class StudentsController {
     @Autowired
     StudentService studentService;
     
-    Logger logger = LoggerFactory.getLogger("SampleLogger");
-    
     @GetMapping()
     public ModelAndView findAllStudent() {
- 
-        logger.info("--------------------- I am in ModelAndView                      viewStudents");
         
        List<StudentDto> students = studentService.findAllStudent();
-       
         
         ModelAndView studentMV = new ModelAndView("students");
        studentMV.addObject("students", students);
      
         return studentMV;   
     }
-    
-    @GetMapping("/2")
-    public ModelAndView index() {
- 
-      logger.info("--------------------- I am in ModelAndView                      viewStudents");
-     
-      String message = "Natalochka   dfgdfg";
-      
-      ModelAndView studentMV = new ModelAndView("students2", "message", message);
-     
-        return studentMV;   
-    }
-    
-    @GetMapping("/1")
-    public ModelAndView findListStudent() {
- 
-        logger.info("--------------------- I am in ModelAndView                      viewStudents");
-        
-       List<StudentDto> students = studentService.findListStudent();      
-        
-        ModelAndView studentMV = new ModelAndView("students1");
-       studentMV.addObject("students", students);
-     
-        return studentMV;   
-    }
-
 }

@@ -20,8 +20,6 @@ public class TeachersController {
     @Autowired
     TeacherService teacherService;
     
-    Logger logger = LoggerFactory.getLogger("SampleLogger");
-    
     @GetMapping()
     public ModelAndView findAllTeachers() {
  
