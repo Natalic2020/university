@@ -28,49 +28,68 @@ public class ScheduleController {
 
     @Autowired
     ScheduleService scheduleService;
-    
+
     @Autowired
     StudentService studentService;
-    
+
     @Autowired
     TeacherService teacherService;
 
     @GetMapping("/student/{uuid}")
-    public ModelAndView showScheduleStudent(@PathVariable("uuid") String uuid, @RequestParam (required = false) String month) {
+    public ModelAndView showScheduleStudent(@PathVariable("uuid") String uuid,
+            @RequestParam(required = false) String month) {
 
         StudentDto studentDto = studentService.findStudent(UUID.fromString(uuid));
-        String person = String.format("student:     %s  %s%n", studentDto.getFirstName(), studentDto.getLastName());
-        
-        ModelAndView scheduleMV ;
+
+        String typPerson = "student";
+        String firstName = studentDto.getFirstName();
+        String lastName = studentDto.getLastName();
+
+        ModelAndView scheduleMV;
         if (month == null) {
-            List<ScheduleItemDto> scheduleWeek = scheduleService.findWeekScheduleStudent(UUID.fromString(uuid)); 
-            scheduleMV = new ModelAndView("scheduleWeek", "person", person);
+            List<ScheduleItemDto> scheduleWeek = scheduleService.findWeekScheduleStudent(UUID.fromString(uuid));
+            scheduleMV = new ModelAndView("scheduleWeek");
             scheduleMV.addObject("schedule", scheduleWeek);
         } else {
-            LocalDate date = LocalDate.of(LocalDate.now().getYear(),  Month.valueOf(month.toUpperCase()), 1);
-            Map<String, List<ScheduleItemDto>> scheduleMonth = scheduleService.findMonthScheduleStudent(UUID.fromString(uuid),  date); 
-            scheduleMV = new ModelAndView("scheduleMonth", "person", person);
+            LocalDate date = LocalDate.of(LocalDate.now().getYear(), Month.valueOf(month.toUpperCase()), 1);
+            Map<String, List<ScheduleItemDto>> scheduleMonth = scheduleService.findMonthScheduleStudent(
+                    UUID.fromString(uuid), date);
+            scheduleMV = new ModelAndView("scheduleMonth");
             scheduleMV.addObject("scheduleMonth", scheduleMonth);
-        } 
+        }
+
+        scheduleMV.addObject("typPerson", typPerson);
+        scheduleMV.addObject("firstName", firstName);
+        scheduleMV.addObject("lastName", lastName);
+
         return scheduleMV;
     }
-    
+
     @GetMapping("/teacher/{uuid}")
-     public ModelAndView showScheduleTeacher(@PathVariable("uuid") String uuid, @RequestParam (required = false) String month) {
+    public ModelAndView showScheduleTeacher(@PathVariable("uuid") String uuid,
+            @RequestParam(required = false) String month) {
         TeacherDto teachertDto = teacherService.findTeacher(UUID.fromString(uuid));
-        String person = String.format("teacher:     %s  %s%n", teachertDto.getFirstName(), teachertDto.getLastName());
-        
-        ModelAndView scheduleMV ;
-      if (month == null) {
-          List<ScheduleItemDto> scheduleWeek = scheduleService.findWeekScheduleTeacher(UUID.fromString(uuid)); 
-          scheduleMV = new ModelAndView("scheduleWeek", "person", person);
-          scheduleMV.addObject("schedule", scheduleWeek);
-      } else {
-          LocalDate date = LocalDate.of(LocalDate.now().getYear(),  Month.valueOf(month.toUpperCase()), 1);
-          Map<String, List<ScheduleItemDto>> scheduleMonth = scheduleService.findMonthScheduleTeacher(UUID.fromString(uuid),  date); 
-          scheduleMV = new ModelAndView("scheduleMonth", "person", person);
-          scheduleMV.addObject("scheduleMonth", scheduleMonth);
-      } 
-       return scheduleMV;  
-  }
+        String typPerson = "teacher";
+        String firstName = teachertDto.getFirstName();
+        String lastName = teachertDto.getLastName();
+
+        ModelAndView scheduleMV;
+        if (month == null) {
+            List<ScheduleItemDto> scheduleWeek = scheduleService.findWeekScheduleTeacher(UUID.fromString(uuid));
+            scheduleMV = new ModelAndView("scheduleWeek");
+            scheduleMV.addObject("schedule", scheduleWeek);
+        } else {
+            LocalDate date = LocalDate.of(LocalDate.now().getYear(), Month.valueOf(month.toUpperCase()), 1);
+            Map<String, List<ScheduleItemDto>> scheduleMonth = scheduleService.findMonthScheduleTeacher(
+                    UUID.fromString(uuid), date);
+            scheduleMV = new ModelAndView("scheduleMonth");
+            scheduleMV.addObject("scheduleMonth", scheduleMonth);
+        }
+
+        scheduleMV.addObject("typPerson", typPerson);
+        scheduleMV.addObject("firstName", firstName);
+        scheduleMV.addObject("lastName", lastName);
+
+        return scheduleMV;
+    }
 }
