@@ -1,5 +1,6 @@
 package ua.com.foxminded.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,15 +37,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudent(UUID id) {
-        studentDao.deleteStudent(id.toString());
+    public void deleteStudent(UUID uuid) {
+        studentDao.deleteStudent(uuid.toString());
     }
 
     @Override
-    public List<StudentDto> findStudent(String text) {
-        return studentDao.findStudent(text).stream()
-                .map(studentConverter::convertEntityToDto)
-                .collect(Collectors.toList());
+    public StudentDto findStudent(UUID uuid) {
+        return studentConverter.convertEntityToDto(studentDao.findStudent(uuid.toString()));
     }
 
     @Override
@@ -53,4 +52,12 @@ public class StudentServiceImpl implements StudentService {
                 .map(studentConverter::convertEntityToDto)
                 .collect(Collectors.toList());
     }
+    
+  @Override
+  public List<StudentDto> findListStudent() {
+      List<StudentDto> students = new ArrayList<>();
+      students.add((StudentDto) new StudentDto().setIdStudent(UUID.fromString("a1f520ba-06fe-11eb-adc1-0242ac120002")).setFirstName("Nata").setLastName("Ivanov58"));
+      students.add((StudentDto) new StudentDto().setIdStudent(UUID.fromString("71ec8ca1-a435-4bcf-bf48-1d239a5145a6")).setFirstName("Ira").setLastName("Petrov25"));
+      return students;
+  }
 }

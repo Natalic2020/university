@@ -111,15 +111,15 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public List<Teacher> findTeacher(String teacherId) {
+    public Teacher findTeacher(String teacherId) {
         logger.info(format("Find teacher with UUID = %s", teacherId));
-        List<Teacher> teacher = new ArrayList<>();
+        List<Teacher> teachers = new ArrayList<>();
         try {
-            teacher = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " +
+            teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " +
                     "  where t.id_person = p.id_person and t.id_teacher = ? ",
                     teacherMapper, teacherId);
 
-            if (teacher.size() == 0) {
+            if (teachers.size() == 0) {
                 throw new NoSuchTeacherException(teacherId);  
             } 
             logger.info(format("Teacher with UUID = %s found sucessfully.", teacherId));
@@ -129,7 +129,7 @@ public class TeacherDaoImpl implements TeacherDao {
         } catch (NoSuchTeacherException e) {
             logger.debug(e.getMessage());
         }
-        return teacher;
+        return teachers.get(0);
     }
 
     @Override

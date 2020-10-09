@@ -22,6 +22,7 @@ public class StudentDto extends PersonDto {
     }
 
     public StudentDto(StudentDto student) {
+        this.idStudent = student.idStudent;
         this.studyStatus = student.studyStatus;
         this.startOfStudy =  LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(),
                 student.getStartOfStudy().getDayOfMonth()) ;
@@ -116,11 +117,12 @@ public class StudentDto extends PersonDto {
 
     @Override
     public String toString() {
-        return "StudentDto [idStudent=" + idStudent + ", studyStatus=" + studyStatus 
+        return "idStudent :" + idStudent 
+                + ", first name  : " + getFirstName()
+                + ", last name" + getLastName()
+                + ", studyStatus : " + studyStatus 
                 + ", startOfStudy=" + startOfStudy
-                + ", citizenship=" + citizenship + ", grant=" + grant 
-                + ", getFirstName()=" + getFirstName()
-                + ", getLastName()=" + getLastName() + "]";
+                + ", citizenship=" + citizenship + ", grant=" + grant ;
     }
 
    

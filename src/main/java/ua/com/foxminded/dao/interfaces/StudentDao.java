@@ -9,6 +9,6 @@ public interface StudentDao {
     public void addStudent(Student student);
     public void editStudent(Student student);
     public void deleteStudent(String id);
-    public List<Student> findStudent(String id);
+    public Student findStudent(String id);
     public List<Student> findAllStudent();    
 }

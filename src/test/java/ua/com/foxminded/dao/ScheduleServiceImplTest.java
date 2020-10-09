@@ -112,7 +112,7 @@ class ScheduleServiceImplTest {
         Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleStudent(UUID.fromString(uuid1),
                                                                            LocalDate.of(1999, 02, 02));
 
-        assertEquals(expected, actual.get("1999-02-09 TUESDAY"));
+        assertEquals(expected, actual.get("1999-02-09"));
     }
 
     @Test
@@ -155,9 +155,10 @@ class ScheduleServiceImplTest {
         scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
         Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleTeacher(UUID.fromString(uuid1),
-                                                                           LocalDate.of(1999, 02, 02));
+//                LocalDate.of(2020, 06, 01));
+                                                                          LocalDate.of(1999, 02, 02));
 
-        assertEquals(expected, actual.get("1999-02-09 TUESDAY"));
+        assertEquals(expected, actual.get("1999-02-09"));
     }
 
 }

@@ -110,7 +110,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> findStudent(String studentId) {
+    public Student findStudent(String studentId) {
         logger.info(format("Find student with id  = %s", studentId));
         List<Student> students = new ArrayList<>();
         try {
@@ -127,8 +127,8 @@ public class StudentDaoImpl implements StudentDao {
                     e.getMessage()));
         } catch (NoSuchStudentException e) {
             logger.debug(e.getMessage());
-        }
-        return students;
+        }   
+        return students.get(0);
     }
 
     @Override

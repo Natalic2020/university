@@ -36,15 +36,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void deleteTeacher(UUID id) {
-        teacherDao.deleteTeacher(id.toString());
+    public void deleteTeacher(UUID uuid) {
+        teacherDao.deleteTeacher(uuid.toString());
     }
 
     @Override
-    public List<TeacherDto> findTeacher(UUID id) {
-        return teacherDao.findTeacher(id.toString()).stream()
-                .map(teacher -> teacherConverter.convertEntityToDto(teacher))
-                .collect(Collectors.toList());
+    public TeacherDto findTeacher(UUID uuid) {
+        return teacherConverter.convertEntityToDto(teacherDao.findTeacher(uuid.toString()));
+
     }
 
     @Override
