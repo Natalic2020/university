@@ -29,7 +29,9 @@ import ua.com.foxminded.config.ApplicationConfigTest;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.StudentDao;
+import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.enums.StudyStatus;
+import ua.com.foxminded.service.interfaces.StudentService;
 import ua.com.foxminded.util.FileParser;
 
 @ExtendWith(SpringExtension.class)
@@ -47,6 +49,9 @@ class StudentDaoImplTest {
     @Autowired
     StudentDao studentDao;
 
+    @Autowired
+    StudentService studentService;
+    
     private String studentUUID = "961a9d3c-fb10-11ea-adc1-0242ac120002";
     private String personUUID = "69c4623a-fb11-11ea-adc1-0242ac120002";
     private Student student;
@@ -81,6 +86,18 @@ class StudentDaoImplTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @Order(1)
+    void addStudent_shouldReturnStudent_whenAddStudentLWithName() {
+
+        int expected = studentDao.findAllStudent().size();
+        
+        studentService.addStudent((StudentDto) new StudentDto().setFirstName("Anna").setLastName("Petja"));
+
+        int actual = studentDao.findAllStudent().size();
+        assertEquals(expected + 1, actual);
+    }
+    
     @Test
     @Order(2)
     void findStudent_shouldReturnStudent_whenFindWithUUID() {
@@ -127,7 +144,9 @@ class StudentDaoImplTest {
     void editStudent_shouldReturnStudent_whenEditStudent() {
         Student expected = student;
 
+        student.setFirstName("Ibragim");
         student.setCitizenship("Egypt");
+        student.setStartOfStudy(null);
         studentDao.editStudent(student);
 
         Student actual = studentDao.findStudent(studentUUID);

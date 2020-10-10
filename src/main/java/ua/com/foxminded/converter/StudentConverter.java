@@ -23,8 +23,11 @@ public class StudentConverter {
                         .setLastName(studentDto.getLastName());
         student.setCitizenship(studentDto.getCitizenship())
         .setGrant(studentDto.getGrant())
-        .setStartOfStudy(studentDto.getStartOfStudy())
-        .setStudyStatus(studentDto.getStudyStatus().name());
+        .setStartOfStudy(studentDto.getStartOfStudy());
+        Optional.ofNullable(studentDto.getStudyStatus())  
+        .ifPresent(ss -> student.setStudyStatus(ss.name()));
+        
+      
       return   student;
         
     }

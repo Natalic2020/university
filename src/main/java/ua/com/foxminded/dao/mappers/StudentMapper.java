@@ -1,7 +1,9 @@
 package ua.com.foxminded.dao.mappers;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -22,7 +24,8 @@ public class StudentMapper implements RowMapper<Student>{
                 .setLastName(rs.getString("last_name"));
         student.setCitizenship(rs.getString("citizenship"));
         student.setGrant(rs.getBigDecimal("grants"));
-        student.setStartOfStudy(rs.getDate("start_of_study").toLocalDate());
+        Optional.ofNullable(rs.getDate("start_of_study")) 
+        .ifPresent(ss -> ss.toLocalDate());
         student.setStudyStatus(rs.getString("study_status"));
         return student;
     }  

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>new student</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+
+	<form th:method="POST" th:action="@{/students}" th:object="${student}">
+		<label for="firstName">First Name: </label>
+		 <input type="text" th:field="*{firstName}" id="firstName" />
+		  <br />
+		  <label for="lastName">Last Name: </label>
+		 <input type="text" th:field="*{lastName}" id="lastName" />
+		  <br />
+		   <input type="submit" 	value="Add Student" />
+	</form>
+
+</body>
+</html>

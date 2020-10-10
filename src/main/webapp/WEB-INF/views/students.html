@@ -8,7 +8,11 @@
  <!-- <link rel="stylesheet" th:href="@{/css/main.css}" /> -->
 </head>
 <body>
+	
 	<div class="container">
+	
+
+
 		<div class="row">
 			<table class="table table-responsive table-bordered table-striped">
 				<thead>
@@ -19,6 +23,8 @@
 						<th>Start of study</th>
 						<th>Citizenship</th>
 						<th>Grant</th>
+						<th>Edit</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -29,10 +35,19 @@
 						<td th:text="${student.startOfStudy}"></td>
 						<td th:text="${student.citizenship}"></td>
 						<td th:text="${student.grant}"></td>	
+						<td><a th:href="@{/students/{uuid}(uuid=${student.idStudent})}">Edit</a> </td>
+						<td><a th:href="@{/students/delete/{uuid}(uuid=${student.idStudent})}">Delete</a> </td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+	<form id = "hotDealForm" th:action = "@{/students/new}"  method="post">
+
+    <div class="col-md-12 bg-light float-lg-left">
+        <br/>
+    <input type="button" value="Add new student" />
+    </div>
+    </form>
 </body>
 </html>
