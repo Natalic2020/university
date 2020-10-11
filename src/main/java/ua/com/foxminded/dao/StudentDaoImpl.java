@@ -78,8 +78,8 @@ public class StudentDaoImpl implements StudentDao {
         logger.info(format("Edit person with UUID = %s", personId));
         try {
             int countPersonUpdated = jdbcTemplate.update(
-                    "UPDATE uni.persons p SET  p.first_name= ?, p.last_name= ? " +
-                            " WHERE p.id_person = ? ",
+                    "UPDATE uni.persons  SET  first_name= ?, last_name= ? " +
+                            " WHERE id_person = ? ",
                student.getFirstName(), student.getLastName(), personId);  
             
             logger.info(format("Person with UUID = %s updated sucessfully.", personId));

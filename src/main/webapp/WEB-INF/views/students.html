@@ -3,14 +3,16 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Students</title>
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
- integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> 
- <!-- <link rel="stylesheet" th:href="@{/css/main.css}" /> -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<!-- <link rel="stylesheet" th:href="@{/css/main.css}" /> -->
 </head>
 <body>
-	
+
 	<div class="container">
-	
+
 
 
 		<div class="row">
@@ -34,20 +36,20 @@
 						<td th:text="${student.studyStatus}"></td>
 						<td th:text="${student.startOfStudy}"></td>
 						<td th:text="${student.citizenship}"></td>
-						<td th:text="${student.grant}"></td>	
-						<td><a th:href="@{/students/{uuid}(uuid=${student.idStudent})}">Edit</a> </td>
+						<td th:text="${student.grant}"></td>
+						<td><a th:href="@{/students/{uuid}(uuid=${student.idStudent})}">Edit</a>
+						</td>
 						<td><a th:href="@{/students/delete/{uuid}(uuid=${student.idStudent})}">Delete</a> </td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-	<form id = "hotDealForm" th:action = "@{/students/new}"  method="post">
+	<form id="hotDealForm" th:action="@{/students/new}">
 
-    <div class="col-md-12 bg-light float-lg-left">
-        <br/>
-    <input type="button" value="Add new student" />
-    </div>
-    </form>
+		<div class="col-md-12 bg-light float-lg-left">
+			<br /> <input type="submit" value="Add new student" />
+		</div>
+	</form>
 </body>
 </html>
