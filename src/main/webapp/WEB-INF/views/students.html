@@ -39,13 +39,7 @@
 						<td th:text="${student.citizenship}"></td>
 						<td th:text="${student.grant}"></td>
 						<td><a th:href="@{/students/{uuid}(uuid=${student.idStudent})}">Edit</a>
-						</td>
-						<td>
-							<form th:object="${commandObject}" th:action="@{/students/delete/{uuid}(uuid=${student.idStudent})}" th:method="delete">	
-							     <input type="hidden" name="_method" value="delete">
-							     <input type="submit"  value="delete">
-							</form>
-						</td>
+						<td><a th:href="@{/students/delete/{uuid}(uuid=${student.idStudent})}">Delete</a>
 					</tr>
 				</tbody>
 			</table>
