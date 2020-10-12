@@ -70,7 +70,7 @@ public class StudentsController {
         return studentMV;
     }
     
-    @GetMapping("/delete/{uuid}")
+    @DeleteMapping("/delete/{uuid}")
     public ModelAndView deleteStudent(@PathVariable("uuid") String uuid) {
 
         studentService.deleteStudent(UUID.fromString(uuid));

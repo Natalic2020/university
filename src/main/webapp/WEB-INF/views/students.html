@@ -34,12 +34,18 @@
 						<td th:text="${student.firstName}"></td>
 						<td th:text="${student.lastName}"></td>
 						<td th:text="${student.studyStatus}"></td>
-						<td th:text="${student.startOfStudy}"></td>
+						<td th:text="${student.StartOfStudy}"></td>
+					<!--  	<td th:text="${#temporals.format(student.getStartOfStudy(), 'dd.MM.yyyy')}"></td> -->
 						<td th:text="${student.citizenship}"></td>
 						<td th:text="${student.grant}"></td>
 						<td><a th:href="@{/students/{uuid}(uuid=${student.idStudent})}">Edit</a>
 						</td>
-						<td><a th:href="@{/students/delete/{uuid}(uuid=${student.idStudent})}">Delete</a> </td>
+						<td>
+							<form th:object="${commandObject}" th:action="@{/students/delete/{uuid}(uuid=${student.idStudent})}" th:method="delete">	
+							     <input type="hidden" name="_method" value="delete">
+							     <input type="submit"  value="delete">
+							</form>
+						</td>
 					</tr>
 				</tbody>
 			</table>
