@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>new teacher</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+
+	<form th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
+		<label for="firstName">First Name: </label>
+		 <input type="text"	th:field="*{firstName}" id="firstName" />
+		 <br />
+		<label for="lastName">Last Name: </label>
+		  <input type="text" th:field="*{lastName}" id="lastName" /> 
+		  <br /> 
+		<label	for="degree">Degree: </label>
+		   <select id="degree" th:field="*{degree}">   
+		    <option
+				th:each="degree : ${T(ua.com.foxminded.model.enums.Degree).values()}"
+				th:value="${degree}" th:text="${degree}">
+			</option>
+		   </select>  
+		 <br /> 
+		 <label	for="department">Department: </label>
+		   <select id="department" th:field="*{department}">   
+		    <option
+				th:each="department : ${T(ua.com.foxminded.model.enums.Department).values()}"
+				th:value="${department}" th:text="${department}">
+			</option>
+		   </select>  
+		 <br /> 
+		
+		<label	for="salary">Salary: </label> 
+		 <input type="number" th:field="*{salary}"	id="salary" />
+		 <br />
+		 <input type="submit" value="Add Teacher" />
+	</form>
+µ
+</body>
+</html>

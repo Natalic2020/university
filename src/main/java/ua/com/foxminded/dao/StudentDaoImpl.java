@@ -85,8 +85,9 @@ public class StudentDaoImpl implements StudentDao {
             logger.info(format("Person with UUID = %s updated sucessfully.", personId));
             
             logger.info(format("Edit student with UUID = %s", studentId));
-            int countStudentUpdated = jdbcTemplate.update("UPDATE uni.students s SET citizenship = ?, study_status = ?, " +
-                    " grants = ?, start_of_study = ?  WHERE s.id_student = ? ",
+            
+            int countStudentUpdated = jdbcTemplate.update("UPDATE uni.students  SET citizenship = ?, study_status = ?, " +
+                    " grants = ?, start_of_study = ?  WHERE id_student = ? ",
                     student.getCitizenship(), student.getStudyStatus(), student.getGrant(), 
                     Optional.ofNullable(student.getStartOfStudy()) 
                     .map(ss -> Date.valueOf(ss)).orElse(null),

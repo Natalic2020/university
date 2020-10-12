@@ -17,6 +17,25 @@
 		  <label for="lastName">Last Name: </label>
 		 <input type="text" th:field="*{lastName}" id="lastName" />
 		  <br />
+		  	<label	for="studyStatus">Study status: </label>
+	  <!--   	  <input type="text" th:field="*{studyStatus}" id="studyStatus" />  -->
+		   <select id="studyStatus" th:field="*{studyStatus}">   
+		    <option
+				th:each="studyStatus : ${T(ua.com.foxminded.model.enums.StudyStatus).values()}"
+				th:value="${studyStatus}" th:text="${studyStatus}">
+			</option>
+		   </select>  
+		 <br /> 
+		<label for="startOfStudy">Start of study: </label> 
+		 <input	type="date" th:field="*{startOfStudy}" id="startOfStudy" /> 
+		 <br />
+		<label for="citizenship">Citizenship: </label> 
+		 <input type="text"	th:field="*{citizenship}" id="citizenship" /> 
+		 <br />
+		<label	for="grant">Grant: </label> 
+		 <input type="number" th:field="*{grant}"	id="grant" />
+		 <br />
+		  
 		   <input type="submit" 	value="Add Student" />
 	</form>
 
