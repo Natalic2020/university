@@ -128,6 +128,7 @@ public class StudentDaoImpl implements StudentDao {
     public Student findStudent(String studentId) {
         logger.info(format("Find student with id  = %s", studentId));
         List<Student> students = new ArrayList<>();
+        Student student = new Student();
         try {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " +
                     " where s.id_person = p.id_person and s.id_student = ? ",
@@ -136,6 +137,7 @@ public class StudentDaoImpl implements StudentDao {
             if (students.size() == 0) {
                 throw new NoSuchStudentException(studentId);     
             }  
+            student = students.get(0);
             logger.info(format("Student with UUID = %s found sucessfully.", studentId));
         } catch (DataAccessException e) {
             logger.debug(format("Student with UUID = %s was not found.  Reason: %s", studentId,
@@ -143,7 +145,7 @@ public class StudentDaoImpl implements StudentDao {
         } catch (NoSuchStudentException e) {
             logger.debug(e.getMessage());
         }   
-        return students.get(0);
+        return student;
     }
 
     @Override

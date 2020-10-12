@@ -79,7 +79,6 @@ public class Student extends Person{
         result = prime * result + ((citizenship == null) ? 0 : citizenship.hashCode());
         result = prime * result + ((grant == null) ? 0 : grant.hashCode());
         result = prime * result + ((group == null) ? 0 : group.hashCode());
-        result = prime * result + ((idStudent == null) ? 0 : idStudent.hashCode());
         result = prime * result + ((startOfStudy == null) ? 0 : startOfStudy.hashCode());
         result = prime * result + ((studyStatus == null) ? 0 : studyStatus.hashCode());
         return result;
@@ -109,11 +108,6 @@ public class Student extends Person{
                 return false;
         } else if (!group.equals(other.group))
             return false;
-        if (idStudent == null) {
-            if (other.idStudent != null)
-                return false;
-        } else if (!idStudent.equals(other.idStudent))
-            return false;
         if (startOfStudy == null) {
             if (other.startOfStudy != null)
                 return false;
@@ -125,6 +119,5 @@ public class Student extends Person{
         } else if (!studyStatus.equals(other.studyStatus))
             return false;
         return true;
-    } 
-    
+    }
 }

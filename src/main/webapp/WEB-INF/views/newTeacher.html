@@ -33,12 +33,13 @@
 			</option>
 		   </select>  
 		 <br /> 
-		
+		<label for="permanent">Permanent: </label> 
+		 <input	type="checkbox" th:checked="*{permanent}" id="permanent" /> 
+		 <br />
 		<label	for="salary">Salary: </label> 
 		 <input type="number" th:field="*{salary}"	id="salary" />
 		 <br />
 		 <input type="submit" value="Add Teacher" />
 	</form>
-µ
 </body>
 </html>

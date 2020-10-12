@@ -111,8 +111,7 @@ public class TeacherDaoImplTest {
     @Order(2)
     void findTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
         List<Teacher> expected = new ArrayList<>();
-
-        Teacher actual = teacherDao.findTeacher("Ivan123");
+        Teacher actual = teacherDao.findTeacher("2d44565a-fb14-11ea-adc1-0242ac120002");
         assertEquals(expected, actual);
     }
 
@@ -163,12 +162,9 @@ public class TeacherDaoImplTest {
 
     @Test
     void addTeacher_shouldNotChangeListAllTeacher_whenInputTeacherWithoutParameter() {
-
         List<Teacher> expected = teacherDao.findAllTeacher();
         teacherDao.addTeacher(new Teacher());
-
         List<Teacher> actual = teacherDao.findAllTeacher();
-
         assertEquals(expected, actual);
     }
 }
