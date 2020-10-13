@@ -9,7 +9,7 @@
 	crossorigin="anonymous">
 </head>
 <body>
-
+	<h3>Welcome, Enter The Student Details</h3>
 	<form th:method="POST" th:action="@{/students}" th:object="${student}">
 		<label for="firstName">First Name: </label>
 		 <input type="text" th:field="*{firstName}" id="firstName" />

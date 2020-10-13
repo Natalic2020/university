@@ -42,6 +42,15 @@ public class StudentsController {
         return studentMV;
     }
     
+    @PostMapping()
+    public ModelAndView createStudent(@ModelAttribute("student") StudentDto student) {
+
+        studentService.addStudent(student);
+        ModelAndView studentMV = new ModelAndView("redirect:/students");
+ 
+        return studentMV;
+    }
+    
     @GetMapping("/{uuid}")
     public ModelAndView showStudent(@PathVariable("uuid") String uuid) {
 
@@ -49,15 +58,6 @@ public class StudentsController {
         ModelAndView studentMV = new ModelAndView("editStudent");
         studentMV.addObject("student", student);
 
-        return studentMV;
-    }
-    
-    @PostMapping()
-    public ModelAndView createStudent(@ModelAttribute("student") StudentDto student) {
-
-        studentService.addStudent(student);
-        ModelAndView studentMV = new ModelAndView("redirect:/students");
- 
         return studentMV;
     }
     

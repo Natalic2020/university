@@ -63,11 +63,6 @@ public class ApplicationConfig implements WebMvcConfigurer{
         templateResolver.setSuffix(".html");
         return templateResolver;
     }
-    
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//      registry.addViewController("students/new").setViewName("newStudent");
-//    }
 
     @Bean
     public SpringTemplateEngine templateEngine() {
