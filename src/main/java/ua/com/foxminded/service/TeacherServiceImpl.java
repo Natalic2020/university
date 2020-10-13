@@ -26,8 +26,9 @@ public class TeacherServiceImpl implements TeacherService {
     
     @Override
     public void addTeacher(TeacherDto teacherDto) {
-        teacherDao.addTeacher(teacherConverter.convertDtoToEntity(teacherDto
-                .setIdTeacher(UUID.randomUUID())));
+        teacherDao.addTeacher(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto
+                .setIdTeacher(UUID.randomUUID())
+                .setIdPerson(UUID.randomUUID())));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherDto> findAllTeacher() {
         return teacherDao.findAllTeacher().stream()
-                .map(teacher -> teacherConverter.convertEntityToDto(teacher))
+                .map(teacherConverter::convertEntityToDto)
                 .collect(Collectors.toList());
     }
 }

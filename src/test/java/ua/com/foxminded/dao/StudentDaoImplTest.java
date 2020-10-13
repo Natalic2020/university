@@ -29,7 +29,9 @@ import ua.com.foxminded.config.ApplicationConfigTest;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.StudentDao;
+import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.enums.StudyStatus;
+import ua.com.foxminded.service.interfaces.StudentService;
 import ua.com.foxminded.util.FileParser;
 
 @ExtendWith(SpringExtension.class)
@@ -47,6 +49,9 @@ class StudentDaoImplTest {
     @Autowired
     StudentDao studentDao;
 
+    @Autowired
+    StudentService studentService;
+    
     private String studentUUID = "961a9d3c-fb10-11ea-adc1-0242ac120002";
     private String personUUID = "69c4623a-fb11-11ea-adc1-0242ac120002";
     private Student student;
@@ -72,31 +77,33 @@ class StudentDaoImplTest {
     @Test
     @Order(1)
     void addStudent_shouldReturnStudent_whenAddStudent() {
-
         Student expected = student;
-
         studentDao.addStudent(student);
-
         Student actual = studentDao.findStudent(studentUUID);
         assertEquals(expected, actual);
     }
 
     @Test
+    @Order(1)
+    void addStudent_shouldReturnStudent_whenAddStudentLWithName() {
+        int expected = studentDao.findAllStudent().size();
+        studentService.addStudent((StudentDto) new StudentDto().setFirstName("Anna").setLastName("Petja"));
+        int actual = studentDao.findAllStudent().size();
+        assertEquals(expected + 1, actual);
+    }
+    
+    @Test
     @Order(2)
     void findStudent_shouldReturnStudent_whenFindWithUUID() {
         Student expected = student;
-        
         Student actual = studentDao.findStudent(studentUUID);
-        
         assertEquals(expected, actual);
     }
 
     @Test
     @Order(2)
     void findStudent_shouldReturnEmpty_whenLookForNonExistentStudent() {
-
         Student expected = new Student();
-
         Student actual = studentDao.findStudent("d7599e42-0263-11eb-adc1-0242ac120002");
         assertEquals(expected, actual);
     }
@@ -104,9 +111,7 @@ class StudentDaoImplTest {
     @Test
     @Order(2)
     void findStudent_shouldReturnEmpty_whenLookForNull() {
-
         Student expected = new Student();
-
         Student actual = studentDao.findStudent(null);
         assertEquals(expected, actual);
     }
@@ -114,10 +119,8 @@ class StudentDaoImplTest {
     @Test
     @Order(3)
     void findAllStudent_shouldReturnAllStudent_whenLookForAllStudents() {
-
-        Student expected = student;
-
-        List<Student> actual = studentDao.findAllStudent();
+        int expected = 2;
+        int actual = studentDao.findAllStudent().size();
         assertEquals(expected, actual);
     }
 
@@ -127,7 +130,9 @@ class StudentDaoImplTest {
     void editStudent_shouldReturnStudent_whenEditStudent() {
         Student expected = student;
 
+        student.setFirstName("Ibragim");
         student.setCitizenship("Egypt");
+        student.setStartOfStudy(null);
         studentDao.editStudent(student);
 
         Student actual = studentDao.findStudent(studentUUID);
@@ -138,12 +143,10 @@ class StudentDaoImplTest {
     @Order(5)
     @DependsOn({ "editStudent_shouldReturnStudent_whenEditStudent" })
     void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
-        Student expected = new Student();
-        
+        int expected = studentDao.findAllStudent().size();
         studentDao.deleteStudent(studentUUID);
-
-        Student actual = studentDao.findStudent("Ivan");
-        assertEquals(expected, actual);
+        int actual = studentDao.findAllStudent().size();
+        assertEquals(expected - 1, actual);
     }
 
     @Test
@@ -152,7 +155,6 @@ class StudentDaoImplTest {
         List<Student> expected = studentDao.findAllStudent();
         studentDao.addStudent(new Student());
         List<Student> actual = studentDao.findAllStudent();
-
         assertEquals(expected, actual);
     }
 }

@@ -19,6 +19,8 @@
 						<th>Department</th>
 						<th>Permanent</th>
 						<th>Salary</th>
+						<th>Edit</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -29,10 +31,17 @@
 						<td th:text="${teacher.department}"></td>
 						<td th:text="${teacher.isPermanent()}? 'Yes' : 'No'"></td>
 						<td th:text="${teacher.salary}"></td>	
+						<td><a th:href="@{/teachers/{uuid}(uuid=${teacher.idTeacher})}">Edit</a>
+						<td><a th:href="@{/teachers/delete/{uuid}(uuid=${teacher.idTeacher})}">Delete</a>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+	<form id="hotDealForm" th:action="@{/teachers/new}">
+		<div class="col-md-12 bg-light float-lg-left">
+			<br /> <input type="submit" value="Add new teacher" />
+		</div>
+	</form>
 </body>
 </html>

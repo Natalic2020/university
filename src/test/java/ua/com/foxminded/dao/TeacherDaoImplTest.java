@@ -27,6 +27,9 @@ import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
+import ua.com.foxminded.model.dto.StudentDto;
+import ua.com.foxminded.model.dto.TeacherDto;
+import ua.com.foxminded.service.interfaces.TeacherService;
 import ua.com.foxminded.util.FileParser;
 
 @ExtendWith(SpringExtension.class)
@@ -43,6 +46,9 @@ public class TeacherDaoImplTest {
 
     @Autowired
     TeacherDao teacherDao;
+    
+    @Autowired
+    TeacherService teacherService;
 
     private String teacherUUID = "2901a714-fb14-11ea-adc1-0242ac120002";
     private String personUUID = "2d44565a-fb14-11ea-adc1-0242ac120002";
@@ -79,6 +85,20 @@ public class TeacherDaoImplTest {
     }
 
     @Test
+    @Order(1)
+    void addStudent_shouldReturnStudent_whenAddTeacherLWithName() {
+
+        int expected = teacherDao.findAllTeacher().size();
+        
+        teacherService.addTeacher((TeacherDto) new TeacherDto().setFirstName("Anna").setLastName("Petja"));
+
+        int actual = teacherDao.findAllTeacher().size();
+        assertEquals(expected + 1, actual);
+    }
+    
+    
+    
+    @Test
     @Order(2)
     void findTeacher_shouldReturnTeacher_whenLookForLastName() {
 
@@ -91,8 +111,7 @@ public class TeacherDaoImplTest {
     @Order(2)
     void findTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
         List<Teacher> expected = new ArrayList<>();
-
-        Teacher actual = teacherDao.findTeacher("Ivan123");
+        Teacher actual = teacherDao.findTeacher("2d44565a-fb14-11ea-adc1-0242ac120002");
         assertEquals(expected, actual);
     }
 
@@ -120,7 +139,9 @@ public class TeacherDaoImplTest {
     @DependsOn({ "addTeacher_shouldReturnTeacher_whenAddTeacher" })
     void editTeacher_shouldReturnTeacher_whenEditTeacher() {
         Teacher expected = teacher;
-
+        
+        teacher.setFirstName("Galina");
+        teacher.setLastName("Bojko");
         teacher.setDegree("DOCTOR");
         teacherDao.editTeacher(teacher);
 
@@ -141,12 +162,9 @@ public class TeacherDaoImplTest {
 
     @Test
     void addTeacher_shouldNotChangeListAllTeacher_whenInputTeacherWithoutParameter() {
-
         List<Teacher> expected = teacherDao.findAllTeacher();
         teacherDao.addTeacher(new Teacher());
-
         List<Teacher> actual = teacherDao.findAllTeacher();
-
         assertEquals(expected, actual);
     }
 }

@@ -23,6 +23,8 @@ public class StudentDto extends PersonDto {
 
     public StudentDto(StudentDto student) {
         this.idStudent = student.idStudent;
+        this.setFirstName(student.getFirstName());
+        this.setLastName(student.getLastName());
         this.studyStatus = student.studyStatus;
         this.startOfStudy =  LocalDate.of(student.getStartOfStudy().getYear(), student.getStartOfStudy().getMonth(),
                 student.getStartOfStudy().getDayOfMonth()) ;

@@ -1,12 +1,14 @@
 package ua.com.foxminded.controller;
 
 import java.util.List;
+import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,4 +32,49 @@ public class TeachersController {
      
         return teacherMV;   
     }
+    @GetMapping("/new")
+    public ModelAndView addNewTeacher(@ModelAttribute("teacher") TeacherDto teacher) {
+
+        ModelAndView teacherMV = new ModelAndView("newTeacher");
+
+        return teacherMV;
+    }
+    
+    @GetMapping("/{uuid}")
+    public ModelAndView showTeacher(@PathVariable("uuid") String uuid) {
+
+        TeacherDto teacher = teacherService.findTeacher(UUID.fromString(uuid));
+        ModelAndView teacherMV = new ModelAndView("editTeacher");
+        teacherMV.addObject("teacher", teacher);
+
+        return teacherMV;
+    }
+    
+    @PostMapping()
+    public ModelAndView createTeacher(@ModelAttribute("teacher") TeacherDto teacher) {
+
+        teacherService.addTeacher(teacher);
+        ModelAndView teacherMV = new ModelAndView("redirect:/teachers");
+ 
+        return teacherMV;
+    }
+    
+    @PostMapping("/edit")
+    public ModelAndView editTeacher(@ModelAttribute("teacher") TeacherDto teacher) {
+
+        teacherService.editTeacher(teacher);
+        ModelAndView teacherMV = new ModelAndView("redirect:/teachers");
+ 
+        return teacherMV;
+    }
+    
+    @GetMapping("/delete/{uuid}")
+    public ModelAndView deleteTeacher(@PathVariable("uuid") String uuid) {
+
+        teacherService.deleteTeacher(UUID.fromString(uuid));
+        ModelAndView teacherMV = new ModelAndView("redirect:/teachers");
+ 
+        return teacherMV;
+    }  
 }
+

@@ -3,6 +3,7 @@ package ua.com.foxminded.dao;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +55,10 @@ public class StudentDaoImpl implements StudentDao {
             int countStudentInserted = jdbcTemplate.update(
                     "INSERT INTO uni.students (id_student, id_person, study_status, " +
                             "start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?, ?)",
-                           student.getIdStudent(), student.getIdPerson(), student.getStudyStatus(), 
-                           Date.valueOf(student.getStartOfStudy()), student.getCitizenship(), student.getGrant());
+                           student.getIdStudent(), student.getIdPerson(), student.getStudyStatus(),
+                           Optional.ofNullable(student.getStartOfStudy()) 
+                           .map(ss -> Date.valueOf(ss)).orElse(null),
+                           student.getCitizenship(), student.getGrant());
             if ( countStudentInserted == 0) {
                 throw new DbObjectNotInsertedException(student);
             }
@@ -71,19 +74,31 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void editStudent(Student student) {
         String studentId = student.getIdStudent();
-        logger.info(format("Edit student with UUID = %s", studentId));
+        String personId = student.getIdPerson();
+        logger.info(format("Edit person with UUID = %s", personId));
         try {
-            int countUpdated = jdbcTemplate.update("UPDATE uni.students s SET citizenship = ?, study_status = ?, " +
-                    " grants = ?, start_of_study = ?  WHERE s.id_student = ? ",
+            int countPersonUpdated = jdbcTemplate.update(
+                    "UPDATE uni.persons  SET  first_name= ?, last_name= ? " +
+                            " WHERE id_person = ? ",
+               student.getFirstName(), student.getLastName(), personId);  
+            
+            logger.info(format("Person with UUID = %s updated sucessfully.", personId));
+            
+            logger.info(format("Edit student with UUID = %s", studentId));
+            
+            int countStudentUpdated = jdbcTemplate.update("UPDATE uni.students  SET citizenship = ?, study_status = ?, " +
+                    " grants = ?, start_of_study = ?  WHERE id_student = ? ",
                     student.getCitizenship(), student.getStudyStatus(), student.getGrant(), 
-                    Date.valueOf(student.getStartOfStudy()), studentId);
+                    Optional.ofNullable(student.getStartOfStudy()) 
+                    .map(ss -> Date.valueOf(ss)).orElse(null),
+                    studentId);
                           
-            if (countUpdated == 0) {
+            if (countStudentUpdated == 0) {
                 throw new NoSuchStudentException(studentId);
             }
             logger.info(format("Student with UUID = %s updated sucessfully.", studentId));
         } catch (DataAccessException e) {
-            logger.debug(format("Student with UUID = %s was not updated.  Reason: %s", studentId,
+            logger.debug(format("Student with UUID = %s was not updated. m Reason: %s", studentId,
                     e.getMessage()));
         } catch (NoSuchStudentException e) {
             logger.info(e.getMessage());
@@ -113,6 +128,7 @@ public class StudentDaoImpl implements StudentDao {
     public Student findStudent(String studentId) {
         logger.info(format("Find student with id  = %s", studentId));
         List<Student> students = new ArrayList<>();
+        Student student = new Student();
         try {
             students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " +
                     " where s.id_person = p.id_person and s.id_student = ? ",
@@ -121,6 +137,7 @@ public class StudentDaoImpl implements StudentDao {
             if (students.size() == 0) {
                 throw new NoSuchStudentException(studentId);     
             }  
+            student = students.get(0);
             logger.info(format("Student with UUID = %s found sucessfully.", studentId));
         } catch (DataAccessException e) {
             logger.debug(format("Student with UUID = %s was not found.  Reason: %s", studentId,
@@ -128,7 +145,7 @@ public class StudentDaoImpl implements StudentDao {
         } catch (NoSuchStudentException e) {
             logger.debug(e.getMessage());
         }   
-        return students.get(0);
+        return student;
     }
 
     @Override
