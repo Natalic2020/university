@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -62,6 +63,11 @@ public class ApplicationConfig implements WebMvcConfigurer{
         templateResolver.setSuffix(".html");
         return templateResolver;
     }
+    
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//      registry.addViewController("students/new").setViewName("newStudent");
+//    }
 
     @Bean
     public SpringTemplateEngine templateEngine() {
