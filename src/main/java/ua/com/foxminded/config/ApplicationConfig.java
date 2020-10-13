@@ -1,5 +1,6 @@
 package ua.com.foxminded.config;
 
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jndi.JndiTemplate;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -24,7 +27,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
 @ComponentScan(basePackages = "ua.com.foxminded")
-@PropertySource(value = { "classpath:db.properties" })
+@PropertySource("classpath:persistence-jndi.properties")
 @EnableWebMvc
 public class ApplicationConfig implements WebMvcConfigurer{
 
@@ -36,16 +39,11 @@ public class ApplicationConfig implements WebMvcConfigurer{
     @Autowired
     public ApplicationConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-    }
+    } 
     
     @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
-        dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
-        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
-        return dataSource;
+    public DataSource dataSource() throws NamingException {
+        return (DataSource) new JndiTemplate().lookup(env.getProperty("jdbc.url"));
     }
  
     @Bean
