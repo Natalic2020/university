@@ -3,6 +3,7 @@ package ua.com.foxminded.config;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -81,4 +82,6 @@ public class ApplicationConfig implements WebMvcConfigurer{
     public IDialect conditionalCommentDialect() {
         return new Java8TimeDialect();
     }
+    
+   
 }

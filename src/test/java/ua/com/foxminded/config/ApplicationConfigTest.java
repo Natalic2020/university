@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @ComponentScan(basePackages = "ua.com.foxminded.service")
 @ComponentScan(basePackages = "ua.com.foxminded.converter")
 @ComponentScan(basePackages = "ua.com.foxminded.dao")
-@PropertySource(value = { "classpath:db_test.properties" })
+@PropertySource(value = { "classpath:hibernate.cfg.xml" })
 public class ApplicationConfigTest {
 
     @Autowired
@@ -26,10 +26,10 @@ public class ApplicationConfigTest {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
-        dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
-        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
+        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        dataSource.setUrl(env.getProperty("jdbc.url"));
+        dataSource.setUsername(env.getProperty("jdbc.username"));
+        dataSource.setPassword(env.getProperty("jdbc.password"));
         return dataSource;
     }
  

@@ -76,7 +76,7 @@ class StudentDaoImplTest {
 
     @Test
     @Order(1)
-    void addStudent_shouldReturnStudent_whenAddStudent() {
+    void addStudentStudentDao_shouldReturnStudent_whenAddStudent() {
         Student expected = student;
         studentDao.addStudent(student);
         Student actual = studentDao.findStudent(studentUUID);
@@ -85,7 +85,7 @@ class StudentDaoImplTest {
 
     @Test
     @Order(1)
-    void addStudent_shouldReturnStudent_whenAddStudentLWithName() {
+    void addStudentStudentService_shouldReturnStudent_whenAddStudentLWithName() {
         int expected = studentDao.findAllStudent().size();
         studentService.addStudent((StudentDto) new StudentDto().setFirstName("Anna").setLastName("Petja"));
         int actual = studentDao.findAllStudent().size();
