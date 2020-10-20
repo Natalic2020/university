@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table (name = "persons", schema = "uni")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class Person {
     
     @Id

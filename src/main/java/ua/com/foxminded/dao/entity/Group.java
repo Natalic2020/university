@@ -5,14 +5,18 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "groups")
+@Table (name = "groups" , schema = "uni")
 public class Group {
-    
+   
+    @Id
+    @Column(name = "id_group", nullable = false)
     private String id;
+    @Column(name = "name_group")
     private String name;
     private String specialty;
     
-    @OneToMany(mappedBy = "groups" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "group")
+//    @Transient
     private List<Student> students;
     
     public Group() {

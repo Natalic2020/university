@@ -8,15 +8,17 @@ import javax.persistence.*;
 
 
 @Entity
-@Table (name = "students")
-
+@Table (name = "students", schema = "uni")
+//@PrimaryKeyJoinColumn(name="id_student1")
 public class Student extends Person{
     
-    @Id
+//    @Id
     @Column(name = "id_student", nullable = false)
     private String idStudent;
     
     @ManyToOne
+    @JoinColumn(name = "id_group")
+//    @Transient
     private Group group;
     
     @Column(name = "study_status")

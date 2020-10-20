@@ -6,9 +6,12 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Bean;
 
 import ua.com.foxminded.dao.entity.ContactInfo;
+import ua.com.foxminded.dao.entity.Group;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Room;
 import ua.com.foxminded.dao.entity.Student;
+import ua.com.foxminded.dao.entity.Subject;
+import ua.com.foxminded.dao.entity.TimeSlot;
 
 public class HibernateSessionFactoryUtil {
     private static SessionFactory sessionFactory;
@@ -19,17 +22,13 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
-//                configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
-//                .setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/university")
-//                .setProperty("hibernate.connection.username", "postgres")
-//                .setProperty("hibernate.connection.password", "1234")
-//                .setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect")
-//                .setProperty("hibernate.connection.datasource", "java:com/driver/db/entity")
-//                .setProperty("hibernate.connection.password", "1234")
-//                .setProperty("show_sql", "true");
-//                configuration.addAnnotatedClass(Student.class);
                 configuration.addAnnotatedClass(Room.class)
+                .addAnnotatedClass(Group.class)
+                .addAnnotatedClass(Subject.class)
+//                .addAnnotatedClass(TimeSlot.class)
+//                .addAnnotatedClass(Period.class)
                 .addAnnotatedClass(Person.class)
+                .addAnnotatedClass(Student.class)
                 .addAnnotatedClass(ContactInfo.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());

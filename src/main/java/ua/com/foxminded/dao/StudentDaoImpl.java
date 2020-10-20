@@ -143,7 +143,7 @@ public class StudentDaoImpl implements StudentDao {
 
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(studentId);
+        session.delete(session.get(Student.class,studentId));
         tx1.commit();
         session.close();
     }
@@ -204,6 +204,8 @@ public class StudentDaoImpl implements StudentDao {
                                                             .openSession()
                                                             .createQuery("From Student")
                                                             .list();
+        
+        
         return students;
     }
 
