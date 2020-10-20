@@ -1,6 +1,7 @@
 package ua.com.foxminded.config;
 
 import javax.naming.NamingException;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -11,9 +12,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jndi.JndiTemplate;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -27,8 +32,11 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
+@EnableTransactionManagement  //Nata
 @ComponentScan(basePackages = "ua.com.foxminded")
 @PropertySource("classpath:persistence-jndi.properties")
+//@PropertySource(value = { "classpath:db.properties" })
+@EnableJpaRepositories(basePackages = "ua.com.foxminded.dao") //Nata
 @EnableWebMvc
 public class ApplicationConfig implements WebMvcConfigurer{
 
@@ -42,11 +50,42 @@ public class ApplicationConfig implements WebMvcConfigurer{
         this.applicationContext = applicationContext;
     } 
     
+    
+    //Nata
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() 
+//      throws NamingException {
+//        LocalContainerEntityManagerFactoryBean em 
+//          = new LocalContainerEntityManagerFactoryBean();
+//        em.setDataSource(dataSource());
+//        
+//        // rest of entity manager configuration
+//        return em;
+//    }
+    
     @Bean
     public DataSource dataSource() throws NamingException {
         return (DataSource) new JndiTemplate().lookup(env.getProperty("jdbc.url"));
     }
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
+//        dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
+//        dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
+//        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
+//        return dataSource;
+//    }
  
+  //Nata
+//    @Bean
+//    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+//        JpaTransactionManager transactionManager = new JpaTransactionManager();
+//        transactionManager.setEntityManagerFactory(emf);
+//        return transactionManager;
+//    }
+    
+    
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);

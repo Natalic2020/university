@@ -3,17 +3,17 @@ package ua.com.foxminded.dao.entity;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "persons")
+@Table (name = "persons", schema = "uni")
 public abstract class Person {
     
     @Id
-    @Column(name = "id_person")
+    @Column(name = "id_person", nullable = false)
 	private String idPerson;
     @Column(name = "first_name")
 	private String firstName;
     @Column(name = "last_name")
 	private String lastName;
-    @OneToOne(mappedBy = "contact_infos", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
 	private ContactInfo contactInfo;
 	
     public Person() {

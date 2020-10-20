@@ -1,8 +1,14 @@
 package ua.com.foxminded.dao.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "rooms", schema = "uni")
 public class Room {
     
-   
+   @Id
     private String id;
     private String name;
     

@@ -16,8 +16,8 @@ public class AppSpringEventListener  {
         @EventListener({ContextRefreshedEvent.class})
         void contextRefreshedEvent() {
             System.out.println("a context refreshed event happened");
-            tableInitializer.createTables();
-            tableInitializer.fillTables();
+//            tableInitializer.createTables();
+//            tableInitializer.fillTables();
         }   
 }
                                                                                                    

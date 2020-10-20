@@ -2,11 +2,17 @@ package ua.com.foxminded.dao.entity;
 
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table (name = "groups")
 public class Group {
     
     private String id;
     private String name;
     private String specialty;
+    
+    @OneToMany(mappedBy = "groups" , fetch = FetchType.EAGER)
     private List<Student> students;
     
     public Group() {

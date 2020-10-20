@@ -6,16 +6,17 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
-import ua.com.foxminded.model.dto.PersonDto;
 
 @Entity
 @Table (name = "students")
+
 public class Student extends Person{
     
     @Id
-    @Column(name = "id_student")
+    @Column(name = "id_student", nullable = false)
     private String idStudent;
-    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL, orphanRemoval = true)
+    
+    @ManyToOne
     private Group group;
     
     @Column(name = "study_status")
