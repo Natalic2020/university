@@ -1,24 +1,15 @@
 package ua.com.foxminded.dao.entity;
 
 import java.math.BigDecimal;
-
 import java.time.LocalDate;
-
 import javax.persistence.*;
-
 
 @Entity
 @Table (name = "students", schema = "uni")
-//@PrimaryKeyJoinColumn(name="id_student1")
 public class Student extends Person{
-    
-//    @Id
-    @Column(name = "id_student", nullable = false)
-    private String idStudent;
     
     @ManyToOne
     @JoinColumn(name = "id_group")
-//    @Transient
     private Group group;
     
     @Column(name = "study_status")
@@ -32,15 +23,6 @@ public class Student extends Person{
     
     public Student() {
        
-    }
-
-    public String getIdStudent() {
-        return idStudent;
-    }
-
-    public Student setIdStudent(String idStudent) {
-        this.idStudent = idStudent;
-        return this;
     }
 
     public Group getGroup() {

@@ -42,8 +42,10 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     "INSERT INTO uni.schedule_items (id, id_group, id_subject, id_room, id_time_slot, " +
                             " id_teacher, day_of_week) values (?, ?, ?, ?, ?, ?, ? )",
                     scheduleItem.getId(), scheduleItem.getGroup().getId(), scheduleItem.getSubject().getId(),
-                    scheduleItem.getRoom().getId(), scheduleItem.getTimeSlot().getId(),
-                    scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek());
+                    scheduleItem.getRoom().getId(), scheduleItem.getTimeSlot().getId()
+//                    ,
+//                    scheduleItem.getTeacher().getIdTeacher(), scheduleItem.getDayOfWeek()
+                    );
 
             if (countInserted == 0) {
                 throw new DbObjectNotInsertedException(scheduleItem);
@@ -66,7 +68,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                     "UPDATE  uni.schedule_items sch  SET sch.id_group= ?, sch.id_subject= ?, sch.id_room= ?,  " +
                             " sch.id_time_slot= ?, sch.id_teacher= ?, sch.day_of_week= ? WHERE sch.id = ? ",
                     scheduleItem.getGroup().getId(), scheduleItem.getSubject().getId(), scheduleItem.getRoom().getId(),
-                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
+//                    scheduleItem.getTimeSlot().getId(), scheduleItem.getTeacher().getIdTeacher(),
                     scheduleItem.getDayOfWeek(), scheduleItem.getId());
 
             if (countUpdated == 0) {

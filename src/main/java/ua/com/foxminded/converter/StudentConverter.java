@@ -15,8 +15,8 @@ public class StudentConverter {
     public Student convertDtoToEntity(StudentDto studentDto) {    
         
         Student student = new Student();
-        Optional.ofNullable(studentDto.getIdStudent())
-        .ifPresent(ss -> student.setIdStudent(ss.toString()));
+//        Optional.ofNullable(studentDto.getIdStudent())
+//        .ifPresent(ss -> student.setIdStudent(ss.toString()));
         Optional.ofNullable(studentDto.getIdPerson())
         .ifPresent(ss -> student.setIdPerson(ss.toString()));        
          student.setFirstName(studentDto.getFirstName())
@@ -35,7 +35,7 @@ public class StudentConverter {
     public StudentDto convertEntityToDto(Student student) {
         StudentDto  studentDto = 
         ((StudentDto) new StudentDto()
-                .setIdStudent(UUID.fromString(student.getIdStudent()))
+//                .setIdStudent(UUID.fromString(student.getIdStudent()))
                 .setIdPerson(UUID.fromString(student.getIdPerson()))
                 .setFirstName(student.getFirstName())
                 .setLastName(student.getLastName()))  

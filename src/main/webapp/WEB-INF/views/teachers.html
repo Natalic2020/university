@@ -31,8 +31,8 @@
 						<td th:text="${teacher.department}"></td>
 						<td th:text="${teacher.isPermanent()}? 'Yes' : 'No'"></td>
 						<td th:text="${teacher.salary}"></td>	
-						<td><a th:href="@{/teachers/{uuid}(uuid=${teacher.idTeacher})}">Edit</a>
-						<td><a th:href="@{/teachers/delete/{uuid}(uuid=${teacher.idTeacher})}">Delete</a>
+						<td><a th:href="@{/teachers/{uuid}(uuid=${teacher.idPerson})}">Edit</a>
+						<td><a th:href="@{/teachers/delete/{uuid}(uuid=${teacher.idPerson})}">Delete</a>
 					</tr>
 				</tbody>
 			</table>

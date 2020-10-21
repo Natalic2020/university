@@ -66,7 +66,7 @@ class ScheduleItemDaoImplTest {
                                          .setRoom(new Room().setId(roomUUID))
                                          .setTimeSlot(new TimeSlot().setId(timeSlotUUID))
                                          .setDayOfWeek(dayOfWeek)
-                                         .setTeacher(new Teacher().setIdTeacher(teacherUUID));
+                                         .setTeacher((Teacher) new Teacher().setIdPerson(teacherUUID));
 
         scheduleItemExpected = new ScheduleItem().setDayOfWeek("MONDAY")
                                                  .setGroup(new Group().setName("gr-1"))

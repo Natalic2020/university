@@ -60,7 +60,7 @@ class StudentDaoImplTest {
     void Init() throws Exception {
         creatDB();
         student = new Student()
-                               .setIdStudent(studentUUID)
+//                               .setIdStudent(studentUUID)
                                .setStudyStatus(StudyStatus.FINISHED.toString())
                                .setCitizenship("German")
                                .setGrant(new BigDecimal(100))

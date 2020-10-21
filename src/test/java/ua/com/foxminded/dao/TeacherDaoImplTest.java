@@ -58,7 +58,7 @@ public class TeacherDaoImplTest {
     void Init() throws Exception {
         creatDB();
         teacher = new Teacher()
-                               .setIdTeacher(teacherUUID)
+//                               .setIdTeacher(teacherUUID)
                                .setDegree("DOCENT")
                                .setDepartment("MATHEMATICS")
                                .setPermanent(true)

@@ -32,10 +32,10 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
             scheduleItemDto.getGroup().getStudents().forEach(studentDto ->
                 {   
                     Student student = new Student();
-                    Optional.ofNullable(studentDto.getIdStudent())
-                    .ifPresent(ss -> student.setIdStudent(ss.toString()));
+//                    Optional.ofNullable(studentDto.getIdStudent())
+//                    .ifPresent(ss -> student.setIdStudent(ss.toString()));
                     Optional.ofNullable(studentDto.getIdPerson())
-                    .ifPresent(ss -> student.setIdStudent(ss.toString()));
+                    .ifPresent(ss -> student.setIdPerson(ss.toString()));
                    student.setFirstName(studentDto.getFirstName())
                     .setLastName(studentDto.getLastName());
                     students.add(student);
@@ -79,8 +79,8 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
             
 
             Teacher teacher = new Teacher();
-            Optional.ofNullable(scheduleItemDto.getTeacher().getIdTeacher())
-            .ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
+//            Optional.ofNullable(scheduleItemDto.getTeacher().getIdTeacher())
+//            .ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
             Optional.ofNullable(scheduleItemDto.getTeacher().getIdPerson())
             .ifPresent(ss -> teacher.setIdPerson(ss.toString()));
 
