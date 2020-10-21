@@ -1,13 +1,16 @@
 package ua.com.foxminded.dao;
 
-
-
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,43 +24,68 @@ import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 @Qualifier("tablesInitializer")
 public class TablesInitializer {
 
+    private static final String URL = "jdbc:postgresql://localhost/";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "1234";
+
     @Autowired
     JdbcTemplate jdbcTemplate;
-    
+
     @Autowired
     FileParser file;
+
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
     
+    public void createDB() {
+        Arrays.stream(file.readFileToLines("sql_db.script")).forEach(this::dropCreateDB);
+
+    }
+
+    public void dropCreateDB(String sql) {
+        logger.info("Remove and create DB University");
+        Connection connection = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            logger.info(e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    logger.info(e.getMessage());
+                }
+            }
+        }
+    }
+
     public void createTables() {
-        jdbcTemplate.batchUpdate( file.readFileToLines("sql.script"));
-    }  
-    
+        jdbcTemplate.batchUpdate(file.readFileToLines("sql.script"));
+    }
+
     public void fillTables() {
-        jdbcTemplate.batchUpdate( file.readFileToLines("tables.script"));
+        jdbcTemplate.batchUpdate(file.readFileToLines("tables.script"));
     }
 
     public void fillTablesNew() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        
-        Arrays.stream(file.readFileToLines("tablesHim.script")).forEach(query -> {
-        session.createNativeQuery(query).executeUpdate(); 
-        });
-        
-//        session.createNativeQuery( "INSERT INTO uni.rooms (id_room, name_room ) values ('026621cc-73a6-40ba-8ea7-86628f4cb802', 'room 1')" )
-//                  .executeUpdate();
-//        
-//        session.createNativeQuery( "INSERT INTO uni.persons (id_person, first_name, last_name) values ('f17e5b3a-5963-4098-a2ff-26b497701e70', 'Nata', 'Svitlychna')" )
-//                 .executeUpdate();
-//
-//        session.createNativeQuery( "INSERT INTO uni.groups (id_group, name_group ) values ('0c149265-57c0-4942-a1e5-06c8b6983a23', 'gr-1')" )
-//        .executeUpdate();
-//        
-//        session.createNativeQuery( "INSERT INTO uni.students (id_student, id_person, study_status, start_of_study, citizenship , grants , id_group ) values ('a17f83c5-a85a-4420-8423-23b86d0463c6', 'f17e5b3a-5963-4098-a2ff-26b497701e70', 'ACCEPTED', '2019-01-01', 'Ukraine', 100, '0c149265-57c0-4942-a1e5-06c8b6983a23')" )
-//        .executeUpdate();
-        
+
+        Arrays.stream(file.readFileToLines("tablesHim.script")).forEach(query ->
+            {
+                session.createNativeQuery(query).executeUpdate();
+            });
+
         tx1.commit();
         session.close();
-        
-    }  
-    
+
+    }
+
 }
