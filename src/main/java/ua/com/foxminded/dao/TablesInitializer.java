@@ -75,6 +75,7 @@ public class TablesInitializer {
     }
 
     public void fillTablesNew() {
+        logger.info("Fill Tables");
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
 
@@ -86,6 +87,11 @@ public class TablesInitializer {
         tx1.commit();
         session.close();
 
+    }
+
+    public void createSchema() {
+        logger.info("Remove and create Schema");
+        jdbcTemplate.batchUpdate(file.readFileToLines("schema.script"));     
     }
 
 }

@@ -10,7 +10,7 @@ public class Group {
    
     @Id
     @Column(name = "id_group", nullable = false)
-    private String id;
+    private String idGroup;
     @Column(name = "name_group")
     private String name;
     private String specialty;
@@ -24,11 +24,11 @@ public class Group {
     }
 
     public String getId() {
-        return id;
+        return idGroup;
     }
 
     public Group setId(String id) {
-        this.id = id;
+        this.idGroup = id;
         return this;
     }
 

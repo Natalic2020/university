@@ -15,11 +15,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.dao.entity.Group;
 import ua.com.foxminded.dao.entity.ScheduleItem;
+import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.dao.mappers.ScheduleMapper;
 import ua.com.foxminded.exception.DbObjectNotInsertedException;
 import ua.com.foxminded.exception.NoSuchScheduleItemException;
+import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
 @Repository
 @Qualifier("scheduleItemDao")
@@ -100,57 +103,56 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
             logger.info(e.getMessage());
         }
     }
-
+    
     @Override
-    public List<ScheduleItem> findWeekScheduleTeacher(String teacherId) {
-        logger.info(format("Find scheduleItem for teacher with id  = %s ", teacherId));
-        List<ScheduleItem> scheduleItems = new ArrayList<>();
-        try {
-            scheduleItems = jdbcTemplate.query("Select * " +
-                    " from uni.persons p,  uni.teachers t,  uni.groups g,  uni.subjects su, " +
-                    " uni.rooms r, uni.time_slots ts, uni.schedule_items si " +
-                    " where si.id_teacher = t.id_teacher and t.id_person = p.id_person " +
-                    " and si.id_group = g.id    and si.id_subject = su.id " +
-                    " and si.id_room = r.id  and si.id_time_slot = ts.id  and t.id_teacher = ?  " +
-                    " order by ts.serial_number ",
-                    scheduleMapper, teacherId);
-            if (scheduleItems.size() == 0) {
-                throw new NoSuchScheduleItemException(teacherId);
-            }
-            logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", teacherId));
-        } catch (DataAccessException e) {
-            logger.debug(format("ScheduleItem for teacher with UUID = %s was not found.  Reason: %s", teacherId,
-                    e.getMessage()));
-        } catch (NoSuchScheduleItemException e) {
-            logger.debug(e.getMessage());
-        }
+    public List<ScheduleItem> findWeekScheduleTeacher(String personId) {
+        logger.info(format("Find scheduleItem for teacher with id  = %s ", personId));
+        List<ScheduleItem> scheduleItems =  HibernateSessionFactoryUtil.getSessionFactory()
+                .openSession()
+                .createQuery("From ScheduleItem where id_person = :personId")
+                .setParameter("personId", personId)
+                .list();
         return scheduleItems;
     }
 
     @Override
-    public List<ScheduleItem> findWeekScheduleStudent(String studentId) {
-        logger.info(format("Find scheduleItem for student with id  = %s ", studentId));
-        List<ScheduleItem> scheduleItems = new ArrayList<>();
-        try {
-            scheduleItems = jdbcTemplate.query("Select * " +
-                    "from uni.persons p,  uni.teachers t,  uni.groups g, uni.students st, " +
-                    " uni.subjects su, uni.rooms r, uni.time_slots ts, uni.schedule_items si " +
-                    " where  si.id_teacher = t.id_teacher  and st.id_person = p.id_person  " +
-                    " and si.id_group = g.id  and g.id = st.id_group  " +
-                    " and si.id_subject = su.id  and si.id_room = r.id  " +
-                    " and si.id_time_slot = ts.id  and st.id_student = ? " +
-                    " order by ts.serial_number ",
-                    scheduleMapper, studentId);
-            if (scheduleItems.size() == 0) {
-                throw new NoSuchScheduleItemException(studentId);
-            }
-            logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", studentId));
-        } catch (DataAccessException e) {
-            logger.debug(format("ScheduleItem for student with UUID = %s was not found.  Reason: %s", studentId,
-                    e.getMessage()));
-        } catch (NoSuchScheduleItemException e) {
-            logger.debug(e.getMessage());
-        }
+    public List<ScheduleItem> findWeekScheduleStudent(String personId) {
+        logger.info(format("Find scheduleItem for student with id  = %s ", personId));
+        Group group = new StudentDaoImpl().findStudent(personId).getGroup();
+        List<ScheduleItem> scheduleItems = HibernateSessionFactoryUtil.getSessionFactory()
+                .openSession()
+                .createQuery("From ScheduleItem where id_group = :idGroup")
+//                .setProperties(group)
+                .setParameter("idGroup", group.getId())
+                .list();
         return scheduleItems;
     }
+    
+    
+//    @Override
+//    public List<ScheduleItem> findWeekScheduleStudent(String studentId) {
+//        logger.info(format("Find scheduleItem for student with id  = %s ", studentId));
+//        List<ScheduleItem> scheduleItems = new ArrayList<>();
+//        try {
+//            scheduleItems = jdbcTemplate.query("Select * " +
+//                    "from uni.persons p,  uni.teachers t,  uni.groups g, uni.students st, " +
+//                    " uni.subjects su, uni.rooms r, uni.time_slots ts, uni.schedule_items si " +
+//                    " where  si.id_teacher = t.id_teacher  and st.id_person = p.id_person  " +
+//                    " and si.id_group = g.id  and g.id = st.id_group  " +
+//                    " and si.id_subject = su.id  and si.id_room = r.id  " +
+//                    " and si.id_time_slot = ts.id  and st.id_student = ? " +
+//                    " order by ts.serial_number ",
+//                    scheduleMapper, studentId);
+//            if (scheduleItems.size() == 0) {
+//                throw new NoSuchScheduleItemException(studentId);
+//            }
+//            logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", studentId));
+//        } catch (DataAccessException e) {
+//            logger.debug(format("ScheduleItem for student with UUID = %s was not found.  Reason: %s", studentId,
+//                    e.getMessage()));
+//        } catch (NoSuchScheduleItemException e) {
+//            logger.debug(e.getMessage());
+//        }
+//        return scheduleItems;
+//    }
 }

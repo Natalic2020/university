@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Bean;
 
 import ua.com.foxminded.dao.entity.ContactInfo;
 import ua.com.foxminded.dao.entity.Group;
+import ua.com.foxminded.dao.entity.Period;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Room;
+import ua.com.foxminded.dao.entity.ScheduleItem;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.entity.Subject;
 import ua.com.foxminded.dao.entity.Teacher;
@@ -29,12 +31,13 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Room.class)
                 .addAnnotatedClass(Group.class)
                 .addAnnotatedClass(Subject.class)
-//                .addAnnotatedClass(TimeSlot.class)
-//                .addAnnotatedClass(Period.class)
+                .addAnnotatedClass(TimeSlot.class)
+                .addAnnotatedClass(Period.class)
                 .addAnnotatedClass(Person.class)
                 .addAnnotatedClass(Student.class)
                 .addAnnotatedClass(Teacher.class)
-                .addAnnotatedClass(ContactInfo.class);
+                .addAnnotatedClass(ContactInfo.class)
+                .addAnnotatedClass(ScheduleItem.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
