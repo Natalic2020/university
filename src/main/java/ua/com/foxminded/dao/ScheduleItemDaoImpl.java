@@ -127,32 +127,4 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
                 .list();
         return scheduleItems;
     }
-    
-    
-//    @Override
-//    public List<ScheduleItem> findWeekScheduleStudent(String studentId) {
-//        logger.info(format("Find scheduleItem for student with id  = %s ", studentId));
-//        List<ScheduleItem> scheduleItems = new ArrayList<>();
-//        try {
-//            scheduleItems = jdbcTemplate.query("Select * " +
-//                    "from uni.persons p,  uni.teachers t,  uni.groups g, uni.students st, " +
-//                    " uni.subjects su, uni.rooms r, uni.time_slots ts, uni.schedule_items si " +
-//                    " where  si.id_teacher = t.id_teacher  and st.id_person = p.id_person  " +
-//                    " and si.id_group = g.id  and g.id = st.id_group  " +
-//                    " and si.id_subject = su.id  and si.id_room = r.id  " +
-//                    " and si.id_time_slot = ts.id  and st.id_student = ? " +
-//                    " order by ts.serial_number ",
-//                    scheduleMapper, studentId);
-//            if (scheduleItems.size() == 0) {
-//                throw new NoSuchScheduleItemException(studentId);
-//            }
-//            logger.info(format("ScheduleItem for teacher with UUID = %s found sucessfully.", studentId));
-//        } catch (DataAccessException e) {
-//            logger.debug(format("ScheduleItem for student with UUID = %s was not found.  Reason: %s", studentId,
-//                    e.getMessage()));
-//        } catch (NoSuchScheduleItemException e) {
-//            logger.debug(e.getMessage());
-//        }
-//        return scheduleItems;
-//    }
 }
