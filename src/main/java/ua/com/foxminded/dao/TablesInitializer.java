@@ -24,7 +24,8 @@ import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 @Qualifier("tablesInitializer")
 public class TablesInitializer {
 
-    private static final String URL = "jdbc:postgresql://localhost/";
+    private static final String URL = "jdbc:postgresql://localhost";
+    private static final String URL_UNI = URL + ":5432/university";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "1234";
 
@@ -38,7 +39,7 @@ public class TablesInitializer {
     
     public void createDB() {
         Arrays.stream(file.readFileToLines("sql_db.script")).forEach(this::dropCreateDB);
-
+        Arrays.stream(file.readFileToLines("schema.script")).forEach(this::doQuery);
     }
 
     public void dropCreateDB(String sql) {
@@ -46,7 +47,32 @@ public class TablesInitializer {
         Connection connection = null;
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL + "/", USERNAME, PASSWORD);
+
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            logger.info(e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    logger.info(e.getMessage());
+                }
+            }
+        }
+    }
+    
+    public void doQuery(String sql) {
+        logger.info("Remove and create Schema");
+        Connection connection = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(URL_UNI, USERNAME, PASSWORD);
 
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
@@ -90,8 +116,7 @@ public class TablesInitializer {
     }
 
     public void createSchema() {
-        logger.info("Remove and create Schema");
-        jdbcTemplate.batchUpdate(file.readFileToLines("schema.script"));     
+        
+        jdbcTemplate.batchUpdate(file.readFileToLines("schema.script"));   
     }
-
 }
