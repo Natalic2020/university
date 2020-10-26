@@ -2,8 +2,6 @@ package ua.com.foxminded.service;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +10,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ua.com.foxminded.converter.ScheduleItemConverter;
-import ua.com.foxminded.dao.ScheduleItemDaoImpl;
-import ua.com.foxminded.dao.entity.ScheduleItem;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
-import ua.com.foxminded.model.dto.WeekScheduleDto;
 import ua.com.foxminded.service.interfaces.ScheduleService;
 
 @Service("scheduleService")

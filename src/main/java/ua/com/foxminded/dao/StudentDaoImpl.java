@@ -1,22 +1,20 @@
 package ua.com.foxminded.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.StudentDao;
 import ua.com.foxminded.dao.mappers.StudentMapper;
-import ua.com.foxminded.util.HibernateSessionFactoryUtil;
-
-import static java.lang.String.format;
 
 @Repository
 @Qualifier("studentDao")
@@ -27,62 +25,105 @@ public class StudentDaoImpl implements StudentDao {
 
     @Autowired
     StudentMapper studentMapper;
-
-    Logger logger = LoggerFactory.getLogger("SampleLogger");
-
+    
     @Override
     public void addStudent(Student student) {
-
-        String personId = student.getIdPerson();
-        logger.info(format("Add person with UUID = %s", personId));
         
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(student);
-        tx1.commit();
-        session.close();
+        try {
+            jdbcTemplate.execute("INSERT INTO uni.persons (id_person, first_name, last_name) values (?, ?, ?)",
+                    new PreparedStatementCallback<Boolean>(){
+                @Override  
+                public Boolean doInPreparedStatement(PreparedStatement ps)  
+                        throws SQLException, DataAccessException {                 
+                        ps.setString(1,student.getIdPerson());  
+                        ps.setString(2,student.getFirstName());
+                        ps.setString(3,student.getLastName());
+                
+                    return ps.execute();  
+                }  
+                });  
+
+            jdbcTemplate.execute(
+                    "INSERT INTO uni.students ( id_person, study_status, start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?, ?)",
+                    new PreparedStatementCallback<Boolean>(){
+                        @Override  
+                        public Boolean doInPreparedStatement(PreparedStatement ps)  
+                                throws SQLException, DataAccessException {                  
+                            ps.setString(2,student.getIdPerson());
+                            ps.setString(3,student.getStudyStatus());
+                            ps.setDate(4,java.sql.Date.valueOf(student.getStartOfStudy()));
+                            ps.setString(5,student.getCitizenship());
+                            ps.setBigDecimal(6,student.getGrant());
+                            return ps.execute();  
+                        }  
+                        });  
+            System.out.println("Student Added!!");
+        } catch (DataAccessException e) {
+            System.out.println("Student didn't add!!  Reason: " + e.getMessage());
+        }
     }
 
     @Override
     public void editStudent(Student student) {
-
-        String personId = student.getIdPerson();
-        logger.info(format("Edit person with UUID = %s", personId));
-
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(student);
-        tx1.commit();
-        session.close();
+        try {
+            jdbcTemplate.execute("UPDATE uni.students s SET citizenship = ?, study_status = ?, grants = ?, start_of_study = ?  WHERE s.id_person = ? ",
+                    new PreparedStatementCallback<Boolean>(){
+                @Override  
+                public Boolean doInPreparedStatement(PreparedStatement ps)  
+                        throws SQLException, DataAccessException {                 
+                    ps.setString(1,student.getCitizenship());  
+                    ps.setString(2,student.getStudyStatus()); 
+                    ps.setBigDecimal(3,student.getGrant()); 
+                    ps.setDate(4, java.sql.Date.valueOf(student.getStartOfStudy())); 
+                    ps.setString(5,student.getIdPerson()); 
+                    return ps.execute();  
+                }  
+                });  
+            System.out.println("Student Updated!!");
+        } catch (DataAccessException e) {
+            System.out.println("Student didn't update!!  Reason: " + e.getMessage());
+        }
     }
 
     @Override
-    public void deleteStudent(String personId) {
-        logger.info(format("Delete student with UUID = %s", personId));
-
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(session.get(Student.class,personId));
-        tx1.commit();
-        session.close();
+    public void deleteStudent(String id) {
+        try {
+            jdbcTemplate.execute("DELETE from uni.students s WHERE s.id_person = ? ", new PreparedStatementCallback<Boolean>(){
+                @Override  
+                public Boolean doInPreparedStatement(PreparedStatement ps)  
+                        throws SQLException, DataAccessException {                 
+                    ps.setString(1,id);  
+                    return ps.execute();  
+                }  
+                });  
+      
+            System.out.println("Student Deleted!!");
+        } catch (DataAccessException e) {
+            System.out.println("Student didn't delete!!  Reason: " + e.getMessage());
+        }
     }
 
     @Override
-    public Student findStudent(String personId) {
-        logger.info(format("Find student with id  = %s", personId));
-        Student student = HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Student.class, personId);
-        return student;
+    public Student findStudent(String lastName) {
+        List<Student> students = new ArrayList<>();
+        try {
+            students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
+                    " where s.id_person = p.id_person and p.last_name = ? ", studentMapper , lastName);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find the student id = " + lastName +". Reason: " + e.getMessage());
+        }
+        return students;
     }
 
     @Override
     public List<Student> findAllStudent() {
-        logger.info("Find all students. ");
-        List<Student> students = HibernateSessionFactoryUtil.getSessionFactory()
-                                                            .openSession()
-                                                            .createQuery("From Student")
-                                                            .list();
-        
-        
+        List<Student> students = new ArrayList<>();
+        try {
+            students = jdbcTemplate.query("Select * from uni.students s, uni.persons p " + 
+                    " where s.id_person = p.id_person", studentMapper);
+        } catch (DataAccessException e) {
+            System.out.println(" I can't find all students. Reason: " + e.getMessage());
+        }
         return students;
     }
 }
