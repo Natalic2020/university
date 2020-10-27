@@ -14,9 +14,7 @@ public class Group {
     @Column(name = "name_group")
     private String name;
     private String specialty;
-    
     @OneToMany(mappedBy = "group")
-//    @Transient
     private List<Student> students;
     
     public Group() {

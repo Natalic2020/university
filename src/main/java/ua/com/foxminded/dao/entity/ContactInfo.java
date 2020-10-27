@@ -44,9 +44,6 @@ public class ContactInfo {
         return this;
     }
 
-   
-   
-
     public int getIndex() {
         return index;
     }
@@ -134,7 +131,5 @@ public class ContactInfo {
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-   
+    } 
 }

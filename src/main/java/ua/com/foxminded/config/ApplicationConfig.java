@@ -32,11 +32,10 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
-@EnableTransactionManagement  //Nata
+@EnableTransactionManagement 
 @ComponentScan(basePackages = "ua.com.foxminded")
 @PropertySource("classpath:persistence-jndi.properties")
-//@PropertySource(value = { "classpath:db.properties" })
-@EnableJpaRepositories(basePackages = "ua.com.foxminded.dao") //Nata
+@EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
 @EnableWebMvc
 public class ApplicationConfig implements WebMvcConfigurer{
 
@@ -50,42 +49,11 @@ public class ApplicationConfig implements WebMvcConfigurer{
         this.applicationContext = applicationContext;
     } 
     
-    
-    //Nata
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() 
-//      throws NamingException {
-//        LocalContainerEntityManagerFactoryBean em 
-//          = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(dataSource());
-//        
-//        // rest of entity manager configuration
-//        return em;
-//    }
-    
     @Bean
     public DataSource dataSource() throws NamingException {
         return (DataSource) new JndiTemplate().lookup(env.getProperty("jdbc.url"));
     }
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
-//        dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
-//        dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
-//        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
-//        return dataSource;
-//    }
- 
-  //Nata
-//    @Bean
-//    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-//        JpaTransactionManager transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(emf);
-//        return transactionManager;
-//    }
-    
-    
+        
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -120,7 +88,5 @@ public class ApplicationConfig implements WebMvcConfigurer{
     @Bean
     public IDialect conditionalCommentDialect() {
         return new Java8TimeDialect();
-    }
-    
-   
+    }   
 }

@@ -17,8 +17,6 @@ public class TeacherConverter {
 
     public Teacher convertDtoToEntity(TeacherDto teacherDto) {
         Teacher teacher = new Teacher();
-//        Optional.ofNullable(teacherDto.getIdTeacher())
-//                .ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
         Optional.ofNullable(teacherDto.getIdPerson())
                 .ifPresent(ss -> teacher.setIdPerson(ss.toString()));
 

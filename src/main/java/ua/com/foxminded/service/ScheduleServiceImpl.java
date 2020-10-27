@@ -26,11 +26,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Autowired
     ScheduleItemConverter scheduleItemConverter;
-    
-//    public ScheduleServiceImpl(ScheduleItemDao scheduleItemDao) {
-//        this.scheduleItemDao = scheduleItemDao;
-//        this.scheduleItemConverter = new ScheduleItemConverter(); 
-//    }
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleStudent(UUID id) {
