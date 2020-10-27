@@ -22,9 +22,6 @@ import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 @Qualifier("teacherDaoHim")
 public class TeacherDaoHimImpl implements TeacherDao {
 
-    @Autowired
-    TeacherMapper teacherMapper;
-
     Logger logger = LoggerFactory.getLogger("SampleLogger");
 
     @Override

@@ -22,9 +22,6 @@ import static java.lang.String.format;
 @Qualifier("studentDaoHim")
 public class StudentDaoHimImpl implements StudentDao {
 
-    @Autowired
-    StudentMapper studentMapper;
-
     Logger logger = LoggerFactory.getLogger("SampleLogger");
 
     @Override

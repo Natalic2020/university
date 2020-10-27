@@ -31,9 +31,6 @@ import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 @Qualifier("scheduleItemDaoHim")
 public class ScheduleItemDaoHimImpl implements ScheduleItemDao {
 
-    @Autowired
-    ScheduleMapper scheduleMapper;
-
     Logger logger = LoggerFactory.getLogger("SampleLogger");
 
     @Override
