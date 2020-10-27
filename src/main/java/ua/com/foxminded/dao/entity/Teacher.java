@@ -94,6 +94,7 @@ public class Teacher extends Person{
         } else if (!salary.equals(other.salary))
             return false;
         return true;
-    }   
-    
+    }
+
+   
 }

@@ -52,7 +52,6 @@ class StudentDaoImplTest {
     @Autowired
     StudentService studentService;
     
-    private String studentUUID = "961a9d3c-fb10-11ea-adc1-0242ac120002";
     private String personUUID = "69c4623a-fb11-11ea-adc1-0242ac120002";
     private Student student;
 
@@ -60,7 +59,6 @@ class StudentDaoImplTest {
     void Init() throws Exception {
         creatDB();
         student = new Student()
-//                               .setIdStudent(studentUUID)
                                .setStudyStatus(StudyStatus.FINISHED.toString())
                                .setCitizenship("German")
                                .setGrant(new BigDecimal(100))
@@ -79,7 +77,7 @@ class StudentDaoImplTest {
     void addStudentStudentDao_shouldReturnStudent_whenAddStudent() {
         Student expected = student;
         studentDao.addStudent(student);
-        Student actual = studentDao.findStudent(studentUUID);
+        Student actual = studentDao.findStudent(personUUID);
         assertEquals(expected, actual);
     }
 
@@ -96,7 +94,7 @@ class StudentDaoImplTest {
     @Order(2)
     void findStudent_shouldReturnStudent_whenFindWithUUID() {
         Student expected = student;
-        Student actual = studentDao.findStudent(studentUUID);
+        Student actual = studentDao.findStudent(personUUID);
         assertEquals(expected, actual);
     }
 
@@ -135,7 +133,7 @@ class StudentDaoImplTest {
         student.setStartOfStudy(null);
         studentDao.editStudent(student);
 
-        Student actual = studentDao.findStudent(studentUUID);
+        Student actual = studentDao.findStudent(personUUID);
         assertEquals(expected, actual);
     }
 
@@ -144,7 +142,7 @@ class StudentDaoImplTest {
     @DependsOn({ "editStudent_shouldReturnStudent_whenEditStudent" })
     void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
         int expected = studentDao.findAllStudent().size();
-        studentDao.deleteStudent(studentUUID);
+        studentDao.deleteStudent(personUUID);
         int actual = studentDao.findAllStudent().size();
         assertEquals(expected - 1, actual);
     }

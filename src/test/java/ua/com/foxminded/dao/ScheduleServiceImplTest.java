@@ -51,11 +51,6 @@ class ScheduleServiceImplTest {
 
     static List<ScheduleItem> scheduleItems;
 
-//    public ScheduleServiceImplTest(ScheduleItemDao scheduleItemDao, ScheduleService scheduleService) {
-//        this.scheduleItemDao = scheduleItemDao;
-//        this.scheduleService = scheduleService;
-//    }
-
     @BeforeAll
     public static void setUpBeforeClass() throws Exception {
 
@@ -155,7 +150,6 @@ class ScheduleServiceImplTest {
         scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
         Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleTeacher(UUID.fromString(uuid1),
-//                LocalDate.of(2020, 06, 01));
                                                                           LocalDate.of(1999, 02, 02));
 
         assertEquals(expected, actual.get("1999-02-09"));

@@ -42,7 +42,7 @@ class ScheduleItemDaoImplTest {
     private String roomUUID = "026621cc-73a6-40ba-8ea7-86628f4cb802";
     private String timeSlotUUID = "d789bb56-b534-402b-8baa-38547218761c";
     private String dayOfWeek = "MONDAY";
-    private String teacherUUID = "95d5a598-4fa1-4937-acf7-382a878d19fa";
+    private String teacherUUID = "69c97b95-8ce5-4923-8d39-4c17bd5389d0";
     private ScheduleItem scheduleItem;
     private ScheduleItem scheduleItemExpected;
 
@@ -79,12 +79,11 @@ class ScheduleItemDaoImplTest {
     @Test
     @Order(1)
     void addScheduleItem_shouldReturnScheduleItem_whenAddScheduleItem() {
-        List<ScheduleItem> expected = new ArrayList<>();
-        expected.add(scheduleItemExpected);
+        int expected = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
 
         scheduleItemDao.addScheduleItem(scheduleItem);
-        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID);
-        assertEquals(expected, actual);
+        int actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
+        assertEquals(expected + 1, actual);
     }
 
 
@@ -102,18 +101,18 @@ class ScheduleItemDaoImplTest {
     @Order(4)
     void editScheduleItem_shouldReturnDayOfWeek_whenEditDayOfWeek() {
 
-        scheduleItemDao.editScheduleItem(scheduleItem.setDayOfWeek("WENDNESDAY"));
+        scheduleItemDao.editScheduleItem(scheduleItem.setDayOfWeek("MONDAY"));
         List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID);
-        assertEquals("WENDNESDAY", actual.get(0).getDayOfWeek());
+        assertEquals("MONDAY", actual.get(0).getDayOfWeek());
     }
 
     @Test
     @Order(5)
     void deleteScheduleItem_shouldReturnEmpty_whenDeleteScheduleItem() {
-        List<ScheduleItem> expected = new ArrayList<>();
+        int expected = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
         scheduleItemDao.deleteScheduleItem(scheduleItemUUID);
-        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID);
-        assertEquals(expected, actual);
+        int actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
+        assertEquals(expected - 1, actual);
     }
 
 }
