@@ -24,7 +24,7 @@ import ua.com.foxminded.exception.DbObjectNotInsertedException;
 import ua.com.foxminded.exception.NoSuchScheduleItemException;
 import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
-//@Repository
+@Repository
 //@Qualifier("scheduleItemDaoHim")
 public class ScheduleItemDaoHimImpl implements ScheduleItemDao {
 
