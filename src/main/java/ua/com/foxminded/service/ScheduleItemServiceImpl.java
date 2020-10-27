@@ -3,6 +3,7 @@ package ua.com.foxminded.service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.ScheduleItemConverter;
@@ -15,6 +16,7 @@ import ua.com.foxminded.service.interfaces.ScheduleItemService;
 public class ScheduleItemServiceImpl implements ScheduleItemService {
 
     @Autowired
+    @Qualifier("scheduleItemDaoHim")
     ScheduleItemDao scheduleItemDao;
 
     @Autowired

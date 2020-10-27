@@ -22,8 +22,8 @@ import ua.com.foxminded.exception.NoTeachersFoundException;
 
 import static java.lang.String.format;
 
-//@Repository
-//@Qualifier("teacherDao")
+@Repository
+@Qualifier("teacherDao")
 public class TeacherDaoImpl implements TeacherDao {
 
     @Autowired

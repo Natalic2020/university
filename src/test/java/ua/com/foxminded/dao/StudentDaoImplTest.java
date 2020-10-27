@@ -19,6 +19,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,10 +48,8 @@ class StudentDaoImplTest {
     FileParser file;
 
     @Autowired
+    @Qualifier("studentDao")
     StudentDao studentDao;
-
-    @Autowired
-    StudentService studentService;
     
     private String personUUID = "69c4623a-fb11-11ea-adc1-0242ac120002";
     private Student student;
@@ -85,7 +84,7 @@ class StudentDaoImplTest {
     @Order(1)
     void addStudentStudentService_shouldReturnStudent_whenAddStudentLWithName() {
         int expected = studentDao.findAllStudent().size();
-        studentService.addStudent((StudentDto) new StudentDto().setFirstName("Anna").setLastName("Petja"));
+        studentDao.addStudent((Student) new Student().setFirstName("Anna").setLastName("Petja").setIdPerson("3fdfa9f8-9dea-4801-9a9c-65f36f10db74"));
         int actual = studentDao.findAllStudent().size();
         assertEquals(expected + 1, actual);
     }

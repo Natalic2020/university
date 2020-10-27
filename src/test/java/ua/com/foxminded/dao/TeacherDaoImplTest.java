@@ -17,6 +17,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,11 +46,9 @@ public class TeacherDaoImplTest {
     FileParser file;
 
     @Autowired
+    @Qualifier("teacherDao")
     TeacherDao teacherDao;
 
-    @Autowired
-    TeacherService teacherService;
-    
     private String personUUID = "2d44565a-fb14-11ea-adc1-0242ac120002";
     private Teacher teacher;
 
@@ -87,9 +86,7 @@ public class TeacherDaoImplTest {
     void addStudent_shouldReturnStudent_whenAddTeacherLWithName() {
 
         int expected = teacherDao.findAllTeacher().size();
-
-        teacherService.addTeacher((TeacherDto) new TeacherDto().setFirstName("Anna").setLastName("Petja"));
-
+        teacherDao.addTeacher( (Teacher) new Teacher().setFirstName("Anna").setLastName("Petja").setIdPerson("81d5affc-453d-4840-92bc-0573cc954e4c"));
         int actual = teacherDao.findAllTeacher().size();
         assertEquals(expected + 1, actual);
     }

@@ -25,7 +25,7 @@ import ua.com.foxminded.exception.NoSuchScheduleItemException;
 import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
 @Repository
-//@Qualifier("scheduleItemDaoHim")
+@Qualifier("scheduleItemDaoHim")
 public class ScheduleItemDaoHimImpl implements ScheduleItemDao {
 
     @Autowired

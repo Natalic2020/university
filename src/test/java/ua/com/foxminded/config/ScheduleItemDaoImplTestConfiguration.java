@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
 import ua.com.foxminded.dao.ScheduleItemDaoHimImpl;
+import ua.com.foxminded.dao.ScheduleItemDaoImpl;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 
 @Profile("test")
@@ -18,6 +19,6 @@ public class ScheduleItemDaoImplTestConfiguration {
     @Bean
     @Qualifier("scheduleItemDao")
     public ScheduleItemDao scheduleItemDao() {
-        return Mockito.mock( ScheduleItemDaoHimImpl.class);
+        return Mockito.mock( ScheduleItemDaoImpl.class);
     }
 }

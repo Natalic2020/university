@@ -21,8 +21,8 @@ import ua.com.foxminded.dao.mappers.ScheduleMapper;
 import ua.com.foxminded.exception.DbObjectNotInsertedException;
 import ua.com.foxminded.exception.NoSuchScheduleItemException;
 
-//@Repository
-//@Qualifier("scheduleItemDao")
+@Repository
+@Qualifier("scheduleItemDao")
 public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Autowired

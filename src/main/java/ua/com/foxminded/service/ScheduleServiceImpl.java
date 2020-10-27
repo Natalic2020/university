@@ -9,7 +9,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import ua.com.foxminded.converter.ScheduleItemConverter;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
@@ -19,15 +21,16 @@ import ua.com.foxminded.service.interfaces.ScheduleService;
 public class ScheduleServiceImpl implements ScheduleService{
 
     @Autowired
+    @Qualifier("scheduleItemDaoHim")
     ScheduleItemDao scheduleItemDao;
 
     @Autowired
     ScheduleItemConverter scheduleItemConverter;
     
-    public ScheduleServiceImpl(ScheduleItemDao scheduleItemDao) {
-        this.scheduleItemDao = scheduleItemDao;
-        this.scheduleItemConverter = new ScheduleItemConverter(); 
-    }
+//    public ScheduleServiceImpl(ScheduleItemDao scheduleItemDao) {
+//        this.scheduleItemDao = scheduleItemDao;
+//        this.scheduleItemConverter = new ScheduleItemConverter(); 
+//    }
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleStudent(UUID id) {

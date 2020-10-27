@@ -15,6 +15,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -53,6 +54,7 @@ class ScheduleItemDaoImplTest {
     FileParser file;
 
     @Autowired
+    @Qualifier("scheduleItemDao")
     ScheduleItemDao scheduleItemDao;
 
     @BeforeAll

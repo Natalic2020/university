@@ -14,7 +14,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @ComponentScan(basePackages = "ua.com.foxminded.util")
-@ComponentScan(basePackages = "ua.com.foxminded.service")
+//@ComponentScan(basePackages = "ua.com.foxminded.service")
 @ComponentScan(basePackages = "ua.com.foxminded.converter")
 @ComponentScan(basePackages = "ua.com.foxminded.dao")
 @PropertySource(value = { "classpath:db_test.properties" })

@@ -19,7 +19,7 @@ import ua.com.foxminded.dao.mappers.TeacherMapper;
 import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
 @Repository
-//@Qualifier("teacherDaoHim")
+@Qualifier("teacherDaoHim")
 public class TeacherDaoHimImpl implements TeacherDao {
 
     @Autowired

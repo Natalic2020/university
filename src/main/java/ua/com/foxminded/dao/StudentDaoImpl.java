@@ -25,8 +25,8 @@ import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
 import static java.lang.String.format;
 
-//@Repository
-//@Qualifier("studentDao")
+@Repository
+@Qualifier("studentDao")
 public class StudentDaoImpl implements StudentDao {
 
     @Autowired
