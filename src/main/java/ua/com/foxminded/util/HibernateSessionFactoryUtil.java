@@ -43,7 +43,6 @@ public class HibernateSessionFactoryUtil {
 
             } catch (Exception e) {
                 logger.info(e.getMessage());
-
             }
         }
         return sessionFactory;
