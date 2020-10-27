@@ -23,9 +23,6 @@ import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 public class TeacherDaoHimImpl implements TeacherDao {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
-
-    @Autowired
     TeacherMapper teacherMapper;
 
     Logger logger = LoggerFactory.getLogger("SampleLogger");

@@ -23,9 +23,6 @@ import static java.lang.String.format;
 public class StudentDaoHimImpl implements StudentDao {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
-
-    @Autowired
     StudentMapper studentMapper;
 
     Logger logger = LoggerFactory.getLogger("SampleLogger");
