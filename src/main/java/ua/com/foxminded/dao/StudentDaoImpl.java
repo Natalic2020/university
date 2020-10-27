@@ -60,7 +60,6 @@ public class StudentDaoImpl implements StudentDao {
                     "INSERT INTO uni.students ( id_person, study_status, " +
                             "start_of_study, citizenship , grants  ) values (?, ?, ?, ?, ?)",
                     student.getIdPerson(), student.getStudyStatus(),
-//                    student.getStartOfStudy(),
                     Optional.ofNullable(student.getStartOfStudy())
                             .map(ss -> Date.valueOf(ss))
                             .orElse(null),
