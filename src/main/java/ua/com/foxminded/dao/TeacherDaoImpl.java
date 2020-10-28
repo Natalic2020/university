@@ -37,8 +37,7 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void addTeacher(Teacher teacher) {
         String personId = teacher.getIdPerson();
-        String teacherId = teacher.getIdTeacher();
-        logger.info(format("Add teacher with UUID = %s", teacherId));
+        logger.info(format("Add teacher with UUID = %s", personId));
         try {
             int countPersonInserted = jdbcTemplate.update(
                     "INSERT INTO uni.persons (id_person, first_name, last_name) " +
@@ -50,20 +49,20 @@ public class TeacherDaoImpl implements TeacherDao {
             }
             logger.info(format("Person with UUID = %s added successfully.", personId));
 
-            logger.info(format("Add teacher with UUID = %s", teacherId));
+            logger.info(format("Add teacher with UUID = %s", personId));
             int countTeacherInserted = jdbcTemplate.update(
-                    "INSERT INTO uni.teachers (id_teacher, id_person, degree, " +
-                            " department, permanent, salary ) values (?, ?, ?, ?, ?, ?)",
-                    teacher.getIdTeacher(), teacher.getIdPerson(), teacher.getDegree(),
+                    "INSERT INTO uni.teachers ( id_person, degree, " +
+                            " department, permanent, salary ) values (?, ?, ?, ?, ?)",
+                    teacher.getIdPerson(), teacher.getDegree(),
                     teacher.getDepartment(), teacher.isPermanent(), teacher.getSalary());
 
             if (countTeacherInserted == 0) {
                 throw new DbObjectNotInsertedException(teacher);
             }
-            logger.info(format("Teacher with UUID = %s added successfully.", teacherId));
+            logger.info(format("Teacher with UUID = %s added successfully.", personId));
         } catch (DataAccessException e) {
             logger.debug(
-                    format("Teacher with UUID = %s was not added. Reason: %s", teacherId, e.getMessage()));
+                    format("Teacher with UUID = %s was not added. Reason: %s", personId, e.getMessage()));
         } catch (DbObjectNotInsertedException e) {
             logger.info(e.getMessage());
         }
@@ -72,7 +71,6 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void editTeacher(Teacher teacher) {
         String personId = teacher.getIdPerson();
-        String teacherId = teacher.getIdTeacher();
         logger.info(format("Edit person with UUID = %s", personId));
         try {
             int countPersonUpdated = jdbcTemplate.update(
@@ -82,19 +80,19 @@ public class TeacherDaoImpl implements TeacherDao {
             
             logger.info(format("Person with UUID = %s updated sucessfully.", personId));
 
-            logger.info(format("Edit teacher with UUID = %s", teacherId));
+            logger.info(format("Edit teacher with UUID = %s", personId));
 
             int countStudentUpdated = jdbcTemplate.update("UPDATE uni.teachers  SET degree = ?, department = ?, " +
-                    " permanent = ? , salary = ?  WHERE id_teacher = ? ",
+                    " permanent = ? , salary = ?  WHERE id_person = ? ",
                     teacher.getDegree(), teacher.getDepartment(), teacher.isPermanent(),
-                    teacher.getSalary(), teacherId);
+                    teacher.getSalary(), personId);
 
             if (countStudentUpdated == 0) {
-                throw new NoSuchTeacherException(teacherId);
+                throw new NoSuchTeacherException(personId);
             }
-            logger.info(format("Teacher with UUID = %s updated sucessfully.", teacherId));
+            logger.info(format("Teacher with UUID = %s updated sucessfully.", personId));
         } catch (DataAccessException e) {
-            logger.debug(format("Teacher with UUID = %s was not updated.  Reason: %s", teacherId,
+            logger.debug(format("Teacher with UUID = %s was not updated.  Reason: %s", personId,
                     e.getMessage()));
         } catch (NoSuchTeacherException e) {
             logger.info(e.getMessage());
@@ -102,18 +100,18 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void deleteTeacher(String teacherId) {
-        logger.info(format("Delete teacher with UUID = %s", teacherId));
+    public void deleteTeacher(String personId) {
+        logger.info(format("Delete teacher with UUID = %s", personId));
         try {
-            int countDeleted = jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_teacher = ? ",
-                    teacherId);
+            int countDeleted = jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_person = ? ",
+                    personId);
 
             if (countDeleted == 0) {
-                throw new NoSuchTeacherException(teacherId);
+                throw new NoSuchTeacherException(personId);
             }
-            logger.info(format("Teacher teacher with UUID = %s deleted sucessfully.", teacherId));
+            logger.info(format("Teacher teacher with UUID = %s deleted sucessfully.", personId));
         } catch (DataAccessException e) {
-            logger.debug(format("Teacher teacher with UUID = %s was not delete.  Reason: %s", teacherId,
+            logger.debug(format("Teacher teacher with UUID = %s was not delete.  Reason: %s", personId,
                     e.getMessage()));
         } catch (NoSuchTeacherException e) {
             logger.info(e.getMessage());
@@ -121,22 +119,22 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Teacher findTeacher(String teacherId) {
-        logger.info(format("Find teacher with UUID = %s", teacherId));
+    public Teacher findTeacher(String personId) {
+        logger.info(format("Find teacher with UUID = %s", personId));
         List<Teacher> teachers = new ArrayList<>();
         Teacher teacher  = new Teacher();
         try {
             teachers = jdbcTemplate.query("Select * from uni.teachers t, uni.persons p " +
-                    "  where t.id_person = p.id_person and t.id_teacher = ? ",
-                    teacherMapper, teacherId);
+                    "  where t.id_person = p.id_person and t.id_person = ? ",
+                    teacherMapper, personId);
 
             if (teachers.size() == 0) {
-                throw new NoSuchTeacherException(teacherId);
+                throw new NoSuchTeacherException(personId);
             }
             teacher = teachers.get(0);
-            logger.info(format("Teacher with UUID = %s found sucessfully.", teacherId));
+            logger.info(format("Teacher with UUID = %s found sucessfully.", personId));
         } catch (DataAccessException e) {
-            logger.debug(format("Teacher with UUID = %s was not found.  Reason: %s", teacherId,
+            logger.debug(format("Teacher with UUID = %s was not found.  Reason: %s", personId,
                     e.getMessage()));
         } catch (NoSuchTeacherException e) {
             logger.debug(e.getMessage());

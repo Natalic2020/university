@@ -14,10 +14,12 @@ public class AppSpringEventListener  {
   TablesInitializer tableInitializer;
    
         @EventListener({ContextRefreshedEvent.class})
-        void contextRefreshedEvent() {
-            System.out.println("a context refreshed event happened");
-            tableInitializer.createTables();
-            tableInitializer.fillTables();
+        void contextRefreshedEvent() { 
+
+                tableInitializer.createDB();
+                tableInitializer.createSchema();
+                tableInitializer.fillTablesNew();
+
         }   
 }
-                                                                                                   
+                                                                                               

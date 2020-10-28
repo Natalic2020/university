@@ -18,14 +18,13 @@ public class StudentMapper implements RowMapper<Student>{
     @Override
     public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
         Student student = new Student();
-        student.setIdStudent(rs.getString("id_student"));
         student.setIdPerson(rs.getString("id_person"))
                 .setFirstName(rs.getString("first_name"))
                 .setLastName(rs.getString("last_name"));
         student.setCitizenship(rs.getString("citizenship"));
         student.setGrant(rs.getBigDecimal("grants"));
         Optional.ofNullable(rs.getDate("start_of_study")) 
-        .ifPresent(ss -> ss.toLocalDate());
+        .map(ss -> student.setStartOfStudy(ss.toLocalDate()));
         student.setStudyStatus(rs.getString("study_status"));
         return student;
     }  

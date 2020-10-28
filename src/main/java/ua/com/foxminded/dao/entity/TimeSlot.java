@@ -2,11 +2,23 @@ package ua.com.foxminded.dao.entity;
 
 import java.time.LocalTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "time_slots", schema = "uni")
 public class TimeSlot {
     
+    @Id
+    @Column(name = "id_time_slot", nullable = false)
     private String id;
+    @Column(name = "serial_number")
     private int serialNumber;
+    @Column(name = "start_time")
     private LocalTime startTime;
+    @Column(name = "finish_time")
     private LocalTime finishTime;
     
     public TimeSlot() {

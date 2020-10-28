@@ -2,11 +2,19 @@ package ua.com.foxminded.dao.entity;
 
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table (name = "groups" , schema = "uni")
 public class Group {
-    
-    private String id;
+   
+    @Id
+    @Column(name = "id_group", nullable = false)
+    private String idGroup;
+    @Column(name = "name_group")
     private String name;
     private String specialty;
+    @OneToMany(mappedBy = "group")
     private List<Student> students;
     
     public Group() {
@@ -14,11 +22,11 @@ public class Group {
     }
 
     public String getId() {
-        return id;
+        return idGroup;
     }
 
     public Group setId(String id) {
-        this.id = id;
+        this.idGroup = id;
         return this;
     }
 

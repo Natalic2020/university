@@ -1,13 +1,34 @@
 package ua.com.foxminded.dao.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "schedule_items", schema = "uni")
 public class ScheduleItem {
     
+    @Id
     private String id;
+    @ManyToOne
+    @JoinColumn(name = "id_group")
     private Group group;
+    @ManyToOne
+    @JoinColumn(name = "id_subject")
     private Subject subject;
+    @Column(name = "day_of_week")
     private String dayOfWeek;
+    @ManyToOne
+    @JoinColumn(name = "id_time_slot")
     private TimeSlot timeSlot;
+    @ManyToOne
+    @JoinColumn(name = "id_room")
     private Room room;
+    @ManyToOne
+    @JoinColumn(name = "id_person")
     private Teacher teacher;
     
     public ScheduleItem() {

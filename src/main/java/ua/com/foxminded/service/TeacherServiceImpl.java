@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import ua.com.foxminded.service.interfaces.TeacherService;
 public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
+    @Qualifier("teacherDaoHim")
     TeacherDao teacherDao;
     
     @Autowired

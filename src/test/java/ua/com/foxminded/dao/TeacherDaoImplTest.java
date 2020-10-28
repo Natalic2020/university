@@ -17,6 +17,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,12 +46,9 @@ public class TeacherDaoImplTest {
     FileParser file;
 
     @Autowired
+    @Qualifier("teacherDao")
     TeacherDao teacherDao;
-    
-    @Autowired
-    TeacherService teacherService;
 
-    private String teacherUUID = "2901a714-fb14-11ea-adc1-0242ac120002";
     private String personUUID = "2d44565a-fb14-11ea-adc1-0242ac120002";
     private Teacher teacher;
 
@@ -58,7 +56,6 @@ public class TeacherDaoImplTest {
     void Init() throws Exception {
         creatDB();
         teacher = new Teacher()
-                               .setIdTeacher(teacherUUID)
                                .setDegree("DOCENT")
                                .setDepartment("MATHEMATICS")
                                .setPermanent(true)
@@ -77,10 +74,10 @@ public class TeacherDaoImplTest {
     void addTeacher_shouldReturnTeacher_whenAddTeacher() {
 
         Teacher expected = teacher;
-        
+
         teacherDao.addTeacher(teacher);
 
-        Teacher actual = teacherDao.findTeacher(teacherUUID);
+        Teacher actual = teacherDao.findTeacher(personUUID);
         assertEquals(expected, actual);
     }
 
@@ -89,38 +86,33 @@ public class TeacherDaoImplTest {
     void addStudent_shouldReturnStudent_whenAddTeacherLWithName() {
 
         int expected = teacherDao.findAllTeacher().size();
-        
-        teacherService.addTeacher((TeacherDto) new TeacherDto().setFirstName("Anna").setLastName("Petja"));
-
+        teacherDao.addTeacher( (Teacher) new Teacher().setFirstName("Anna").setLastName("Petja").setIdPerson("81d5affc-453d-4840-92bc-0573cc954e4c"));
         int actual = teacherDao.findAllTeacher().size();
         assertEquals(expected + 1, actual);
     }
-    
-    
-    
+
     @Test
     @Order(2)
     void findTeacher_shouldReturnTeacher_whenLookForLastName() {
 
         Teacher expected = teacher;
-        Teacher actual = teacherDao.findTeacher(teacherUUID);
+        Teacher actual = teacherDao.findTeacher(personUUID);
         assertEquals(expected, actual);
     }
 
     @Test
     @Order(2)
     void findTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
-        List<Teacher> expected = new ArrayList<>();
-        Teacher actual = teacherDao.findTeacher("2d44565a-fb14-11ea-adc1-0242ac120002");
+        Teacher expected = new Teacher();
+        Teacher actual = teacherDao.findTeacher("2901a714-fb14-11ea-adc1-0242ac120002");
         assertEquals(expected, actual);
     }
 
     @Test
     @Order(2)
     void findTeacher_shouldReturnEmpty_whenLookForNull() {
-        List<Teacher> expected = new ArrayList<>();
-
-       Teacher actual = teacherDao.findTeacher(null);
+        Teacher expected = new Teacher();
+        Teacher actual = teacherDao.findTeacher(null);
         assertEquals(expected, actual);
     }
 
@@ -139,13 +131,13 @@ public class TeacherDaoImplTest {
     @DependsOn({ "addTeacher_shouldReturnTeacher_whenAddTeacher" })
     void editTeacher_shouldReturnTeacher_whenEditTeacher() {
         Teacher expected = teacher;
-        
+
         teacher.setFirstName("Galina");
         teacher.setLastName("Bojko");
         teacher.setDegree("DOCTOR");
         teacherDao.editTeacher(teacher);
 
-       Teacher actual = teacherDao.findTeacher(teacherUUID);
+        Teacher actual = teacherDao.findTeacher(personUUID);
         assertEquals(expected, actual);
     }
 
@@ -153,8 +145,8 @@ public class TeacherDaoImplTest {
     @Order(5)
     @DependsOn({ "editTeacher_shouldReturnTeacher_whenEditTeacher" })
     void deleteTeacher_shouldReturnEmpty_whenDeleteTeacher() {
-       Teacher expected = new Teacher();
-        teacherDao.deleteTeacher(teacherUUID);
+        Teacher expected = new Teacher();
+        teacherDao.deleteTeacher(personUUID);
 
         Teacher actual = teacherDao.findTeacher("Ivanovna");
         assertEquals(expected, actual);

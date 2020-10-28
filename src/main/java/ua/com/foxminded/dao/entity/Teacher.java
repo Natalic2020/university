@@ -2,25 +2,22 @@ package ua.com.foxminded.dao.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "teachers", schema = "uni")
 public class Teacher extends Person{
 
-    private String idTeacher;
     private String degree;
     private String department;
+    @Column(name = "permanent")
     private boolean isPermanent;
     private BigDecimal salary;
    
     public Teacher() {
      
-    }
-
-    public String getIdTeacher() {
-        return idTeacher;
-    }
-
-    public Teacher setIdTeacher(String idTeacher) {
-        this.idTeacher = idTeacher;
-        return this;
     }
 
     public String getDegree() {
@@ -65,7 +62,6 @@ public class Teacher extends Person{
         int result = super.hashCode();
         result = prime * result + ((degree == null) ? 0 : degree.hashCode());
         result = prime * result + ((department == null) ? 0 : department.hashCode());
-        result = prime * result + ((idTeacher == null) ? 0 : idTeacher.hashCode());
         result = prime * result + (isPermanent ? 1231 : 1237);
         result = prime * result + ((salary == null) ? 0 : salary.hashCode());
         return result;
@@ -90,11 +86,6 @@ public class Teacher extends Person{
                 return false;
         } else if (!department.equals(other.department))
             return false;
-        if (idTeacher == null) {
-            if (other.idTeacher != null)
-                return false;
-        } else if (!idTeacher.equals(other.idTeacher))
-            return false;
         if (isPermanent != other.isPermanent)
             return false;
         if (salary == null) {
@@ -103,6 +94,7 @@ public class Teacher extends Person{
         } else if (!salary.equals(other.salary))
             return false;
         return true;
-    }   
-    
+    }
+
+   
 }

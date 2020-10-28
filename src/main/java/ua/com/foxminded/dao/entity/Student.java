@@ -2,29 +2,27 @@ package ua.com.foxminded.dao.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.*;
 
-import ua.com.foxminded.model.dto.PersonDto;
-
+@Entity
+@Table (name = "students", schema = "uni")
 public class Student extends Person{
     
-    private String idStudent;
+    @ManyToOne
+    @JoinColumn(name = "id_group")
     private Group group;
+    
+    @Column(name = "study_status")
     private String studyStatus;
+    @Column(name = "start_of_study")
     private LocalDate startOfStudy;
+    @Column(name = "citizenship")
     private String citizenship;
+    @Column(name = "grants")
     private BigDecimal grant;
     
     public Student() {
        
-    }
-
-    public String getIdStudent() {
-        return idStudent;
-    }
-
-    public Student setIdStudent(String idStudent) {
-        this.idStudent = idStudent;
-        return this;
     }
 
     public Group getGroup() {

@@ -17,8 +17,6 @@ public class TeacherConverter {
 
     public Teacher convertDtoToEntity(TeacherDto teacherDto) {
         Teacher teacher = new Teacher();
-        Optional.ofNullable(teacherDto.getIdTeacher())
-                .ifPresent(ss -> teacher.setIdTeacher(ss.toString()));
         Optional.ofNullable(teacherDto.getIdPerson())
                 .ifPresent(ss -> teacher.setIdPerson(ss.toString()));
 
@@ -39,8 +37,7 @@ public class TeacherConverter {
     public TeacherDto convertEntityToDto(Teacher teacher) {
         
         TeacherDto teacherDto =
-        ((TeacherDto) new TeacherDto().setIdTeacher(UUID.fromString(teacher.getIdTeacher()))
-                                             .setIdPerson(UUID.fromString(teacher.getIdPerson()))
+        ((TeacherDto) new TeacherDto().setIdPerson(UUID.fromString(teacher.getIdPerson()))
                                              .setFirstName(teacher.getFirstName())
                                              .setLastName(teacher.getLastName()))
         .setPermanent(teacher.isPermanent())

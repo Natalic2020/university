@@ -1,9 +1,18 @@
 package ua.com.foxminded.dao.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "rooms", schema = "uni")
 public class Room {
     
-   
+    @Id
+    @Column(name = "id_room", nullable = false)
     private String id;
+    @Column(name = "name_room")
     private String name;
     
     public Room() {

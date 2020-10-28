@@ -1,10 +1,20 @@
 package ua.com.foxminded.dao.entity;
 
-public abstract class Person {
+import javax.persistence.*;
 
+@Entity
+@Table (name = "persons", schema = "uni")
+@Inheritance(strategy=InheritanceType.JOINED)
+public abstract class Person {
+    
+    @Id
+    @Column(name = "id_person", nullable = false)
 	private String idPerson;
+    @Column(name = "first_name")
 	private String firstName;
+    @Column(name = "last_name")
 	private String lastName;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
 	private ContactInfo contactInfo;
 	
     public Person() {

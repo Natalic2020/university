@@ -2,10 +2,25 @@ package ua.com.foxminded.dao.entity;
 
 import java.util.Locale;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "contact_infos", schema = "uni")
 public class ContactInfo {
 
+    @Id
+    @Column(name = "id_cont_info")
     private String id;
-    private String idPerson;
+    @OneToOne()
+    @JoinColumn(name = "id_person")  
+    private Person person;
 	private int index;
 	private String country;
 	private String city;
@@ -26,15 +41,6 @@ public class ContactInfo {
 
     public ContactInfo setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String getIdPerson() {
-        return idPerson;
-    }
-
-    public ContactInfo setIdPerson(String idPerson) {
-        this.idPerson = idPerson;
         return this;
     }
 
@@ -119,78 +125,11 @@ public class ContactInfo {
         return this;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + apartment;
-        result = prime * result + ((city == null) ? 0 : city.hashCode());
-        result = prime * result + ((country == null) ? 0 : country.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((house == null) ? 0 : house.hashCode());
-        result = prime * result + ((idPerson == null) ? 0 : idPerson.hashCode());
-        result = prime * result + index;
-        result = prime * result + ((phone1 == null) ? 0 : phone1.hashCode());
-        result = prime * result + ((phone2 == null) ? 0 : phone2.hashCode());
-        result = prime * result + ((street == null) ? 0 : street.hashCode());
-        return result;
+    public Person getPerson() {
+        return person;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ContactInfo other = (ContactInfo) obj;
-        if (apartment != other.apartment)
-            return false;
-        if (city == null) {
-            if (other.city != null)
-                return false;
-        } else if (!city.equals(other.city))
-            return false;
-        if (country == null) {
-            if (other.country != null)
-                return false;
-        } else if (!country.equals(other.country))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        if (house == null) {
-            if (other.house != null)
-                return false;
-        } else if (!house.equals(other.house))
-            return false;
-        if (idPerson == null) {
-            if (other.idPerson != null)
-                return false;
-        } else if (!idPerson.equals(other.idPerson))
-            return false;
-        if (index != other.index)
-            return false;
-        if (phone1 == null) {
-            if (other.phone1 != null)
-                return false;
-        } else if (!phone1.equals(other.phone1))
-            return false;
-        if (phone2 == null) {
-            if (other.phone2 != null)
-                return false;
-        } else if (!phone2.equals(other.phone2))
-            return false;
-        if (street == null) {
-            if (other.street != null)
-                return false;
-        } else if (!street.equals(other.street))
-            return false;
-        return true;
-    }
-    
-    
+    public void setPerson(Person person) {
+        this.person = person;
+    } 
 }

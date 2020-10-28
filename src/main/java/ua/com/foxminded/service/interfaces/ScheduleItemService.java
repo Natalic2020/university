@@ -1,7 +1,5 @@
 package ua.com.foxminded.service.interfaces;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import ua.com.foxminded.model.dto.ScheduleItemDto;
