@@ -24,9 +24,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 //(exclude = { MySpringMvcDispatcherSerlvetIntitializer.class })
 @ServletComponentScan
 @ComponentScan(basePackages = "ua.com.foxminded")
-//@SpringBootApplication(scanBasePackages = "com.baeldung")
-//@EnableJpaRepositories("com.baeldung.persistence.repo")
-//@EntityScan("com.baeldung.persistence.model")
 public class Application extends SpringBootServletInitializer{
 
     @Autowired

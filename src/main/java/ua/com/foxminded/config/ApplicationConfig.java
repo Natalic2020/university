@@ -35,11 +35,8 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @SpringBootApplication
-//@Configuration
 @EnableTransactionManagement 
-//@EnableAutoConfiguration
 @ComponentScan(basePackages = "ua.com.foxminded")
-//@PropertySource("classpath:persistence-jndi.properties")
 @EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
 @EnableWebMvc
 public class ApplicationConfig implements WebMvcConfigurer{
@@ -53,20 +50,6 @@ public class ApplicationConfig implements WebMvcConfigurer{
     public ApplicationConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     } 
-    
-//    @Bean
-//    public DataSource dataSource() throws NamingException {
-//        return (DataSource) new JndiTemplate().lookup(env.getProperty("jdbc.url"));
-//    }
-//        
-//    @Bean
-//    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-//        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//        jdbcTemplate.setResultsMapCaseInsensitive(true);
-//        return jdbcTemplate;
-//    }  
-//    
-    
     
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -92,10 +75,5 @@ public class ApplicationConfig implements WebMvcConfigurer{
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         registry.viewResolver(resolver);
-    }
-    
-//    @Bean
-//    public IDialect conditionalCommentDialect() {
-//        return new Java8TimeDialect();
-//    }   
+    } 
 }
