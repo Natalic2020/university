@@ -38,8 +38,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 @EnableTransactionManagement 
 @ComponentScan(basePackages = "ua.com.foxminded")
 @EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
-@EnableWebMvc
-public class ApplicationConfig implements WebMvcConfigurer{
+//@EnableWebMvc
+public class ApplicationConfig { //implements WebMvcConfigurer{
 
     @Autowired
     private Environment env;
@@ -51,29 +51,29 @@ public class ApplicationConfig implements WebMvcConfigurer{
         this.applicationContext = applicationContext;
     } 
     
-    @Bean
-    public SpringResourceTemplateResolver templateResolver() {
-        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/views/");
-        templateResolver.setSuffix(".html");
-        templateResolver.setCacheable(false);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        return templateResolver;
-    }
+//    @Bean
+//    public SpringResourceTemplateResolver templateResolver() {
+//        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+//        templateResolver.setApplicationContext(applicationContext);
+//        templateResolver.setPrefix("/WEB-INF/views/");
+//        templateResolver.setSuffix(".html");
+//        templateResolver.setCacheable(false);
+//        templateResolver.setTemplateMode(TemplateMode.HTML);
+//        return templateResolver;
+//    }
 
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.setEnableSpringELCompiler(true);
-        return templateEngine;
-    }
+//    @Bean
+//    public SpringTemplateEngine templateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(templateResolver());
+//        templateEngine.setEnableSpringELCompiler(true);
+//        return templateEngine;
+//    }
     
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-        resolver.setTemplateEngine(templateEngine());
-        registry.viewResolver(resolver);
-    } 
+//    @Override
+//    public void configureViewResolvers(ViewResolverRegistry registry) {
+//        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+//        resolver.setTemplateEngine(templateEngine());
+//        registry.viewResolver(resolver);
+//    } 
 }

@@ -22,14 +22,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import ua.com.foxminded.config.MySpringMvcDispatcherSerlvetIntitializer;
 import ua.com.foxminded.config.TestWebConfig;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestWebConfig.class   , MySpringMvcDispatcherSerlvetIntitializer.class})
-@TestInstance(Lifecycle.PER_CLASS)
-@WebAppConfiguration
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = {TestWebConfig.class   , MySpringMvcDispatcherSerlvetIntitializer.class})
+//@TestInstance(Lifecycle.PER_CLASS)
+//@WebAppConfiguration
+//@ExtendWith(MockitoExtension.class)
 @Disabled
 class StudentsController2Test {
 
