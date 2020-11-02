@@ -34,22 +34,22 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
-@SpringBootApplication
-@EnableTransactionManagement 
-@ComponentScan(basePackages = "ua.com.foxminded")
-@EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
-//@EnableWebMvc
+//@SpringBootApplication
+//@EnableTransactionManagement 
+//@ComponentScan(basePackages = "ua.com.foxminded")
+//@EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
+////@EnableWebMvc
 public class ApplicationConfig { //implements WebMvcConfigurer{
 
-    @Autowired
-    private Environment env;
- 
-    private final ApplicationContext applicationContext;
-
-    @Autowired
-    public ApplicationConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    } 
+//    @Autowired
+//    private Environment env;
+// 
+//    private final ApplicationContext applicationContext;
+//
+//    @Autowired
+//    public ApplicationConfig(ApplicationContext applicationContext) {
+//        this.applicationContext = applicationContext;
+//    } 
     
 //    @Bean
 //    public SpringResourceTemplateResolver templateResolver() {
