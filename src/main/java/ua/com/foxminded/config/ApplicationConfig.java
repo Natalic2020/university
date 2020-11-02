@@ -6,6 +6,8 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,11 +32,14 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
-@Configuration
+@SpringBootApplication
+//@Configuration
 @EnableTransactionManagement 
+//@EnableAutoConfiguration
 @ComponentScan(basePackages = "ua.com.foxminded")
-@PropertySource("classpath:persistence-jndi.properties")
+//@PropertySource("classpath:persistence-jndi.properties")
 @EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
 @EnableWebMvc
 public class ApplicationConfig implements WebMvcConfigurer{
@@ -49,17 +54,19 @@ public class ApplicationConfig implements WebMvcConfigurer{
         this.applicationContext = applicationContext;
     } 
     
-    @Bean
-    public DataSource dataSource() throws NamingException {
-        return (DataSource) new JndiTemplate().lookup(env.getProperty("jdbc.url"));
-    }
-        
-    @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.setResultsMapCaseInsensitive(true);
-        return jdbcTemplate;
-    }  
+//    @Bean
+//    public DataSource dataSource() throws NamingException {
+//        return (DataSource) new JndiTemplate().lookup(env.getProperty("jdbc.url"));
+//    }
+//        
+//    @Bean
+//    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+//        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+//        jdbcTemplate.setResultsMapCaseInsensitive(true);
+//        return jdbcTemplate;
+//    }  
+//    
+    
     
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -67,6 +74,8 @@ public class ApplicationConfig implements WebMvcConfigurer{
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
+        templateResolver.setCacheable(false);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
         return templateResolver;
     }
 
@@ -85,8 +94,8 @@ public class ApplicationConfig implements WebMvcConfigurer{
         registry.viewResolver(resolver);
     }
     
-    @Bean
-    public IDialect conditionalCommentDialect() {
-        return new Java8TimeDialect();
-    }   
+//    @Bean
+//    public IDialect conditionalCommentDialect() {
+//        return new Java8TimeDialect();
+//    }   
 }

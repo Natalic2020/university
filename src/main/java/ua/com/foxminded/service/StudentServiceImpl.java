@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.StudentConverter;
+import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.StudentDao;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.service.interfaces.StudentService;
@@ -50,6 +51,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDto> findAllStudent() {
+      
+        List<Student> students = studentDao.findAllStudent();
+        
+//        studentConverter.convertEntityToDto(students.get(0));
+        
+        
+//        students.forEach(student -> {
+//            studentConverter.convertEntityToDto(student);
+//        });
+        
+//        return findListStudent();
+        
         return studentDao.findAllStudent().stream()
                 .map(studentConverter::convertEntityToDto)
                 .collect(Collectors.toList());

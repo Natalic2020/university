@@ -26,6 +26,7 @@ public class StudentsController {
     @GetMapping()
     public ModelAndView findAllStudent() {
 
+        System.out.println("Nata");
         List<StudentDto> students = studentService.findAllStudent();
 
         ModelAndView studentMV = new ModelAndView("students");

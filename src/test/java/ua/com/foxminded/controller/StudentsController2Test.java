@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -29,6 +30,7 @@ import ua.com.foxminded.config.TestWebConfig;
 @TestInstance(Lifecycle.PER_CLASS)
 @WebAppConfiguration
 @ExtendWith(MockitoExtension.class)
+@Disabled
 class StudentsController2Test {
 
     private MockMvc mockMvc;
