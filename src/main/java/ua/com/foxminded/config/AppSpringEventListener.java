@@ -16,9 +16,9 @@ public class AppSpringEventListener  {
         @EventListener({ContextRefreshedEvent.class})
         void contextRefreshedEvent() { 
 
-                tableInitializer.createDB();
-                tableInitializer.createSchema();
-                tableInitializer.fillTablesNew();
+//                tableInitializer.createDB();
+//                tableInitializer.createSchema();
+//                tableInitializer.fillTablesNew();
 
         }   
 }

@@ -1,4 +1,4 @@
-package ua.com.foxminded.config;
+
 
 import java.util.Properties;
 
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -20,19 +21,22 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
+import ua.com.foxminded.util.HibernateSessionFactoryUtil;
+
 @SpringBootApplication
 @EnableAutoConfiguration
 @ServletComponentScan
 @ComponentScan(basePackages = "ua.com.foxminded")
 @EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
+@EntityScan(basePackages = "ua.com.foxminded.dao.entity")
 public class Application extends SpringBootServletInitializer{
 
     @Autowired
     private Environment env;
     
     public static void main(String[] args) {
+      
         SpringApplication.run(Application.class, args);
-
     }
 
 //    @Bean(name = "dataSource")
