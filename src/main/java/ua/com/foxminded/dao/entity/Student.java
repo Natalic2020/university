@@ -4,16 +4,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table (name = "students", schema = "uni")
 public class Student extends Person{
     
     @ManyToOne
     @JoinColumn(name = "id_group")
-    private Group group;
-    
+    private Group group; 
+
     @Column(name = "study_status")
     private String studyStatus;
+   
     @Column(name = "start_of_study")
     private LocalDate startOfStudy;
     @Column(name = "citizenship")

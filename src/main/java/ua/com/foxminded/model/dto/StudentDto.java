@@ -7,12 +7,17 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.persistence.Basic;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import ua.com.foxminded.model.enums.StudyStatus;
 
 public class StudentDto extends PersonDto {
 
     private UUID idStudent;
     private StudyStatus studyStatus;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startOfStudy;
     private String citizenship;
     private BigDecimal grant;
