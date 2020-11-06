@@ -34,7 +34,7 @@
 		   </select>  
 		 <br /> 
 		<label for="permanent">Permanent: </label> 
-		 <input	type="checkbox" th:checked="*{permanent}" id="permanent" /> 
+		 <input	type="checkbox" th:checked="*{permanent}" id="permanent" th:field="*{permanent}" /> 
 		 <br />
 		<label	for="salary">Salary: </label> 
 		 <input type="number" th:field="*{salary}"	id="salary" />
