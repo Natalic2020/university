@@ -82,8 +82,6 @@ class ScheduleServiceImplTest {
 
         Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
 
-//        scheduleService = new ScheduleServiceImpl(scheduleItemDao);
-
         List<ScheduleItemDto> actual = scheduleService.findWeekScheduleStudent(UUID.fromString(uuid1));
         assertEquals(expected, actual);
 
@@ -103,8 +101,6 @@ class ScheduleServiceImplTest {
         String uuid1 = "a17f83c5-a85a-4420-8423-23b86d0463c6";
 
         Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
-
-//    <7>    scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
         Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleStudent(UUID.fromString(uuid1),
                 LocalDate.of(1999, 02, 02));
@@ -127,8 +123,6 @@ class ScheduleServiceImplTest {
 
         Mockito.when(scheduleItemDao.findWeekScheduleStudent(uuid1)).thenReturn(scheduleItems);
 
-//        scheduleService = new ScheduleServiceImpl(scheduleItemDao);
-
         List<ScheduleItemDto> actual = scheduleService.findWeekScheduleTeacher(UUID.fromString(uuid1));
         assertEquals(expected, actual);
 
@@ -148,8 +142,6 @@ class ScheduleServiceImplTest {
         String uuid1 = "a17f83c5-a85a-4420-8423-23b86d0463c6";
 
         Mockito.when(scheduleItemDao.findWeekScheduleTeacher(uuid1)).thenReturn(scheduleItems);
-
-//        scheduleService = new ScheduleServiceImpl(scheduleItemDao);
 
         Map<String, List<ScheduleItemDto>> actual = scheduleService.findMonthScheduleTeacher(UUID.fromString(uuid1),
                 LocalDate.of(1999, 02, 02));
