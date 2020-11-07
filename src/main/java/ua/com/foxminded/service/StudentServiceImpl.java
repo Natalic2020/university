@@ -51,18 +51,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDto> findAllStudent() {
-      
-        List<Student> students = studentDao.findAllStudent();
-        
-//        studentConverter.convertEntityToDto(students.get(0));
-        
-        
-//        students.forEach(student -> {
-//            studentConverter.convertEntityToDto(student);
-//        });
-        
-//        return findListStudent();
-        
         return studentDao.findAllStudent().stream()
                 .map(studentConverter::convertEntityToDto)
                 .collect(Collectors.toList());
