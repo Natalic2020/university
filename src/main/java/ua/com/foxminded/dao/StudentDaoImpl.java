@@ -21,7 +21,6 @@ import ua.com.foxminded.dao.mappers.StudentMapper;
 import ua.com.foxminded.exception.DbObjectNotInsertedException;
 import ua.com.foxminded.exception.NoStudentsFoundException;
 import ua.com.foxminded.exception.NoSuchStudentException;
-import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
 import static java.lang.String.format;
 
@@ -75,7 +74,6 @@ public class StudentDaoImpl implements StudentDao {
             logger.info(e.getMessage());
         }
     }
-
    
     @Override
     public void editStudent(Student student) {
@@ -113,26 +111,25 @@ public class StudentDaoImpl implements StudentDao {
     }
 
    
-//    @Override
-//    public void deleteStudent(String personId) {
-//        logger.info(format("Delete student with UUID = %s", personId));
-//        try {
-//            int countDeleted = jdbcTemplate.update("DELETE from uni.students s WHERE s.id_person = ? ",
-//                    personId);
-//
-//            if (countDeleted == 0) {
-//                throw new NoSuchStudentException(personId);
-//            }
-//            logger.info(format("Student with UUID = %s deleted sucessfully.", personId));
-//        } catch (DataAccessException e) {
-//            logger.debug(format("Student with UUID= %s was not delete.  Reason: %s", personId,
-//                    e.getMessage()));
-//        } catch (NoSuchStudentException e) {
-//            logger.info(e.getMessage());
-//        }
-//    }
+    @Override
+    public void deleteStudent(Student student) {
+        String personId = student.getIdPerson();
+        logger.info(format("Delete student with UUID = %s", personId));
+        try {
+            int countDeleted = jdbcTemplate.update("DELETE from uni.students s WHERE s.id_person = ? ",
+                    personId);
 
-    
+            if (countDeleted == 0) {
+                throw new NoSuchStudentException(personId);
+            }
+            logger.info(format("Student with UUID = %s deleted sucessfully.", personId));
+        } catch (DataAccessException e) {
+            logger.debug(format("Student with UUID= %s was not delete.  Reason: %s", personId,
+                    e.getMessage()));
+        } catch (NoSuchStudentException e) {
+            logger.info(e.getMessage());
+        }
+    }
 
     @Override
     public Student findStudent(String personId) {
@@ -158,8 +155,6 @@ public class StudentDaoImpl implements StudentDao {
         return student;
     }
 
-    
-
     @Override
     public List<Student> findAllStudent() {
         logger.info("Find all students. ");
@@ -177,12 +172,5 @@ public class StudentDaoImpl implements StudentDao {
             logger.debug(e.getMessage());
         }
         return students;
-    }
-
-
-    @Override
-    public void deleteStudent(Student student) {
-        // TODO Auto-generated method stub
-        
     }
 }

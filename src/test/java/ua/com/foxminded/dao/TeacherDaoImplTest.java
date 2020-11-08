@@ -148,8 +148,7 @@ public class TeacherDaoImplTest {
     @DependsOn({ "editTeacher_shouldReturnTeacher_whenEditTeacher" })
     void deleteTeacher_shouldReturnEmpty_whenDeleteTeacher() {
         Teacher expected = new Teacher();
-        teacherDao.deleteTeacher(personUUID);
-
+        teacherDao.deleteTeacher((Teacher) new Teacher().setIdPerson(personUUID));
         Teacher actual = teacherDao.findTeacher("Ivanovna");
         assertEquals(expected, actual);
     }

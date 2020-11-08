@@ -6,11 +6,9 @@ import java.util.UUID;
 import ua.com.foxminded.model.dto.TeacherDto;
 
 public interface TeacherService {
-
     public void addTeacher(TeacherDto teacher);
     public void editTeacher(TeacherDto teacher);
     public void deleteTeacher(UUID uuid);
     public TeacherDto findTeacher(UUID uuid);
-    public List<TeacherDto> findAllTeacher();
-    
+    public List<TeacherDto> findAllTeacher(); 
 }

@@ -30,7 +30,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addStudent(StudentDto studentDto) {
         studentDao.addStudent(studentConverter.convertDtoToEntity((StudentDto) studentDto
-                .setIdStudent(UUID.randomUUID())
                 .setIdPerson(UUID.randomUUID())));
     }
 

@@ -100,7 +100,8 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void deleteTeacher(String personId) {
+    public void deleteTeacher(Teacher teacher) {
+        String personId = teacher.getIdPerson();
         logger.info(format("Delete teacher with UUID = %s", personId));
         try {
             int countDeleted = jdbcTemplate.update("DELETE from uni.teachers s WHERE s.id_person = ? ",
