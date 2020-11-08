@@ -113,24 +113,24 @@ public class StudentDaoImpl implements StudentDao {
     }
 
    
-    @Override
-    public void deleteStudent(String personId) {
-        logger.info(format("Delete student with UUID = %s", personId));
-        try {
-            int countDeleted = jdbcTemplate.update("DELETE from uni.students s WHERE s.id_person = ? ",
-                    personId);
-
-            if (countDeleted == 0) {
-                throw new NoSuchStudentException(personId);
-            }
-            logger.info(format("Student with UUID = %s deleted sucessfully.", personId));
-        } catch (DataAccessException e) {
-            logger.debug(format("Student with UUID= %s was not delete.  Reason: %s", personId,
-                    e.getMessage()));
-        } catch (NoSuchStudentException e) {
-            logger.info(e.getMessage());
-        }
-    }
+//    @Override
+//    public void deleteStudent(String personId) {
+//        logger.info(format("Delete student with UUID = %s", personId));
+//        try {
+//            int countDeleted = jdbcTemplate.update("DELETE from uni.students s WHERE s.id_person = ? ",
+//                    personId);
+//
+//            if (countDeleted == 0) {
+//                throw new NoSuchStudentException(personId);
+//            }
+//            logger.info(format("Student with UUID = %s deleted sucessfully.", personId));
+//        } catch (DataAccessException e) {
+//            logger.debug(format("Student with UUID= %s was not delete.  Reason: %s", personId,
+//                    e.getMessage()));
+//        } catch (NoSuchStudentException e) {
+//            logger.info(e.getMessage());
+//        }
+//    }
 
     
 
@@ -177,5 +177,12 @@ public class StudentDaoImpl implements StudentDao {
             logger.debug(e.getMessage());
         }
         return students;
+    }
+
+
+    @Override
+    public void deleteStudent(Student student) {
+        // TODO Auto-generated method stub
+        
     }
 }

@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(UUID uuid) {
-        studentDao.deleteStudent(uuid.toString());
+        studentDao.deleteStudent(studentDao.findStudent(uuid.toString()));
     }
 
     @Override

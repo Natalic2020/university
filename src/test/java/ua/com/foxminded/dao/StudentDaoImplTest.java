@@ -136,15 +136,15 @@ class StudentDaoImplTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    @Order(5)
-    @DependsOn({ "editStudent_shouldReturnStudent_whenEditStudent" })
-    void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
-        int expected = studentDao.findAllStudent().size();
-        studentDao.deleteStudent(personUUID);
-        int actual = studentDao.findAllStudent().size();
-        assertEquals(expected - 1, actual);
-    }
+//    @Test
+//    @Order(5)
+//    @DependsOn({ "editStudent_shouldReturnStudent_whenEditStudent" })
+//    void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
+//        int expected = studentDao.findAllStudent().size();
+//        studentDao.deleteStudent(personUUID);
+//        int actual = studentDao.findAllStudent().size();
+//        assertEquals(expected - 1, actual);
+//    }
 
     @Test
     void addStudent_shouldNotChangeListAllStudent_whenInputStudentWithoutParameter() {

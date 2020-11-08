@@ -2,6 +2,9 @@ package ua.com.foxminded.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
@@ -24,17 +27,26 @@ public class StudentDaoHimImpl implements StudentDao {
 
     Logger logger = LoggerFactory.getLogger("SampleLogger");
 
+    @PersistenceContext
+    private EntityManager entityManager;
+    
     @Override
     public void addStudent(Student student) {
 
         String personId = student.getIdPerson();
         logger.info(format("Add person with UUID = %s", personId));
         
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(student);
-        tx1.commit();
-        session.close();
+     
+//        entityManager.getTransaction().begin();
+        entityManager.persist(student);
+//        entityManager.getTransaction().commit();
+        
+        
+//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+//        Transaction tx1 = session.beginTransaction();
+//        session.save(student);
+//        tx1.commit();
+//        session.close();
     }
 
     @Override
@@ -43,40 +55,57 @@ public class StudentDaoHimImpl implements StudentDao {
         String personId = student.getIdPerson();
         logger.info(format("Edit person with UUID = %s", personId));
 
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(student);
-        tx1.commit();
-        session.close();
+        entityManager.merge(student);
+        
+//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+//        Transaction tx1 = session.beginTransaction();
+//        session.update(student);
+//        tx1.commit();
+//        session.close();
     }
 
     @Override
-    public void deleteStudent(String personId) {
+    public void deleteStudent(Student student) {
+        String personId = student.getIdPerson();
         logger.info(format("Delete student with UUID = %s", personId));
 
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(session.get(Student.class,personId));
-        tx1.commit();
-        session.close();
+        if (entityManager.contains(student)) {
+            entityManager.remove(student);
+        } else {
+            entityManager.remove(entityManager.merge(student));
+        }
+        
+//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+//        Transaction tx1 = session.beginTransaction();
+//        session.delete(session.get(Student.class,personId));
+//        tx1.commit();
+//        session.close();
     }
 
     @Override
     public Student findStudent(String personId) {
         logger.info(format("Find student with id  = %s", personId));
-        Student student = HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Student.class, personId);
-        return student;
+        Student response = (Student) entityManager.find(Student.class, personId);
+        return response;
+//        Student student = HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Student.class, personId);
+//        return student;
     }
 
     @Override
     public List<Student> findAllStudent() {
-        logger.info("Find all students. ");
-        List<Student> students = HibernateSessionFactoryUtil.getSessionFactory()
-                                                            .openSession()
-                                                            .createQuery("From Student")
-                                                            .list();
-        
-        
-        return students;
+        // TODO Auto-generated method stub
+        return null;
     }
+
+//    @Override
+//    public List<Student> findAllStudent() {
+//        logger.info("Find all students. ");
+//        List<Student> students = HibernateSessionFactoryUtil.getSessionFactory()
+//                                                            .openSession()
+//                                                            .createQuery("From Student")
+//                                                            .list();
+//        
+//        
+//        return students;
+//    }
 }
