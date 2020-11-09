@@ -21,6 +21,7 @@
 						<th>Salary</th>
 						<th>Edit</th>
 						<th>Delete</th>
+						<th>Schedule</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +34,7 @@
 						<td th:text="${teacher.salary}"></td>	
 						<td><a th:href="@{/teachers/{uuid}(uuid=${teacher.idPerson})}">Edit</a>
 						<td><a th:href="@{/teachers/delete/{uuid}(uuid=${teacher.idPerson})}">Delete</a>
+						<td><a th:href="@{/schedule/teacher/{uuid}(uuid=${teacher.idPerson})}">Schedule</a>
 					</tr>
 				</tbody>
 			</table>

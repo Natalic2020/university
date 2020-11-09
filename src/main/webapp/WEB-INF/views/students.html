@@ -27,6 +27,7 @@
 						<th>Grant</th>
 						<th>Edit</th>
 						<th>Delete</th>
+						<th>Schedule</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,11 +36,11 @@
 						<td th:text="${student.lastName}"></td>
 						<td th:text="${student.studyStatus}"></td>
 						<td th:text="${student.StartOfStudy}"></td>
-					<!--  	<td th:text="${#temporals.format(student.getStartOfStudy(), 'dd.MM.yyyy')}"></td> -->
 						<td th:text="${student.citizenship}"></td>
 						<td th:text="${student.grant}"></td>
 						<td><a th:href="@{/students/{uuid}(uuid=${student.idPerson})}">Edit</a>
 						<td><a th:href="@{/students/delete/{uuid}(uuid=${student.idPerson})}">Delete</a>
+						<td><a th:href="@{/schedule/student/{uuid}(uuid=${student.idPerson})}">Schedule</a>
 					</tr>
 				</tbody>
 			</table>
