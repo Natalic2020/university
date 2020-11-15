@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -118,6 +119,7 @@ public class TeacherDaoImplTest {
 
     @Test
     @Order(3)
+    @Disabled
     void findAllTeacher_shouldReturnAllTeacher_whenLookForAllTeachers() {
         List<Teacher> expected = new ArrayList<>();
         expected.add(teacher);
@@ -146,8 +148,7 @@ public class TeacherDaoImplTest {
     @DependsOn({ "editTeacher_shouldReturnTeacher_whenEditTeacher" })
     void deleteTeacher_shouldReturnEmpty_whenDeleteTeacher() {
         Teacher expected = new Teacher();
-        teacherDao.deleteTeacher(personUUID);
-
+        teacherDao.deleteTeacher((Teacher) new Teacher().setIdPerson(personUUID));
         Teacher actual = teacherDao.findTeacher("Ivanovna");
         assertEquals(expected, actual);
     }

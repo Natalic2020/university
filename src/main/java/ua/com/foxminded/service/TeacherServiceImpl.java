@@ -29,7 +29,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void addTeacher(TeacherDto teacherDto) {
         teacherDao.addTeacher(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto
-                .setIdTeacher(UUID.randomUUID())
                 .setIdPerson(UUID.randomUUID())));
     }
 
@@ -40,7 +39,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacher(UUID uuid) {
-        teacherDao.deleteTeacher(uuid.toString());
+        teacherDao.deleteTeacher(teacherDao.findTeacher(uuid.toString()));
     }
 
     @Override

@@ -21,6 +21,8 @@
 						<th>Salary</th>
 						<th>Edit</th>
 						<th>Delete</th>
+						<th>Schedule month</th>
+						<th>Schedule day</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -33,6 +35,20 @@
 						<td th:text="${teacher.salary}"></td>	
 						<td><a th:href="@{/teachers/{uuid}(uuid=${teacher.idPerson})}">Edit</a>
 						<td><a th:href="@{/teachers/delete/{uuid}(uuid=${teacher.idPerson})}">Delete</a>
+						<td><form
+							th:action="@{/schedule/teacher/{uuid}(uuid=${teacher.idPerson}, month=${month})}">
+						<button type="submit">Schedule</button>
+							    <select id="month" name="month">
+								<option th:each="month: ${months}"
+ 									th:value="${month}" th:text="${month}"></option>
+								</select>	 
+						</form>		
+						</td>
+						<td><form
+							th:action="@{/schedule/teacher/{uuid}(uuid=${teacher.idPerson}, day=${day})}">
+						<button type="submit">Schedule</button> 
+						 <input	type="date" id="day" name="day"/> 	
+						 </form>
 					</tr>
 				</tbody>
 			</table>

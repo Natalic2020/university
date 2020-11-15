@@ -1,5 +1,6 @@
 package ua.com.foxminded.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ua.com.foxminded.model.dto.TeacherDto;
+import ua.com.foxminded.model.enums.Month;
 import ua.com.foxminded.service.interfaces.TeacherService;
 
 @Controller
@@ -29,7 +31,10 @@ public class TeachersController {
        
         ModelAndView teacherMV = new ModelAndView("teachers");
         teacherMV.addObject("teachers", teachers);
-     
+        
+        List<String> months = Month.getAllMonths();
+        
+        teacherMV.addObject("months", months);
         return teacherMV;   
     }
     @GetMapping("/new")

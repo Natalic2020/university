@@ -21,7 +21,6 @@ import ua.com.foxminded.dao.mappers.StudentMapper;
 import ua.com.foxminded.exception.DbObjectNotInsertedException;
 import ua.com.foxminded.exception.NoStudentsFoundException;
 import ua.com.foxminded.exception.NoSuchStudentException;
-import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
 import static java.lang.String.format;
 
@@ -75,7 +74,6 @@ public class StudentDaoImpl implements StudentDao {
             logger.info(e.getMessage());
         }
     }
-
    
     @Override
     public void editStudent(Student student) {
@@ -114,7 +112,8 @@ public class StudentDaoImpl implements StudentDao {
 
    
     @Override
-    public void deleteStudent(String personId) {
+    public void deleteStudent(Student student) {
+        String personId = student.getIdPerson();
         logger.info(format("Delete student with UUID = %s", personId));
         try {
             int countDeleted = jdbcTemplate.update("DELETE from uni.students s WHERE s.id_person = ? ",
@@ -131,8 +130,6 @@ public class StudentDaoImpl implements StudentDao {
             logger.info(e.getMessage());
         }
     }
-
-    
 
     @Override
     public Student findStudent(String personId) {
@@ -157,8 +154,6 @@ public class StudentDaoImpl implements StudentDao {
         }
         return student;
     }
-
-    
 
     @Override
     public List<Student> findAllStudent() {

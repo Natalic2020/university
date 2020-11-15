@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.StudentConverter;
+import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.StudentDao;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.service.interfaces.StudentService;
@@ -29,7 +30,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addStudent(StudentDto studentDto) {
         studentDao.addStudent(studentConverter.convertDtoToEntity((StudentDto) studentDto
-                .setIdStudent(UUID.randomUUID())
                 .setIdPerson(UUID.randomUUID())));
     }
 
@@ -40,7 +40,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(UUID uuid) {
-        studentDao.deleteStudent(uuid.toString());
+        studentDao.deleteStudent(studentDao.findStudent(uuid.toString()));
     }
 
     @Override

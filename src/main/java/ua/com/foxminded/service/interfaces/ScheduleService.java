@@ -14,4 +14,6 @@ public interface ScheduleService {
     public Map<String, List<ScheduleItemDto>> findMonthScheduleStudent(UUID id, LocalDate date);
     public List<ScheduleItemDto> findWeekScheduleTeacher(UUID id);
     public Map<String, List<ScheduleItemDto>> findMonthScheduleTeacher(UUID id, LocalDate date);
+    public List<ScheduleItemDto> findDayScheduleStudent(UUID fromString, LocalDate date);
+    public List<ScheduleItemDto> findDayScheduleTeacher(UUID fromString, LocalDate date);
 }

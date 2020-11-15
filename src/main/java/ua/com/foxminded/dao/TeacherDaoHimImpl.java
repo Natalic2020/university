@@ -4,19 +4,17 @@ import static java.lang.String.format;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
-import ua.com.foxminded.dao.mappers.TeacherMapper;
-import ua.com.foxminded.util.HibernateSessionFactoryUtil;
 
 @Repository
 @Qualifier("teacherDaoHim")
@@ -24,56 +22,48 @@ public class TeacherDaoHimImpl implements TeacherDao {
 
     Logger logger = LoggerFactory.getLogger("SampleLogger");
 
+    @PersistenceContext
+    private EntityManager entityManager;
+    
     @Override
+    @Transactional
     public void addTeacher(Teacher teacher)  {
-
         String personId = teacher.getIdPerson();
         logger.info(format("Add person with UUID = %s", personId));
-        
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(teacher);
-        tx1.commit();
-        session.close();
+        entityManager.persist(teacher);
     }
     
     @Override
+    @Transactional
     public void editTeacher(Teacher teacher) {
         String personId = teacher.getIdPerson();
         logger.info(format("Edit person with UUID = %s", personId));
-
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(teacher);
-        tx1.commit();
-        session.close();
+        entityManager.merge(teacher);
     }
     
     @Override
-    public void deleteTeacher(String personId) {
+    @Transactional
+    public void deleteTeacher(Teacher teacher) {
+        String personId = teacher.getIdPerson();
         logger.info(format("Delete teacher with UUID = %s", personId));
-
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(session.get(Teacher.class, personId));
-        tx1.commit();
-        session.close();
+        if (entityManager.contains(teacher)) {
+            entityManager.remove(teacher);
+        } else {
+            entityManager.remove(entityManager.merge(teacher));
+        }   
     }
 
     @Override
+    @Transactional
     public Teacher findTeacher(String personId) {
-        logger.info(format("Find student with id  = %s", personId));
-        Teacher teacher = HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Teacher.class, personId);
-        return teacher;
+        logger.info(format("Find teacher with id  = %s", personId));
+        return  (Teacher) entityManager.find(Teacher.class, personId);
     }
 
     @Override
+    @Transactional
     public List<Teacher> findAllTeacher() {
         logger.info("Find all teachers. ");
-        List<Teacher> teachers = HibernateSessionFactoryUtil.getSessionFactory()
-                                                            .openSession()
-                                                            .createQuery("From Teacher")
-                                                            .list();
-        return teachers;
+        return entityManager.createQuery("From Teacher").getResultList();
     }   
 }

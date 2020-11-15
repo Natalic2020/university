@@ -1,11 +1,16 @@
 package ua.com.foxminded.dao.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 
 @Entity
 @Table (name = "schedule_items", schema = "uni")
@@ -28,7 +33,8 @@ public class ScheduleItem {
     @JoinColumn(name = "id_room")
     private Room room;
     @ManyToOne
-    @JoinColumn(name = "id_person")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "id_person" )
     private Teacher teacher;
     
     public ScheduleItem() {

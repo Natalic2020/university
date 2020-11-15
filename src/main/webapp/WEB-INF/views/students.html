@@ -27,6 +27,8 @@
 						<th>Grant</th>
 						<th>Edit</th>
 						<th>Delete</th>
+						<th>Schedule month</th>
+						<th>Schedule day</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,11 +37,26 @@
 						<td th:text="${student.lastName}"></td>
 						<td th:text="${student.studyStatus}"></td>
 						<td th:text="${student.StartOfStudy}"></td>
-					<!--  	<td th:text="${#temporals.format(student.getStartOfStudy(), 'dd.MM.yyyy')}"></td> -->
 						<td th:text="${student.citizenship}"></td>
 						<td th:text="${student.grant}"></td>
-						<td><a th:href="@{/students/{uuid}(uuid=${student.idPerson})}">Edit</a>
-						<td><a th:href="@{/students/delete/{uuid}(uuid=${student.idPerson})}">Delete</a>
+						<td><a
+							th:href="@{/students/{uuid}(uuid=${student.idPerson})}">Edit</a>
+						<td><a
+							th:href="@{/students/delete/{uuid}(uuid=${student.idPerson})}">Delete</a>
+						<td><form
+							th:action="@{/schedule/student/{uuid}(uuid=${student.idPerson}, month=${month})}">
+						<button type="submit">Schedule</button>
+							    <select id="month" name="month">
+								<option th:each="month: ${months}"
+ 									th:value="${month}" th:text="${month}"></option>
+								</select>	 
+						</form>		
+						</td>
+						<td><form
+							th:action="@{/schedule/student/{uuid}(uuid=${student.idPerson}, day=${day})}">
+						<button type="submit">Schedule</button> 
+						 <input	type="date" id="day" name="day"/> 	
+						 </form>
 					</tr>
 				</tbody>
 			</table>

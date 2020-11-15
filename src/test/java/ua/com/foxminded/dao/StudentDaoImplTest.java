@@ -141,7 +141,7 @@ class StudentDaoImplTest {
     @DependsOn({ "editStudent_shouldReturnStudent_whenEditStudent" })
     void deleteStudent_shouldReturnEmpty_whenDeleteStudent() {
         int expected = studentDao.findAllStudent().size();
-        studentDao.deleteStudent(personUUID);
+        studentDao.deleteStudent((Student) new Student().setIdPerson(personUUID));
         int actual = studentDao.findAllStudent().size();
         assertEquals(expected - 1, actual);
     }

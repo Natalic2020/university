@@ -37,25 +37,32 @@ public class ScheduleController {
 
     @GetMapping("/student/{uuid}")
     public ModelAndView showScheduleStudent(@PathVariable("uuid") String uuid,
-            @RequestParam(required = false) String month) {
+            @RequestParam(required = false) String month, @RequestParam(required = false) String day) {
 
         StudentDto studentDto = studentService.findStudent(UUID.fromString(uuid));
-
         String typPerson = "student";
         String firstName = studentDto.getFirstName();
         String lastName = studentDto.getLastName();
-
+        
+        boolean isMonthEmpty = (month == null || month == "");
+        boolean isDayEmpty = (day == null || day == "");
+        
         ModelAndView scheduleMV;
-        if (month == null) {
+        if (isMonthEmpty && isDayEmpty ) {
             List<ScheduleItemDto> scheduleWeek = scheduleService.findWeekScheduleStudent(UUID.fromString(uuid));
             scheduleMV = new ModelAndView("scheduleWeek");
             scheduleMV.addObject("schedule", scheduleWeek);
-        } else {
+        } else if (isDayEmpty) {
             LocalDate date = LocalDate.of(LocalDate.now().getYear(), Month.valueOf(month.toUpperCase()), 1);
             Map<String, List<ScheduleItemDto>> scheduleMonth = scheduleService.findMonthScheduleStudent(
                     UUID.fromString(uuid), date);
             scheduleMV = new ModelAndView("scheduleMonth");
             scheduleMV.addObject("scheduleMonth", scheduleMonth);
+        } else {
+            LocalDate date = LocalDate.parse(day);
+            List<ScheduleItemDto> scheduleDay = scheduleService.findDayScheduleStudent(UUID.fromString(uuid), date);
+            scheduleMV = new ModelAndView("scheduleWeek");
+            scheduleMV.addObject("schedule", scheduleDay);
         }
 
         scheduleMV.addObject("typPerson", typPerson);
@@ -65,25 +72,34 @@ public class ScheduleController {
         return scheduleMV;
     }
 
+
     @GetMapping("/teacher/{uuid}")
     public ModelAndView showScheduleTeacher(@PathVariable("uuid") String uuid,
-            @RequestParam(required = false) String month) {
+            @RequestParam(required = false) String month, @RequestParam(required = false) String day) {
         TeacherDto teachertDto = teacherService.findTeacher(UUID.fromString(uuid));
         String typPerson = "teacher";
         String firstName = teachertDto.getFirstName();
         String lastName = teachertDto.getLastName();
 
+        boolean isMonthEmpty = (month == null || month == "");
+        boolean isDayEmpty = (day == null || day == "");
+        
         ModelAndView scheduleMV;
-        if (month == null) {
+        if (isMonthEmpty && isDayEmpty) {
             List<ScheduleItemDto> scheduleWeek = scheduleService.findWeekScheduleTeacher(UUID.fromString(uuid));
             scheduleMV = new ModelAndView("scheduleWeek");
             scheduleMV.addObject("schedule", scheduleWeek);
-        } else {
+        } else if (isDayEmpty) {
             LocalDate date = LocalDate.of(LocalDate.now().getYear(), Month.valueOf(month.toUpperCase()), 1);
             Map<String, List<ScheduleItemDto>> scheduleMonth = scheduleService.findMonthScheduleTeacher(
                     UUID.fromString(uuid), date);
             scheduleMV = new ModelAndView("scheduleMonth");
             scheduleMV.addObject("scheduleMonth", scheduleMonth);
+          } else {
+            LocalDate date = LocalDate.parse(day);
+            List<ScheduleItemDto> scheduleDay = scheduleService.findDayScheduleTeacher(UUID.fromString(uuid), date);
+            scheduleMV = new ModelAndView("scheduleWeek");
+            scheduleMV.addObject("schedule", scheduleDay);
         }
 
         scheduleMV.addObject("typPerson", typPerson);
