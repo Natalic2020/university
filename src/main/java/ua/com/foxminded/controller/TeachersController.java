@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ua.com.foxminded.model.dto.TeacherDto;
+import ua.com.foxminded.model.enums.Month;
 import ua.com.foxminded.service.interfaces.TeacherService;
 
 @Controller
@@ -31,19 +32,7 @@ public class TeachersController {
         ModelAndView teacherMV = new ModelAndView("teachers");
         teacherMV.addObject("teachers", teachers);
         
-        List<String> months = new ArrayList<>();
-        months.add("January");
-        months.add("February");
-        months.add("March");
-        months.add("April");
-        months.add("May");
-        months.add("June");
-        months.add("July");
-        months.add("August");
-        months.add("September");
-        months.add("October");
-        months.add("November");
-        months.add("December");
+        List<String> months = Month.getAllMonths();
         
         teacherMV.addObject("months", months);
         return teacherMV;   

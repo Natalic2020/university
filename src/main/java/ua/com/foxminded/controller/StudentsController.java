@@ -3,6 +3,8 @@ package ua.com.foxminded.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ua.com.foxminded.model.dto.StudentDto;
+import ua.com.foxminded.model.enums.Month;
 import ua.com.foxminded.service.interfaces.StudentService;
 
 @Controller
@@ -31,19 +34,7 @@ public class StudentsController {
 
         ModelAndView studentMV = new ModelAndView("students");
         studentMV.addObject("students", students);
-        List<String> months = new ArrayList<>();
-        months.add("January");
-        months.add("February");
-        months.add("March");
-        months.add("April");
-        months.add("May");
-        months.add("June");
-        months.add("July");
-        months.add("August");
-        months.add("September");
-        months.add("October");
-        months.add("November");
-        months.add("December");
+        List<String> months = Month.getAllMonths();
         
         studentMV.addObject("months", months);
         return studentMV;
