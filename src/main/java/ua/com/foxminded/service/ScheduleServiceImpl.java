@@ -2,6 +2,7 @@ package ua.com.foxminded.service;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.ScheduleItemConverter;
+import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.dao.interfaces.StudentDao;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
@@ -22,11 +24,11 @@ import ua.com.foxminded.service.interfaces.ScheduleService;
 public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
-    @Qualifier("scheduleItemDaoHim")
+    @Qualifier("scheduleItemDao")
     ScheduleItemDao scheduleItemDao;
 
     @Autowired
-    @Qualifier("studentDaoHim")
+    @Qualifier("studentDao")
     StudentDao studentDao;
 
     @Autowired
@@ -34,12 +36,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleStudent(UUID id) {
-        String idGroup = studentDao.findStudent(id.toString()).getGroup().getId().toString();
-        return scheduleItemDao.findWeekScheduleStudent(idGroup)
-                              .stream()
-                              .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
-                              .collect(Collectors.toList());
-    }
+        String idGroup = studentDao.findById(id.toString()).orElse(new Student()).getGroup().getId().toString();
+        List<ScheduleItemDto> schedule = new ArrayList<>();
+        scheduleItemDao.findByGroupIdGroup(idGroup.toString()).forEach(sch -> {
+            schedule.add(scheduleItemConverter.convertEntityToDto(sch));
+        });
+        return schedule;
+      }
 
     @Override
     public List<ScheduleItemDto> findDayScheduleStudent(UUID id, LocalDate date) {
@@ -74,12 +77,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleItemDto> findWeekScheduleTeacher(UUID id) {
-        return scheduleItemDao.findWeekScheduleTeacher(id.toString())
-                              .stream()
-                              .map(scheduleItem -> scheduleItemConverter.convertEntityToDto(scheduleItem))
-                              .collect(Collectors.toList());
+        List<ScheduleItemDto> schedule = new ArrayList<>();
+        scheduleItemDao.findByTeacherIdPerson(id.toString()).forEach(sch -> {
+            schedule.add(scheduleItemConverter.convertEntityToDto(sch));
+        });
+        return schedule;  
     }
-
+    
     @Override
     public Map<String, List<ScheduleItemDto>> findMonthScheduleTeacher(UUID id, LocalDate date) {
         List<ScheduleItemDto> ScheduleItems = findWeekScheduleTeacher(id);

@@ -21,7 +21,7 @@ import ua.com.foxminded.service.interfaces.StudentService;
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
-    @Qualifier("studentDaoHim")
+    @Qualifier("studentDao")
     StudentDao studentDao;
     
     @Autowired
@@ -29,30 +29,33 @@ public class StudentServiceImpl implements StudentService {
     
     @Override
     public void addStudent(StudentDto studentDto) {
-        studentDao.addStudent(studentConverter.convertDtoToEntity((StudentDto) studentDto
+        studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
+                .setIdStudent(UUID.randomUUID())
                 .setIdPerson(UUID.randomUUID())));
     }
 
     @Override
     public void editStudent(StudentDto studentDto) {
-        studentDao.editStudent(studentConverter.convertDtoToEntity(studentDto));
+        studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto));
     }
 
     @Override
     public void deleteStudent(UUID uuid) {
-        studentDao.deleteStudent(studentDao.findStudent(uuid.toString()));
+        studentDao.deleteById(uuid.toString());
     }
 
     @Override
     public StudentDto findStudent(UUID uuid) {
-        return studentConverter.convertEntityToDto(studentDao.findStudent(uuid.toString()));
+        return studentConverter.convertEntityToDto(studentDao.findById(uuid.toString()).orElse(new Student()));
     }
 
     @Override
     public List<StudentDto> findAllStudent() {
-        return studentDao.findAllStudent().stream()
-                .map(studentConverter::convertEntityToDto)
-                .collect(Collectors.toList());
+        List<StudentDto> students = new ArrayList<StudentDto>();
+        studentDao.findAll().forEach(student -> {
+            students.add(studentConverter.convertEntityToDto(student));
+        });
+        return students;
     }
     
   @Override

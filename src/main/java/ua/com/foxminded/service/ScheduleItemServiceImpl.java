@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.ScheduleItemConverter;
-import ua.com.foxminded.dao.ScheduleItemDaoHimImpl;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
 import ua.com.foxminded.service.interfaces.ScheduleItemService;
@@ -16,7 +15,7 @@ import ua.com.foxminded.service.interfaces.ScheduleItemService;
 public class ScheduleItemServiceImpl implements ScheduleItemService {
 
     @Autowired
-    @Qualifier("scheduleItemDaoHim")
+    @Qualifier("scheduleItemDao")
     ScheduleItemDao scheduleItemDao;
 
     @Autowired
@@ -24,22 +23,16 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
 
     @Override
     public void addScheduleItem(ScheduleItemDto scheduleItemDto) {
-        scheduleItemDao
-                       .addScheduleItem(scheduleItemConverter
-                                                             .convertDtoToEntity(scheduleItemDto));
+        scheduleItemDao.save(scheduleItemConverter.convertDtoToEntity(scheduleItemDto));
     }
 
     @Override
     public void editScheduleItem(ScheduleItemDto scheduleItemDto) {
-        scheduleItemDao
-                       .editScheduleItem(scheduleItemConverter
-                                                              .convertDtoToEntity(scheduleItemDto));
-
+        scheduleItemDao.save(scheduleItemConverter.convertDtoToEntity(scheduleItemDto));
     }
 
     @Override
     public void deleteScheduleItem(UUID id) {
-        scheduleItemDao.deleteScheduleItem(id.toString());
+        scheduleItemDao.deleteById(id.toString());
     }
-
 }
