@@ -1,5 +1,6 @@
 package ua.com.foxminded.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ import ua.com.foxminded.service.interfaces.TeacherService;
 public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
-    @Qualifier("teacherDaoHim")
+    @Qualifier("teacherDao")
     TeacherDao teacherDao;
     
     @Autowired
@@ -28,30 +29,34 @@ public class TeacherServiceImpl implements TeacherService {
     
     @Override
     public void addTeacher(TeacherDto teacherDto) {
-        teacherDao.addTeacher(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto
+        teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto
+                .setIdTeacher(UUID.randomUUID())
                 .setIdPerson(UUID.randomUUID())));
     }
 
     @Override
     public void editTeacher(TeacherDto teacherDto) {
-        teacherDao.editTeacher(teacherConverter.convertDtoToEntity(teacherDto));
-    }
+        teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto ));
+     }
 
     @Override
     public void deleteTeacher(UUID uuid) {
-        teacherDao.deleteTeacher(teacherDao.findTeacher(uuid.toString()));
+        teacherDao.deleteById(uuid.toString());
     }
 
     @Override
     public TeacherDto findTeacher(UUID uuid) {
-        return teacherConverter.convertEntityToDto(teacherDao.findTeacher(uuid.toString()));
+        return teacherConverter.convertEntityToDto(teacherDao.findById(uuid.toString()).orElse(new Teacher()));
 
     }
 
     @Override
     public List<TeacherDto> findAllTeacher() {
-        return teacherDao.findAllTeacher().stream()
-                .map(teacherConverter::convertEntityToDto)
-                .collect(Collectors.toList());
+        List<TeacherDto> teachers = new ArrayList<TeacherDto>();
+        teacherDao.findAll().forEach(teacher -> {
+            teachers.add(teacherConverter.convertEntityToDto(teacher));
+        });
+        return teachers;   
     }
 }
+

@@ -1,15 +1,12 @@
 package ua.com.foxminded.dao.interfaces;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import ua.com.foxminded.dao.entity.Teacher;
+import ua.com.foxminded.dao.entity.Group;
 
 @Repository
-@Qualifier("teacherDao")
-public interface TeacherDao extends CrudRepository<Teacher, String>{
-
+@Qualifier("groupDao")
+public interface GroupDao extends CrudRepository<Group, String>{
 }
