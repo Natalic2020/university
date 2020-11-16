@@ -77,44 +77,4 @@ class ScheduleItemDaoImplTest {
                                                  .setTimeSlot(new TimeSlot().setSerialNumber(1));
 
     }
-
-//    @Test
-//    @Order(1)
-//    void addScheduleItem_shouldReturnScheduleItem_whenAddScheduleItem() {
-//        int expected = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
-//
-//        scheduleItemDao.addScheduleItem(scheduleItem);
-//        int actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
-//        assertEquals(expected + 1, actual);
-//    }
-//
-//
-//    @Test
-//    @Order(2)
-//    void findScheduleTeacher_shouldReturnEmpty_whenLookForNonExistentTeacher() {
-//
-//        List<Student> expected = new ArrayList<>();
-//
-//        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher("Chavan99");
-//        assertEquals(expected, actual);
-//    }
-//
-//    @Test
-//    @Order(4)
-//    void editScheduleItem_shouldReturnDayOfWeek_whenEditDayOfWeek() {
-//
-//        scheduleItemDao.editScheduleItem(scheduleItem.setDayOfWeek("MONDAY"));
-//        List<ScheduleItem> actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID);
-//        assertEquals("MONDAY", actual.get(0).getDayOfWeek());
-//    }
-//
-//    @Test
-//    @Order(5)
-//    void deleteScheduleItem_shouldReturnEmpty_whenDeleteScheduleItem() {
-//        int expected = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
-//        scheduleItemDao.deleteScheduleItem(scheduleItemUUID);
-//        int actual = scheduleItemDao.findWeekScheduleTeacher(teacherUUID).size();
-//        assertEquals(expected - 1, actual);
-//    }
-
 }
