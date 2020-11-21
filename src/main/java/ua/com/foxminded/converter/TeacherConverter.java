@@ -5,8 +5,10 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
+import ua.com.foxminded.dao.entity.ContactInfo;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Teacher;
+import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
@@ -31,6 +33,22 @@ public class TeacherConverter {
 
         teacher.setPermanent(teacherDto.isPermanent())
                .setSalary(teacherDto.getSalary());
+        
+        ContactInfoDto contactInfoDto = teacherDto.getContactInfo();
+        ContactInfo contactInfo = new ContactInfo()
+                .setIndex(contactInfoDto.getIndex())
+                .setCountry(contactInfoDto.getCountry())
+                .setCity(contactInfoDto.getCity())
+                .setStreet(contactInfoDto.getStreet())
+                .setHouse(contactInfoDto.getHouse())
+                .setApartment(contactInfoDto.getApartment())
+                .setPhone1(contactInfoDto.getPhone1())
+                .setPhone2(contactInfoDto.getPhone2())
+                .setEmail(contactInfoDto.getEmail())
+                .setId(Optional.of(contactInfoDto.getId())
+                        .orElse(UUID.randomUUID()).toString());    
+        contactInfo.setPerson(teacher);
+        teacher.setContactInfo(contactInfo);
         return teacher;
     }
 
@@ -45,7 +63,24 @@ public class TeacherConverter {
         Optional.ofNullable(teacher.getDegree())
         .ifPresent(ss -> teacherDto.setDegree(Degree.valueOf(ss))); 
         Optional.ofNullable(teacher.getDepartment())
-        .ifPresent(ss -> teacherDto.setDepartment(Department.valueOf(ss)));     
+        .ifPresent(ss -> teacherDto.setDepartment(Department.valueOf(ss))); 
+        
+        ContactInfo contactInfo = teacher.getContactInfo();
+        ContactInfoDto contactInfoDto = new ContactInfoDto();
+        if (contactInfo != null) {
+            contactInfoDto
+                    .setIndex(contactInfo.getIndex())
+                    .setCountry(contactInfo.getCountry())
+                    .setCity(contactInfo.getCity())
+                    .setStreet(contactInfo.getStreet())
+                    .setHouse(contactInfo.getHouse())
+                    .setApartment(contactInfo.getApartment())
+                    .setPhone1(contactInfo.getPhone1())
+                    .setPhone2(contactInfo.getPhone2())
+                    .setEmail(contactInfo.getEmail())
+                    .setId(UUID.fromString(contactInfo.getId()));    
+        }
+        teacherDto.setContactInfo(contactInfoDto);
         return teacherDto;
     }
 }

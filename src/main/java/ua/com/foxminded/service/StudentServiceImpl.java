@@ -2,6 +2,7 @@ package ua.com.foxminded.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
     
     @Override
     public void addStudent(StudentDto studentDto) {
+        studentDto.getContactInfo().setId(UUID.randomUUID());
         studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
                 .setIdStudent(UUID.randomUUID())
                 .setIdPerson(UUID.randomUUID())));
@@ -36,6 +38,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void editStudent(StudentDto studentDto) {
+        UUID idContactInfo = Optional.ofNullable(studentDto.getContactInfo().getId())
+                .map(s -> s).orElse(UUID.randomUUID());
+        studentDto.getContactInfo().setId(idContactInfo);
         studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto));
     }
 

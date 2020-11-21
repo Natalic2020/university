@@ -1,18 +1,42 @@
 package ua.com.foxminded.model.dto;
 
-import java.util.Locale;
+import java.util.UUID;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 public class ContactInfoDto {
 
-	private int index;
-	private String country;
-	private String city;
-	private String street;
-	private String house;
-	private int apartment;
-	private String phone1;
-	private String phone2;
-	private String email;
+    private UUID id;
+    @Positive
+    @Min(2)
+    private int index;
+    @NotBlank
+    private String country;
+    @NotBlank
+    private String city;
+    @NotBlank
+    private String street;
+    @NotBlank
+    private String house;
+    @Positive
+    private int apartment;
+    @NotBlank
+    @Pattern(regexp = "^\\+?(?:[0-9] ?){6,14}[0-9]$")
+    private String phone1;
+    @NotBlank
+    @Pattern(regexp = "^\\+?(?:[0-9] ?){6,14}[0-9]$")
+    private String phone2;
+    @NotBlank
+    @Email
+    private String email;
 	
     public ContactInfoDto() {
        
@@ -28,6 +52,15 @@ public class ContactInfoDto {
         this.phone1 = contactInfo.phone1;
         this.phone2 = contactInfo.phone2;
         this.email = contactInfo.email;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public ContactInfoDto setId(UUID id) {
+        this.id = id;
+        return this;
     }
 
     public int getIndex() {

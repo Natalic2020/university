@@ -21,6 +21,7 @@
 					<tr>
 						<th>First Name</th>
 						<th>Last Name</th>
+						<th>Group</th>
 						<th>Study status</th>
 						<th>Start of study</th>
 						<th>Citizenship</th>
@@ -35,6 +36,7 @@
 					<tr th:each="student : ${students}">
 						<td th:text="${student.firstName}"></td>
 						<td th:text="${student.lastName}"></td>
+						<td th:text="${student.groupName}"></td>
 						<td th:text="${student.studyStatus}"></td>
 						<td th:text="${student.StartOfStudy}"></td>
 						<td th:text="${student.citizenship}"></td>

@@ -2,12 +2,23 @@ package ua.com.foxminded.model.dto;
 
 import java.util.UUID;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public abstract class PersonDto {
 
-	private UUID idPerson;
-	private String firstName;
-	private String lastName;
-	private ContactInfoDto contactInfo;
+    private UUID idPerson;
+    @NotBlank
+    @Size(min=2, max=40)
+    private String firstName;
+    @NotBlank
+    @Size(min=2, max=40)
+    private String lastName;
+    @NotNull
+    @Valid
+    private ContactInfoDto contactInfo;
 	
     public PersonDto() {
         
@@ -16,7 +27,7 @@ public abstract class PersonDto {
     public PersonDto(PersonDto person) {
         this.firstName = person.firstName;
         this.lastName = person.lastName;
-        this.contactInfo = new ContactInfoDto(person.getContactInfo());
+        this.contactInfo = person.getContactInfo();
     }
 
     public UUID getIdPerson() {
