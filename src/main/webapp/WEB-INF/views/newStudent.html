@@ -23,15 +23,15 @@
 				<td><input type="text" th:field="*{lastName}" id="lastName"/></td>
 				<td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
 	     	</tr>
-	     	<tr>
+	       	<tr>
 				<td><label for="Group">Group: </label></td>
-				<td><select id="idGroup" th:field="*{idGroup}">     
+				<td><select id="nameGroup" th:field="*{group.name}">     
 			    		<option
 							th:each="group : ${groups}"
-							th:value="${group.id}" th:text="${group.name}">
+							th:value="${group.name}" th:text="${group.name}">
 						</option>
 			   	</select></td>
-	     	</tr>
+	     	</tr> 
 			<tr>
 				<td><label	for="studyStatus">Study status: </label></td>
 			  	<td><select id="studyStatus" th:field="*{studyStatus}">   

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.converter.GroupConverter;
 import ua.com.foxminded.converter.TeacherConverter;
+import ua.com.foxminded.dao.entity.Group;
 import ua.com.foxminded.dao.interfaces.GroupDao;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
 import ua.com.foxminded.model.dto.GroupDto;
@@ -28,36 +29,25 @@ public class GroupServiceImpl implements GroupService{
     GroupConverter groupConverter;
     
     @Override
-    public void addGroup(GroupDto group) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void editGroup(GroupDto group) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deleteGroup(UUID uuid) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public GroupDto findGroup(UUID uuid) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public List<GroupDto> findAllGroups() {
         List<GroupDto> groups = new ArrayList<>();
         groupDao.findAll().forEach(group -> {
             groups.add(groupConverter.convertEntityToDto(group));
         });
         return groups;   
+    }
+    
+    @Override
+    public GroupDto findGroupByName(String name) {
+        GroupDto group = new GroupDto();
+        if (name == null || name.isEmpty()) {
+            return group; 
+        }
+        List<Group> groups = groupDao.findGroupByName(name);
+        if (groups.size() > 0) {
+         group = groupConverter.convertEntityToDto(groups.get(0));
+        }
+        return group;   
     }
 }
 

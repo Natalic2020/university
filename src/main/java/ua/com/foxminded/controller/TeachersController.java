@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,8 @@ public class TeachersController {
     
     @Autowired
     TeacherService teacherService;
+    
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
     
     @GetMapping()
     public ModelAndView findAllTeachers() {
@@ -68,7 +72,7 @@ public class TeachersController {
     public ModelAndView createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacher, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            System.out.println("BINDING RESuLT ERROR");
+            logger.info("BINDING RESuLT ERROR");
             ModelAndView teacherMV = new ModelAndView("newTeacher");
             return teacherMV;
         }   
@@ -81,7 +85,7 @@ public class TeachersController {
     @PostMapping("/edit")
     public ModelAndView editTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacher, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println("BINDING RESuLT ERROR");
+            logger.info("BINDING RESuLT ERROR");
             ModelAndView teacherMV = new ModelAndView("editTeacher");
             return teacherMV;
         }   

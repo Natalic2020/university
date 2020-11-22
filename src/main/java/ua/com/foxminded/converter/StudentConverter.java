@@ -10,6 +10,7 @@ import ua.com.foxminded.dao.entity.Group;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.model.dto.ContactInfoDto;
+import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.enums.StudyStatus;
 
@@ -18,9 +19,10 @@ public class StudentConverter {
    
     public Student convertDtoToEntity(StudentDto studentDto) {    
         
-        Student student = new Student()
-                .setGroup(new Group().setId(studentDto.getIdGroup().toString())
-                        .setName(studentDto.getGroupName()));
+        Student student = new Student();
+        Optional.ofNullable(studentDto.getGroup())  
+        .ifPresent(gr -> student.setGroup(new Group().setId(gr.getId().toString())
+                .setName(gr.getName())));
         Optional.ofNullable(studentDto.getIdPerson())
         .ifPresent(ss -> student.setIdPerson(ss.toString()));        
          student.setFirstName(studentDto.getFirstName())
@@ -63,8 +65,8 @@ public class StudentConverter {
         .ifPresent(ss -> studentDto.setStudyStatus(StudyStatus.valueOf(ss)));  
         
         Optional.ofNullable(student.getGroup())
-        .ifPresent(ss -> studentDto.setIdGroup(UUID.fromString(ss.getId()))
-                .setGroupName(ss.getName()));
+        .ifPresent(gr -> studentDto.setGroup(new GroupDto().setId(UUID.fromString(gr.getId()))
+                .setName(gr.getName())));
         
         ContactInfo contactInfo = student.getContactInfo();
         ContactInfoDto contactInfoDto = new ContactInfoDto();

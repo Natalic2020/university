@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -39,6 +41,8 @@ public class StudentsController {
     @Autowired
     GroupService groupService;
 
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
+    
     @GetMapping()
     public ModelAndView findAllStudent() {
 
@@ -67,7 +71,7 @@ public class StudentsController {
     public ModelAndView createStudent(@ModelAttribute("student") @Valid StudentDto student,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println("BINDING RESuLT ERROR");
+            logger.info("BINDING RESuLT ERROR");
             ModelAndView studentMV = new ModelAndView("newStudent");
             List<GroupDto> groups = groupService.findAllGroups();
             studentMV.addObject("groups", groups);
@@ -88,14 +92,13 @@ public class StudentsController {
         
         List<GroupDto> groups = groupService.findAllGroups();
         studentMV.addObject("groups", groups);
-
         return studentMV;
     }
 
     @PostMapping("/edit")
     public ModelAndView editStudent(@ModelAttribute("student") @Valid StudentDto student, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println("BINDING RESuLT ERROR");
+            logger.info("BINDING RESuLT ERROR");
             ModelAndView studentMV = new ModelAndView("editStudent");
             studentMV.addObject("student", student);
             List<GroupDto> groups = groupService.findAllGroups();

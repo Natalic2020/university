@@ -36,7 +36,7 @@
 					<tr th:each="student : ${students}">
 						<td th:text="${student.firstName}"></td>
 						<td th:text="${student.lastName}"></td>
-						<td th:text="${student.groupName}"></td>
+						<td th:text="${student.group.name}"></td>
 						<td th:text="${student.studyStatus}"></td>
 						<td th:text="${student.StartOfStudy}"></td>
 						<td th:text="${student.citizenship}"></td>

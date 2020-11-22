@@ -27,7 +27,7 @@ public abstract class PersonDto {
     public PersonDto(PersonDto person) {
         this.firstName = person.firstName;
         this.lastName = person.lastName;
-        this.contactInfo = person.getContactInfo();
+        this.contactInfo = new ContactInfoDto(person.getContactInfo());
     }
 
     public UUID getIdPerson() {

@@ -25,10 +25,10 @@
 	     	</tr>
 	     	<tr>
 				<td><label for="Group">Group: </label></td>
-				<td><select id="idGroup" th:field="*{idGroup}">     
+				<td><select id="nameGroup" th:field="*{group.name}">     
 			    		<option
 							th:each="group : ${groups}"
-							th:value="${group.id}" th:text="${group.name}">
+							th:value="${group.name}" th:text="${group.name}">
 						</option>
 			   	</select></td>
 	     	</tr>

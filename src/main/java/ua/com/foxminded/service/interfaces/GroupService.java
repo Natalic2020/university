@@ -6,9 +6,6 @@ import java.util.UUID;
 import ua.com.foxminded.model.dto.GroupDto;
 
 public interface GroupService {
-    public void addGroup(GroupDto group);
-    public void editGroup(GroupDto group);
-    public void deleteGroup(UUID uuid);
-    public GroupDto findGroup(UUID uuid);
-    public List<GroupDto> findAllGroups(); 
+    public List<GroupDto> findAllGroups();
+    public GroupDto findGroupByName(String name); 
 }

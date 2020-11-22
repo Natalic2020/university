@@ -11,6 +11,7 @@ import javax.validation.constraints.PositiveOrZero;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import ua.com.foxminded.model.enums.StudyStatus;
+import ua.com.foxminded.model.validation.NotPastDate;
 
 public class StudentDto extends PersonDto {
 
@@ -19,13 +20,13 @@ public class StudentDto extends PersonDto {
     private StudyStatus studyStatus;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
+    @NotPastDate
     private LocalDate startOfStudy;
     @NotBlank
     private String citizenship;
     @PositiveOrZero
     private BigDecimal grant;
-    private UUID idGroup;
-    private String groupName;
+    private GroupDto group;
     
     public StudentDto() {
     }
@@ -41,21 +42,12 @@ public class StudentDto extends PersonDto {
         this.grant = BigDecimal.valueOf(student.getGrant().longValue());
     }
 
-    public UUID getIdGroup() {
-        return idGroup;
+    public GroupDto getGroup() {
+        return group;
     }
 
-    public StudentDto setIdGroup(UUID idGroup) {
-        this.idGroup = idGroup;
-        return this;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public StudentDto setGroupName(String groupName) {
-        this.groupName = groupName;
+    public StudentDto setGroup(GroupDto group) {
+        this.group = group;
         return this;
     }
 

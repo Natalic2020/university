@@ -38,9 +38,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void editTeacher(TeacherDto teacherDto) {
-        UUID idContactInfo = Optional.ofNullable(teacherDto.getContactInfo().getId())
-                .map(s -> s).orElse(UUID.randomUUID());
-        teacherDto.getContactInfo().setId(idContactInfo);
         teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto ));
      }
 

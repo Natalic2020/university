@@ -1,27 +1,25 @@
-package ua.com.foxminded.model.enums;
+package ua.com.foxminded.model.validation;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ FIELD })
+@Target({ ElementType.FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = CheckDegreeValidator.class)
+@Constraint(validatedBy = CheckNotPastDateValidator.class)
 @Documented
-public @interface CheckDegree {
+public @interface NotPastDate {
 
-    String message() default "{ua.com.foxminded.constraints.CheckDegree}";
+    String message() default "{ua.com.foxminded.constraints.NotPastDate}";
 
     Class<?>[] groups() default {};
-
+    
     Class<? extends Payload>[] payload() default {};
-    
-    String value();
-    
 }
