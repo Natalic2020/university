@@ -1,12 +1,18 @@
 package ua.com.foxminded.controller;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +27,15 @@ import ua.com.foxminded.service.interfaces.TeacherService;
 @RequestMapping("/teachers")
 public class TeachersController {
     
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+    
     @Autowired
     TeacherService teacherService;
+    
+    Logger logger = LoggerFactory.getLogger("SampleLogger");
     
     @GetMapping()
     public ModelAndView findAllTeachers() {
@@ -56,8 +69,17 @@ public class TeachersController {
     }
     
     @PostMapping()
-    public ModelAndView createTeacher(@ModelAttribute("teacher") TeacherDto teacher) {
+    public ModelAndView createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacher, BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+            logger.info("BINDING RESuLT ERROR");
+            bindingResult.getFieldErrors().forEach(error ->
+            {
+                logger.info(error.getField() + " " + error.getDefaultMessage());
+            });
+            ModelAndView teacherMV = new ModelAndView("newTeacher");
+            return teacherMV;
+        }   
         teacherService.addTeacher(teacher);
         ModelAndView teacherMV = new ModelAndView("redirect:/teachers");
  
@@ -65,8 +87,16 @@ public class TeachersController {
     }
     
     @PostMapping("/edit")
-    public ModelAndView editTeacher(@ModelAttribute("teacher") TeacherDto teacher) {
-
+    public ModelAndView editTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacher, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.info("BINDING RESuLT ERROR");
+            bindingResult.getFieldErrors().forEach(error ->
+            {
+                logger.info(error.getField() + " " + error.getDefaultMessage());
+            });
+            ModelAndView teacherMV = new ModelAndView("editTeacher");
+            return teacherMV;
+        }   
         teacherService.editTeacher(teacher);
         ModelAndView teacherMV = new ModelAndView("redirect:/teachers");
  

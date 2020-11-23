@@ -129,7 +129,8 @@ public class ContactInfo {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public ContactInfo setPerson(Person person) {
         this.person = person;
+        return this;
     } 
 }

@@ -2,6 +2,7 @@ package ua.com.foxminded.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -10,10 +11,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import ua.com.foxminded.converter.GroupConverter;
 import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.entity.Student;
+import ua.com.foxminded.dao.interfaces.GroupDao;
 import ua.com.foxminded.dao.interfaces.StudentDao;
+import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.StudentDto;
+import ua.com.foxminded.service.interfaces.GroupService;
 import ua.com.foxminded.service.interfaces.StudentService;
 
 @Service("studentService")
@@ -25,18 +30,37 @@ public class StudentServiceImpl implements StudentService {
     StudentDao studentDao;
     
     @Autowired
+    @Qualifier("groupDao")
+    GroupDao groupDao;
+    
+    @Autowired
     StudentConverter studentConverter;
+    
+    @Autowired
+    GroupConverter groupConverter;
+    
+    @Autowired
+    GroupService groupService;
     
     @Override
     public void addStudent(StudentDto studentDto) {
+        String groupName = Optional.ofNullable(studentDto.getGroup())
+                .map(gr -> gr.getName())
+                .orElse("");
+        GroupDto groupDto = groupService.findGroupByName(groupName);
         studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
-                .setIdStudent(UUID.randomUUID())
+                .setGroup(groupDto)
                 .setIdPerson(UUID.randomUUID())));
     }
 
     @Override
     public void editStudent(StudentDto studentDto) {
-        studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto));
+        String groupName = Optional.ofNullable(studentDto.getGroup())
+                .map(gr -> gr.getName())
+                .orElse("");
+        GroupDto groupDto = groupService.findGroupByName(groupName);
+        studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
+                .setGroup(groupDto)));
     }
 
     @Override

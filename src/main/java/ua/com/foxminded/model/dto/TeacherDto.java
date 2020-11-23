@@ -3,15 +3,21 @@ package ua.com.foxminded.model.dto;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
 import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
+import ua.com.foxminded.model.validation.NotPastDate;
 
 public class TeacherDto extends PersonDto{
     
     private UUID idTeacher;
     private Degree degree;
+    @NotNull
     private Department department;
     private boolean permanent;
+    @PositiveOrZero
     private BigDecimal salary;
    
     public TeacherDto() {

@@ -2,28 +2,33 @@ package ua.com.foxminded.model.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.UUID;
 
-import javax.persistence.Basic;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import ua.com.foxminded.model.enums.StudyStatus;
+import ua.com.foxminded.model.validation.NotPastDate;
 
 public class StudentDto extends PersonDto {
 
     private UUID idStudent;
+    @NotNull
     private StudyStatus studyStatus;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    @NotPastDate
     private LocalDate startOfStudy;
+    @NotBlank
     private String citizenship;
+    @PositiveOrZero
     private BigDecimal grant;
-
+    private GroupDto group;
+    
     public StudentDto() {
-
     }
 
     public StudentDto(StudentDto student) {
@@ -35,6 +40,15 @@ public class StudentDto extends PersonDto {
                 student.getStartOfStudy().getDayOfMonth()) ;
         this.citizenship = student.citizenship;
         this.grant = BigDecimal.valueOf(student.getGrant().longValue());
+    }
+
+    public GroupDto getGroup() {
+        return group;
+    }
+
+    public StudentDto setGroup(GroupDto group) {
+        this.group = group;
+        return this;
     }
 
     public UUID getIdStudent() {
