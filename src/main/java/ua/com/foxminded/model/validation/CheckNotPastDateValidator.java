@@ -16,6 +16,10 @@ public class CheckNotPastDateValidator implements ConstraintValidator<NotPastDat
     @Override
     public boolean isValid(LocalDate date, ConstraintValidatorContext context) {
 
+        if (date == null) {
+            return true;
+        }
+        
         LocalDate today = LocalDate.now();
        
         logger.info("today :" + today); 

@@ -72,6 +72,11 @@ public class StudentsController {
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.info("BINDING RESuLT ERROR");
+            bindingResult.getFieldErrors().forEach(error ->
+            {
+                logger.info(error.getField() + " " + error.getDefaultMessage());
+            });
+           
             ModelAndView studentMV = new ModelAndView("newStudent");
             List<GroupDto> groups = groupService.findAllGroups();
             studentMV.addObject("groups", groups);
@@ -99,6 +104,10 @@ public class StudentsController {
     public ModelAndView editStudent(@ModelAttribute("student") @Valid StudentDto student, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.info("BINDING RESuLT ERROR");
+            bindingResult.getFieldErrors().forEach(error ->
+            {
+                logger.info(error.getField() + " " + error.getDefaultMessage());
+            });
             ModelAndView studentMV = new ModelAndView("editStudent");
             studentMV.addObject("student", student);
             List<GroupDto> groups = groupService.findAllGroups();

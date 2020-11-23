@@ -73,6 +73,10 @@ public class TeachersController {
 
         if (bindingResult.hasErrors()) {
             logger.info("BINDING RESuLT ERROR");
+            bindingResult.getFieldErrors().forEach(error ->
+            {
+                logger.info(error.getField() + " " + error.getDefaultMessage());
+            });
             ModelAndView teacherMV = new ModelAndView("newTeacher");
             return teacherMV;
         }   
@@ -86,6 +90,10 @@ public class TeachersController {
     public ModelAndView editTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacher, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.info("BINDING RESuLT ERROR");
+            bindingResult.getFieldErrors().forEach(error ->
+            {
+                logger.info(error.getField() + " " + error.getDefaultMessage());
+            });
             ModelAndView teacherMV = new ModelAndView("editTeacher");
             return teacherMV;
         }   

@@ -1,9 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import ua.com.foxminded.dao.TablesInitializer;
-import ua.com.foxminded.util.DbCreat;
+import ua.com.foxminded.dao.DatebaseCreator;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -25,8 +19,8 @@ import ua.com.foxminded.util.DbCreat;
 public class Application extends SpringBootServletInitializer{
     
     public static void main(String[] args) {     
-        TablesInitializer tablesInitializer = new TablesInitializer();
-        tablesInitializer.createDB();
+        DatebaseCreator datebaseCreator = new DatebaseCreator();
+        datebaseCreator.createDatabase();
         SpringApplication.run(Application.class, args);
     }
 }
