@@ -16,6 +16,7 @@ import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.GroupDao;
 import ua.com.foxminded.dao.interfaces.StudentDao;
+import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.service.interfaces.GroupService;
@@ -47,6 +48,8 @@ public class StudentServiceImpl implements StudentService {
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
+       studentDto.getContactInfo().setId(UUID.randomUUID());
+        
         GroupDto groupDto = groupService.findGroupByName(groupName);
         studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
                 .setGroup(groupDto)
@@ -54,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void editStudent(StudentDto studentDto) {
+    public void editStudent(StudentDto studentDto, UUID uuid) {
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");

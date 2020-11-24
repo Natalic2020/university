@@ -44,8 +44,8 @@ public class StudentConverter {
                 .setPhone1(contactInfoDto.getPhone1())
                 .setPhone2(contactInfoDto.getPhone2())
                 .setEmail(contactInfoDto.getEmail())
-                .setId(Optional.of(contactInfoDto.getId())
-                        .orElse(UUID.randomUUID()).toString());    
+                .setId(contactInfoDto.getId().toString());
+               
         contactInfo.setPerson(student);
         student.setContactInfo(contactInfo);
       return   student;
