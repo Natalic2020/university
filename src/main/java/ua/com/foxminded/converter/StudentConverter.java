@@ -53,8 +53,11 @@ public class StudentConverter {
     }
 
     public StudentDto convertEntityToDto(Student student) {
-        StudentDto  studentDto = 
-        ((StudentDto) new StudentDto()
+        StudentDto  studentDto = new StudentDto();
+        if (student.getIdPerson() == null) {
+            return studentDto;
+        }
+        ((StudentDto) studentDto
                 .setIdPerson(UUID.fromString(student.getIdPerson()))
                 .setFirstName(student.getFirstName())
                 .setLastName(student.getLastName()))  

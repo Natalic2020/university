@@ -97,7 +97,7 @@ public class TeachersController {
             ModelAndView teacherMV = new ModelAndView("editTeacher");
             return teacherMV;
         }   
-        teacherService.editTeacher(teacher);
+        teacherService.editTeacher(teacher, teacher.getIdPerson());
         ModelAndView teacherMV = new ModelAndView("redirect:/teachers");
  
         return teacherMV;
