@@ -55,7 +55,8 @@ public class StudentsRestController  {
 
         return students != null &&  !students.isEmpty()
                 ? new ResponseEntity(students, HttpStatus.OK)
-                        : new ResponseEntity(HttpStatus.NOT_FOUND);
+                        : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not found Students "),
+                                HttpStatus.NOT_FOUND);
     }
 
 
@@ -72,7 +73,7 @@ public class StudentsRestController  {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
     
-        return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not create Student "),
+        return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not create Student "),
                 HttpStatus.NOT_FOUND); 
     }
 
@@ -83,9 +84,10 @@ public class StudentsRestController  {
         
         StudentDto student = studentService.findStudent(UUID.fromString(uuid));
         
-        return student != null
+        return (student != null && student.getIdPerson()!=null)
                 ? new ResponseEntity<>(student, HttpStatus.OK)
-                        : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                        : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not found Student "),
+                                HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(value = "/student/{uuid}" ,
@@ -100,8 +102,9 @@ public class StudentsRestController  {
         }
         
         StudentDto studentCheck = studentService.findStudent(UUID.fromString(uuid));
-        if (studentCheck.getIdPerson()==null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not find Student with id  " + uuid), HttpStatus.NOT_FOUND); 
+        if (studentCheck.getIdPerson() == null) {
+            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find Student with id  " + uuid),
+                    HttpStatus.NOT_FOUND);
         }
              
         studentService.editStudent(student, UUID.fromString(uuid));
@@ -115,12 +118,14 @@ public class StudentsRestController  {
         
         StudentDto studentCheck = studentService.findStudent(UUID.fromString(uuid));
         if (studentCheck.getIdPerson() == null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not find Student with id  " + uuid), HttpStatus.NOT_FOUND); 
+            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find Student with id  " + uuid),
+                    HttpStatus.NOT_FOUND); 
         }
         studentService.deleteStudent(UUID.fromString(uuid));
         studentCheck = studentService.findStudent(UUID.fromString(uuid));
         if (studentCheck.getIdPerson() != null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_MODIFIED, "Do not delete Student with id  " + uuid), HttpStatus.NOT_MODIFIED); 
+            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Do not delete Student with id  " + uuid),
+                    HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

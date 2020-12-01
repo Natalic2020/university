@@ -46,7 +46,8 @@ public class ScheduleRestController {
         
         StudentDto studentCheck = studentService.findStudent(UUID.fromString(uuid));
         if (studentCheck.getIdPerson()==null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not find Student with id  " + uuid), HttpStatus.NOT_FOUND); 
+            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find Student with id  " + uuid),
+                    HttpStatus.NOT_FOUND); 
         }
         boolean isMonthEmpty = (month == null || month == "");
         boolean isDayEmpty = (day == null || day == "");
@@ -68,7 +69,8 @@ public class ScheduleRestController {
           
         return schedule != null &&  !schedule.isEmpty()
                 ? new ResponseEntity<>(schedule, HttpStatus.OK)
-                        : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                        : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find Student with id  " + uuid),
+                                HttpStatus.NOT_FOUND);
     }
     
 
@@ -80,7 +82,8 @@ public class ScheduleRestController {
 
         TeacherDto teacherCheck = teacherService.findTeacher(UUID.fromString(uuid));
         if (teacherCheck.getIdPerson()==null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not find teacher with id  " + uuid), HttpStatus.NOT_FOUND); 
+            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find teacher with id  " + uuid),
+                    HttpStatus.NOT_FOUND);
         }
         
         boolean isMonthEmpty = (month == null || month == "");
@@ -104,7 +107,8 @@ public class ScheduleRestController {
 
         return schedule != null &&  !schedule.isEmpty()
                 ? new ResponseEntity<>(schedule, HttpStatus.OK)
-                        : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                        : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find teacher with id  " + uuid),
+                                HttpStatus.NOT_FOUND);
     }
 }
 

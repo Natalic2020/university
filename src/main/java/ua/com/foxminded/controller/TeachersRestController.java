@@ -11,26 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import ua.com.foxminded.error.ErrorBilder;
 import ua.com.foxminded.error.ErrorDescriptor;
-import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
-import ua.com.foxminded.model.enums.Month;
 import ua.com.foxminded.service.interfaces.TeacherService;
 
 @RestController
@@ -54,7 +48,8 @@ public class TeachersRestController {
 
         return teachers != null && !teachers.isEmpty()
                 ? new ResponseEntity<>(teachers, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not found Teacher "),
+                        HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/teacher/{uuid}", 
@@ -63,9 +58,10 @@ public class TeachersRestController {
 
         TeacherDto teacher = teacherService.findTeacher(UUID.fromString(uuid));
         
-        return teacher != null
+        return (teacher != null && teacher.getIdPerson() != null)
                 ? new ResponseEntity<>(teacher, HttpStatus.OK)
-                        : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                        : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not found Teacher "),
+                                HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/teacher",
@@ -82,8 +78,8 @@ public class TeachersRestController {
            return new ResponseEntity<>(HttpStatus.CREATED);
        }
 
-       return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not create Teacher "),
-               HttpStatus.NOT_FOUND); 
+       return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not create Teacher "),
+               HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(value = "/teacher/{uuid}" ,
@@ -99,7 +95,8 @@ public class TeachersRestController {
         
         TeacherDto teacherCheck = teacherService.findTeacher(UUID.fromString(uuid));
         if (teacherCheck.getIdPerson()==null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not find teacher with id  " + uuid), HttpStatus.NOT_FOUND); 
+            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find teacher with id  " + uuid),
+                    HttpStatus.NOT_FOUND);
         }
         teacherService.editTeacher(teacher, UUID.fromString(uuid));
         
@@ -112,14 +109,16 @@ public class TeachersRestController {
         
         TeacherDto teacherCheck = teacherService.findTeacher(UUID.fromString(uuid));
         if (teacherCheck.getIdPerson()==null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_FOUND, "Not find teacher with id  " + uuid), HttpStatus.NOT_FOUND); 
+            return  new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find teacher with id  " + uuid),
+                    HttpStatus.NOT_FOUND);
         }
         
         teacherService.deleteTeacher(UUID.fromString(uuid));
 
          teacherCheck = teacherService.findTeacher(UUID.fromString(uuid));
         if (teacherCheck.getIdPerson()!=null) {
-            return new ResponseEntity(new ErrorDescriptor(HttpStatus.NOT_MODIFIED, "Do not delete with id  " + uuid), HttpStatus.NOT_MODIFIED); 
+            return  new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Do not delete with id  " + uuid),
+                    HttpStatus.NOT_FOUND);
         }
         
         return new ResponseEntity<>(HttpStatus.OK);
