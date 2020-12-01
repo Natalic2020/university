@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.com.foxminded.error.ErrorBilder;
 import ua.com.foxminded.error.ErrorDescriptor;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.service.interfaces.TeacherService;
@@ -71,7 +70,7 @@ public class TeachersRestController {
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return new ErrorBilder().fillErrors(bindingResult, "teacher");
+            return new ResponseEntity(new ErrorDescriptor(bindingResult, "teacher"), HttpStatus.BAD_REQUEST) ;
         }
         
        if (teacherService.addTeacher(teacher)) {
@@ -90,7 +89,7 @@ public class TeachersRestController {
             BindingResult bindingResult) {
         
         if (bindingResult.hasErrors()) {
-            return new ErrorBilder().fillErrors(bindingResult, "teacher");
+            return new ResponseEntity(new ErrorDescriptor(bindingResult, "teacher"), HttpStatus.BAD_REQUEST) ;
         }
         
         TeacherDto teacherCheck = teacherService.findTeacher(UUID.fromString(uuid));

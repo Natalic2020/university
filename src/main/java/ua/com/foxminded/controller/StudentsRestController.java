@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.com.foxminded.error.ErrorBilder;
 import ua.com.foxminded.error.ErrorDescriptor;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.service.interfaces.GroupService;
@@ -66,7 +65,7 @@ public class StudentsRestController  {
         public ResponseEntity createStudent(@Valid @RequestBody StudentDto student,
                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ErrorBilder().fillErrors(bindingResult, "student");
+            return new ResponseEntity(new ErrorDescriptor(bindingResult, "student"), HttpStatus.BAD_REQUEST) ;
         }
            
         if (studentService.addStudent(student)) {
@@ -98,7 +97,7 @@ public class StudentsRestController  {
             BindingResult bindingResult) {
         
         if (bindingResult.hasErrors()) {
-            return new ErrorBilder().fillErrors(bindingResult, "student");
+            return new ResponseEntity(new ErrorDescriptor(bindingResult, "student"), HttpStatus.BAD_REQUEST) ;
         }
         
         StudentDto studentCheck = studentService.findStudent(UUID.fromString(uuid));

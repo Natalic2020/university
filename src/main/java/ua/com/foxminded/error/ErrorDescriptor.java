@@ -3,7 +3,10 @@ package ua.com.foxminded.error;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -24,6 +27,19 @@ public class ErrorDescriptor {
         this.status = HttpStatus.BAD_REQUEST;
     }
 
+    public ErrorDescriptor(BindingResult bindingResult, String object) {
+        this();
+        bindingResult.getFieldErrors().forEach(error ->
+        {        
+            SubError subError = new SubError().setField(error.getField())
+                    .setMessage(error.getDefaultMessage())
+                    .setObject(object);
+            Optional.ofNullable(error.getRejectedValue())
+            .ifPresent(errorValue -> subError.setRejectedValue(errorValue.toString()));   
+            subErrors.add(subError);    
+        });     
+    }
+    
     public HttpStatus getStatus() {
         return status;
     }
