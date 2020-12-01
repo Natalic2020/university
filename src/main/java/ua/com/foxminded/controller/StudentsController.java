@@ -114,7 +114,7 @@ public class StudentsController {
             studentMV.addObject("groups", groups);
             return studentMV;
         }
-        studentService.editStudent(student);
+        studentService.editStudent(student, student.getIdPerson());
         ModelAndView studentMV = new ModelAndView("redirect:/students");
         
         

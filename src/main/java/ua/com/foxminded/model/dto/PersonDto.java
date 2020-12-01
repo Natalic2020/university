@@ -21,7 +21,6 @@ public abstract class PersonDto {
     private ContactInfoDto contactInfo;
 	
     public PersonDto() {
-        
     }
 
     public PersonDto(PersonDto person) {

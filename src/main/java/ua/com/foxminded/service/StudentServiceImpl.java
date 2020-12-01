@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,23 +42,26 @@ public class StudentServiceImpl implements StudentService {
     GroupService groupService;
     
     @Override
-    public void addStudent(StudentDto studentDto) {
+    public Boolean addStudent(StudentDto studentDto) {
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
+       studentDto.getContactInfo().setId(UUID.randomUUID());
+        
         GroupDto groupDto = groupService.findGroupByName(groupName);
         studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
                 .setGroup(groupDto)
                 .setIdPerson(UUID.randomUUID())));
+        return !findStudent(studentDto.getIdPerson()).equals(new StudentDto());
     }
 
     @Override
-    public void editStudent(StudentDto studentDto) {
+    public void editStudent(StudentDto studentDto, UUID uuid) {
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
         GroupDto groupDto = groupService.findGroupByName(groupName);
-        studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
+        studentDao.save(studentConverter.convertDtoToEntity(((StudentDto) studentDto.setIdPerson(uuid))
                 .setGroup(groupDto)));
     }
 

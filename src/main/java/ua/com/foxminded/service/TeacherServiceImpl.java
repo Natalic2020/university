@@ -2,9 +2,7 @@ package ua.com.foxminded.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ua.com.foxminded.converter.TeacherConverter;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
+import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.service.interfaces.TeacherService;
 
@@ -29,16 +28,17 @@ public class TeacherServiceImpl implements TeacherService {
     TeacherConverter teacherConverter;
     
     @Override
-    public void addTeacher(TeacherDto teacherDto) {
+    public Boolean addTeacher(TeacherDto teacherDto) {
         teacherDto.getContactInfo().setId(UUID.randomUUID());
         teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto
                 .setIdTeacher(UUID.randomUUID())
                 .setIdPerson(UUID.randomUUID())));
+        return !findTeacher(teacherDto.getIdPerson()).equals(new TeacherDto());
     }
 
     @Override
-    public void editTeacher(TeacherDto teacherDto) {
-        teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto ));
+    public void editTeacher(TeacherDto teacherDto, UUID uuid) {
+        teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto.setIdPerson(uuid)));
      }
 
     @Override

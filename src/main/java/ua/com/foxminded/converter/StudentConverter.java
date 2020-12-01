@@ -44,8 +44,8 @@ public class StudentConverter {
                 .setPhone1(contactInfoDto.getPhone1())
                 .setPhone2(contactInfoDto.getPhone2())
                 .setEmail(contactInfoDto.getEmail())
-                .setId(Optional.of(contactInfoDto.getId())
-                        .orElse(UUID.randomUUID()).toString());    
+                .setId(contactInfoDto.getId().toString());
+               
         contactInfo.setPerson(student);
         student.setContactInfo(contactInfo);
       return   student;
@@ -53,8 +53,11 @@ public class StudentConverter {
     }
 
     public StudentDto convertEntityToDto(Student student) {
-        StudentDto  studentDto = 
-        ((StudentDto) new StudentDto()
+        StudentDto  studentDto = new StudentDto();
+        if (student.getIdPerson() == null) {
+            return studentDto;
+        }
+        ((StudentDto) studentDto
                 .setIdPerson(UUID.fromString(student.getIdPerson()))
                 .setFirstName(student.getFirstName())
                 .setLastName(student.getLastName()))  
