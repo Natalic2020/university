@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import ua.com.foxminded.error.ErrorDescriptor;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.service.interfaces.GroupService;
@@ -46,6 +48,8 @@ public class StudentsRestController  {
 
     Logger logger = LoggerFactory.getLogger("SampleLogger");
     
+//    @ApiOperation("Get all Students")
+//    @ApiResponse(code = 200, message = "ok")
     @GetMapping(value = "/students",
             produces = {"application/json"})
     public ResponseEntity<List<StudentDto>> findAllStudent() {

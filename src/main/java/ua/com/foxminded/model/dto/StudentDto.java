@@ -10,9 +10,12 @@ import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import ua.com.foxminded.model.enums.StudyStatus;
 import ua.com.foxminded.model.validation.NotPastDate;
 
+@ApiModel("Student")
 public class StudentDto extends PersonDto {
 
     private UUID idStudent;
@@ -23,6 +26,7 @@ public class StudentDto extends PersonDto {
     @NotPastDate
     private LocalDate startOfStudy;
     @NotBlank
+    @ApiModelProperty(notes = "citizenship", required = true, example = "Ukraine")
     private String citizenship;
     @PositiveOrZero
     private BigDecimal grant;
