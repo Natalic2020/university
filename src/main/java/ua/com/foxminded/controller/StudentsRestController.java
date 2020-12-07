@@ -48,8 +48,6 @@ public class StudentsRestController  {
 
     Logger logger = LoggerFactory.getLogger("SampleLogger");
     
-//    @ApiOperation("Get all Students")
-//    @ApiResponse(code = 200, message = "ok")
     @GetMapping(value = "/students",
             produces = {"application/json"})
     public ResponseEntity<List<StudentDto>> findAllStudent() {
