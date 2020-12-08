@@ -112,7 +112,8 @@ public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
         scheduleItemDto.setSubject(
                 new SubjectDto().setName(scheduleItem.getSubject().getName()));
         scheduleItemDto.setTimeSlot(new TimeSlotDto().setSerialNumber(
-                scheduleItem.getTimeSlot().getSerialNumber()));
+                scheduleItem.getTimeSlot().getSerialNumber())
+                .setStartTime(scheduleItem.getTimeSlot().getStartTime()));
 
         return scheduleItemDto;
     }
