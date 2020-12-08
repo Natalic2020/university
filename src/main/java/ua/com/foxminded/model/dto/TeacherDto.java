@@ -1,18 +1,15 @@
 package ua.com.foxminded.model.dto;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
-import ua.com.foxminded.model.validation.NotPastDate;
 
 public class TeacherDto extends PersonDto{
     
-    private UUID idTeacher;
     private Degree degree;
     @NotNull
     private Department department;
@@ -29,15 +26,6 @@ public class TeacherDto extends PersonDto{
         this.department = teacher.department;
         this.permanent = teacher.permanent;
         this.salary = BigDecimal.valueOf(teacher.getSalary().longValue());
-    }
-
-    public UUID getIdTeacher() {
-        return idTeacher;
-    }
-
-    public TeacherDto setIdTeacher(UUID idTeacher) {
-        this.idTeacher = idTeacher;
-        return this;
     }
 
     public Degree getDegree() {
@@ -113,7 +101,7 @@ public class TeacherDto extends PersonDto{
 
     @Override
     public String toString() {
-        return "TeacherDto [idTeacher=" + idTeacher + ", degree=" + degree + ", department=" + department
+        return "TeacherDto [ degree=" + degree + ", department=" + department
                 + ", permanent=" + permanent + ", salary=" + salary + ", getIdPerson()=" + getIdPerson()
                 + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + "]";
     }

@@ -3,11 +3,16 @@ package ua.com.foxminded.model.dto;
 import java.time.LocalTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TimeSlotDto {
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
     private int serialNumber;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private LocalTime startTime;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private LocalTime finishTime;
     
     public TimeSlotDto() {

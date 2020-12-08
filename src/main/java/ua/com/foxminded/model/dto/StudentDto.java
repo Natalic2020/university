@@ -2,7 +2,6 @@ package ua.com.foxminded.model.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,7 +17,6 @@ import ua.com.foxminded.model.validation.NotPastDate;
 @ApiModel("Student")
 public class StudentDto extends PersonDto {
 
-    private UUID idStudent;
     @NotNull
     private StudyStatus studyStatus;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -36,7 +34,6 @@ public class StudentDto extends PersonDto {
     }
 
     public StudentDto(StudentDto student) {
-        this.idStudent = student.idStudent;
         this.setFirstName(student.getFirstName());
         this.setLastName(student.getLastName());
         this.studyStatus = student.studyStatus;
@@ -52,15 +49,6 @@ public class StudentDto extends PersonDto {
 
     public StudentDto setGroup(GroupDto group) {
         this.group = group;
-        return this;
-    }
-
-    public UUID getIdStudent() {
-        return idStudent;
-    }
-
-    public StudentDto setIdStudent(UUID idStudent) {
-        this.idStudent = idStudent;
         return this;
     }
 
@@ -142,8 +130,7 @@ public class StudentDto extends PersonDto {
 
     @Override
     public String toString() {
-        return "idStudent :" + idStudent 
-                + ", first name  : " + getFirstName()
+        return "first name  : " + getFirstName()
                 + ", last name" + getLastName()
                 + ", studyStatus : " + studyStatus 
                 + ", startOfStudy=" + startOfStudy

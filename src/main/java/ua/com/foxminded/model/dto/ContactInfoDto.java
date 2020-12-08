@@ -1,16 +1,11 @@
 package ua.com.foxminded.model.dto;
 
 import java.util.UUID;
-
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
 
 public class ContactInfoDto {
 

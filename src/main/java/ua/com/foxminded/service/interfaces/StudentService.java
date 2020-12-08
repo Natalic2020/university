@@ -13,6 +13,4 @@ public interface StudentService {
     public void deleteStudent(UUID uuid);
     public StudentDto findStudent(UUID uuid);
     public List<StudentDto> findAllStudent();
-    public List<StudentDto> findListStudent();
-      
 }

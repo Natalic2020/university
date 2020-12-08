@@ -26,7 +26,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     @Qualifier("studentDao")
-    StudentDao studentDao;
+    private final StudentDao studentDao;
     
     @Autowired
     @Qualifier("groupDao")
@@ -41,6 +41,10 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     GroupService groupService;
     
+    public StudentServiceImpl(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
+
     @Override
     public Boolean addStudent(StudentDto studentDto) {
         String groupName = Optional.ofNullable(studentDto.getGroup())
@@ -83,12 +87,4 @@ public class StudentServiceImpl implements StudentService {
         });
         return students;
     }
-    
-  @Override
-  public List<StudentDto> findListStudent() {
-      List<StudentDto> students = new ArrayList<>();
-      students.add((StudentDto) new StudentDto().setIdStudent(UUID.fromString("a1f520ba-06fe-11eb-adc1-0242ac120002")).setFirstName("Nata").setLastName("Ivanov58"));
-      students.add((StudentDto) new StudentDto().setIdStudent(UUID.fromString("71ec8ca1-a435-4bcf-bf48-1d239a5145a6")).setFirstName("Ira").setLastName("Petrov25"));
-      return students;
-  }
 }

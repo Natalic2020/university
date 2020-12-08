@@ -4,13 +4,18 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import ua.com.foxminded.model.enums.Specialty;
 
 public class GroupDto {
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
     private String name;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Specialty specialty;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<StudentDto> students;
     
     public GroupDto() {

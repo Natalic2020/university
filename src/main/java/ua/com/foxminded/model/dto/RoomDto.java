@@ -2,8 +2,11 @@ package ua.com.foxminded.model.dto;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RoomDto {
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
     private String name;
     
