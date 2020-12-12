@@ -9,6 +9,7 @@ import ua.com.foxminded.dao.entity.ContactInfo;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.model.dto.ContactInfoDto;
+import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
@@ -54,8 +55,11 @@ public class TeacherConverter {
 
     public TeacherDto convertEntityToDto(Teacher teacher) {
         
-        TeacherDto teacherDto =
-        ((TeacherDto) new TeacherDto().setIdPerson(UUID.fromString(teacher.getIdPerson()))
+        TeacherDto teacherDto = new TeacherDto();     
+        if (teacher.getIdPerson() == null) {
+            return teacherDto;
+        }
+        ((TeacherDto) teacherDto.setIdPerson(UUID.fromString(teacher.getIdPerson()))
                                              .setFirstName(teacher.getFirstName())
                                              .setLastName(teacher.getLastName()))
         .setPermanent(teacher.isPermanent())
