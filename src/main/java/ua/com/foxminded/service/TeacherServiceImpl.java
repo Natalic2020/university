@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import ua.com.foxminded.converter.TeacherConverter;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
-import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.service.interfaces.TeacherService;
 
@@ -31,8 +30,7 @@ public class TeacherServiceImpl implements TeacherService {
     public Boolean addTeacher(TeacherDto teacherDto) {
         teacherDto.getContactInfo().setId(UUID.randomUUID());
         teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto
-                .setIdTeacher(UUID.randomUUID())
-                .setIdPerson(UUID.randomUUID())));
+              .setIdPerson(UUID.randomUUID())));
         return !findTeacher(teacherDto.getIdPerson()).equals(new TeacherDto());
     }
 

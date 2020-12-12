@@ -70,4 +70,7 @@ class StudentDaoImplTest {
     public void creatDB() {
         jdbcTemplate.batchUpdate(file.readFileToLines("sql_test.script"));
     }
+    
+    
+    
 }

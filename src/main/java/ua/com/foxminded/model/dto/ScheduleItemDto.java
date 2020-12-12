@@ -1,13 +1,16 @@
 package ua.com.foxminded.model.dto;
 
-import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import ua.com.foxminded.model.enums.DayOfWeek;
 
 public class ScheduleItemDto {
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private TeacherDto teacher;
     private GroupDto group;
     private SubjectDto subject;
