@@ -15,19 +15,15 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.GroupDto;
@@ -36,16 +32,16 @@ import ua.com.foxminded.model.enums.Specialty;
 import ua.com.foxminded.model.enums.StudyStatus;
 import ua.com.foxminded.service.interfaces.StudentService;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(StudentsRestController.class)
-class StudentsController2Test {
-
+public class StudentControllerIntegrationTest {
     @MockBean
     private StudentService studentService;
     
     @Autowired
     private MockMvc mockMvc;
 
+    private WebTestClient webClient;
+    
     StudentDto validStudent;
     
     @BeforeEach
@@ -99,3 +95,6 @@ class StudentsController2Test {
                .andExpect(jsonPath("$.firstName", is("Maria")));
     }
 }
+
+
+

@@ -20,7 +20,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ua.com.foxminded.config.ApplicationConfigTest;
+
 import ua.com.foxminded.dao.entity.Group;
 import ua.com.foxminded.dao.entity.Room;
 import ua.com.foxminded.dao.entity.ScheduleItem;
@@ -32,7 +32,7 @@ import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.util.FileParser;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { ApplicationConfigTest.class })
+//@ContextConfiguration(classes = { ApplicationConfigTest.class })
 @TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 class ScheduleItemDaoImplTest {

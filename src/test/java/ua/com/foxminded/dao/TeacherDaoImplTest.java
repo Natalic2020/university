@@ -24,7 +24,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ua.com.foxminded.config.ApplicationConfigTest;
+//import ua.com.foxminded.config.ApplicationConfigTest;
 import ua.com.foxminded.dao.entity.Person;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.entity.Teacher;
@@ -35,7 +35,7 @@ import ua.com.foxminded.service.interfaces.TeacherService;
 import ua.com.foxminded.util.FileParser;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { ApplicationConfigTest.class })
+//@ContextConfiguration(classes = { ApplicationConfigTest.class })
 @TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class TeacherDaoImplTest {

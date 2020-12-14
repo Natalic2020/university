@@ -25,7 +25,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import ua.com.foxminded.config.ScheduleItemDaoImplTestConfiguration;
 import ua.com.foxminded.dao.entity.Group;
 import ua.com.foxminded.dao.entity.Room;
 import ua.com.foxminded.dao.entity.ScheduleItem;
@@ -43,7 +42,7 @@ import ua.com.foxminded.service.interfaces.ScheduleService;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
-@SpringJUnitConfig(ScheduleItemDaoImplTestConfiguration.class)
+//@SpringJUnitConfig(ScheduleItemDaoImplTestConfiguration.class)
 @Disabled
 class ScheduleServiceImplTest {
 
@@ -63,7 +62,7 @@ class ScheduleServiceImplTest {
                                             .setSubject(new Subject().setName("Maths"))
                                             .setTimeSlot(new TimeSlot().setSerialNumber(1)));
 
-        scheduleItemDao = new ScheduleItemDaoImplTestConfiguration().scheduleItemDao();
+//        scheduleItemDao = new ScheduleItemDaoImplTestConfiguration().scheduleItemDao();
 
     }
 }
