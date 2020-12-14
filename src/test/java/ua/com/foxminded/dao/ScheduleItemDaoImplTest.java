@@ -16,6 +16,8 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -32,9 +34,7 @@ import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.util.FileParser;
 
 @ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = { ApplicationConfigTest.class })
-@TestMethodOrder(OrderAnnotation.class)
-@TestInstance(Lifecycle.PER_CLASS)
+@DataJpaTest
 class ScheduleItemDaoImplTest {
 
     private String scheduleItemUUID = "8f240794-fb1e-11ea-adc1-0242ac120002";
@@ -54,8 +54,11 @@ class ScheduleItemDaoImplTest {
     FileParser file;
 
     @Autowired
-    @Qualifier("scheduleItemDao")
-    ScheduleItemDao scheduleItemDao;
+    private TestEntityManager entityManager;
+    
+//    @Autowired
+//    @Qualifier("scheduleItemDao")
+//    ScheduleItemDao scheduleItemDao;
 
     @BeforeAll
     void setUpBeforeClass() throws Exception {

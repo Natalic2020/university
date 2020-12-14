@@ -22,9 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import ua.com.foxminded.TestConfig;
 import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.StudentDto;
@@ -32,8 +36,10 @@ import ua.com.foxminded.model.enums.Specialty;
 import ua.com.foxminded.model.enums.StudyStatus;
 import ua.com.foxminded.service.interfaces.StudentService;
 
+@ContextConfiguration(classes = {TestConfig.class})
 @WebMvcTest(StudentsRestController.class)
 public class StudentControllerIntegrationTest {
+    
     @MockBean
     private StudentService studentService;
     
@@ -64,7 +70,9 @@ public class StudentControllerIntegrationTest {
                 .setGroup(new GroupDto().setId(UUID.randomUUID()).setName("gggr").setSpecialty(Specialty.ECONOMY))
                 .setStudyStatus(StudyStatus.FINISHED)
                 .setStartOfStudy(LocalDate.now());
+        
          when(studentService.findStudent(any())).thenReturn(validStudent);   
+//         webClient = MockMvcWebClientBuilder.mockMvcSetup(mockMvc).useMockMvcForHosts("").build();
     }
     
     @AfterEach
@@ -76,7 +84,7 @@ public class StudentControllerIntegrationTest {
     void showStudent2() throws Exception {
 //       given(studentService.findStudent(any())).willReturn(validStudent); 
        
-       mockMvc.perform(get("/student/" + validStudent.getIdPerson()))
+       mockMvc.perform(get("/student/" + validStudent.getIdPerson().toString()))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$.idPerson", is(validStudent.getIdPerson().toString())))

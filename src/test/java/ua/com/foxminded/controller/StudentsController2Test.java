@@ -23,12 +23,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import ua.com.foxminded.TestConfig;
 import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.StudentDto;
@@ -36,6 +38,7 @@ import ua.com.foxminded.model.enums.Specialty;
 import ua.com.foxminded.model.enums.StudyStatus;
 import ua.com.foxminded.service.interfaces.StudentService;
 
+@ContextConfiguration(classes = {TestConfig.class})
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(StudentsRestController.class)
 class StudentsController2Test {
@@ -68,6 +71,7 @@ class StudentsController2Test {
                 .setGroup(new GroupDto().setId(UUID.randomUUID()).setName("gggr").setSpecialty(Specialty.ECONOMY))
                 .setStudyStatus(StudyStatus.FINISHED)
                 .setStartOfStudy(LocalDate.now());
+//        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
          when(studentService.findStudent(any())).thenReturn(validStudent);   
     }
     
@@ -80,7 +84,7 @@ class StudentsController2Test {
     void showStudent2() throws Exception {
 //       given(studentService.findStudent(any())).willReturn(validStudent); 
        
-       mockMvc.perform(get("/student/" + validStudent.getIdPerson()))
+       mockMvc.perform(get("http://localhost:8080/university/student/" + validStudent.getIdPerson()))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$.idPerson", is(validStudent.getIdPerson().toString())))
