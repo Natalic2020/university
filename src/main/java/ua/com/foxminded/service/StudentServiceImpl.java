@@ -32,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
     @Qualifier("groupDao")
     GroupDao groupDao;
     
-    @Autowired
+//    @Autowired
     StudentConverter studentConverter;
     
     @Autowired
@@ -41,10 +41,13 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     GroupService groupService;
     
-    public StudentServiceImpl(StudentDao studentDao) {
+    @Autowired
+    public StudentServiceImpl(StudentDao studentDao, StudentConverter studentConverter) {
         this.studentDao = studentDao;
+        this.studentConverter = studentConverter;
     }
 
+    
     @Override
     public Boolean addStudent(StudentDto studentDto) {
         String groupName = Optional.ofNullable(studentDto.getGroup())
@@ -60,18 +63,20 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void editStudent(StudentDto studentDto, UUID uuid) {
+    public Boolean editStudent(StudentDto studentDto, UUID uuid) {
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
         GroupDto groupDto = groupService.findGroupByName(groupName);
         studentDao.save(studentConverter.convertDtoToEntity(((StudentDto) studentDto.setIdPerson(uuid))
                 .setGroup(groupDto)));
+        return true;
     }
 
     @Override
-    public void deleteStudent(UUID uuid) {
+    public Boolean deleteStudent(UUID uuid) {
         studentDao.deleteById(uuid.toString());
+        return true;
     }
 
     @Override

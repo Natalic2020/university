@@ -25,7 +25,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
+import ua.com.foxminded.TestConfig;
 import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.entity.ContactInfo;
 import ua.com.foxminded.dao.entity.Group;
@@ -42,6 +44,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
+@ContextConfiguration(classes = {TestConfig.class})
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
 
@@ -51,8 +54,8 @@ class StudentServiceTest {
     @InjectMocks
     StudentServiceImpl studentServise; 
 
-    @Autowired
-    StudentConverter studentConverter;
+//    @Autowired
+    StudentConverter studentConverter = new StudentConverter();
     
     Student validStudent;
     

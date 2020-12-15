@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.interfaces.ScheduleItemDao;
 import ua.com.foxminded.service.ScheduleItemServiceImpl;
 
@@ -35,5 +36,11 @@ public class TestConfig {
     public ScheduleItemServiceImpl scheduleItemServiceImple(){
         // this could also be used to return a Mock object
         return new ScheduleItemServiceImpl();
+    }
+    
+    @Bean
+    public  StudentConverter studentConverter(){
+        // this could also be used to return a Mock object
+        return new StudentConverter();
     }
 }
