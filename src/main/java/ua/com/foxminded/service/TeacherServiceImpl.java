@@ -35,13 +35,15 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void editTeacher(TeacherDto teacherDto, UUID uuid) {
+    public Boolean editTeacher(TeacherDto teacherDto, UUID uuid) {
         teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto.setIdPerson(uuid)));
-     }
+        return true;
+    }
 
     @Override
-    public void deleteTeacher(UUID uuid) {
+    public Boolean deleteTeacher(UUID uuid) {
         teacherDao.deleteById(uuid.toString());
+        return true;
     }
 
     @Override

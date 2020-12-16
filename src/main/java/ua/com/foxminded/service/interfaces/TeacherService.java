@@ -7,8 +7,8 @@ import ua.com.foxminded.model.dto.TeacherDto;
 
 public interface TeacherService {
     public Boolean addTeacher(TeacherDto teacher);
-    public void editTeacher(TeacherDto teacher, UUID uuid);
-    public void deleteTeacher(UUID uuid);
+    public Boolean editTeacher(TeacherDto teacher, UUID uuid);
+    public Boolean deleteTeacher(UUID uuid);
     public TeacherDto findTeacher(UUID uuid);
     public List<TeacherDto> findAllTeacher(); 
 }

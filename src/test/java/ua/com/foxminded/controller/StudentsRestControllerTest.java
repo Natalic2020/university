@@ -38,7 +38,7 @@ import ua.com.foxminded.model.enums.StudyStatus;
 import ua.com.foxminded.service.interfaces.StudentService;
 
 @ExtendWith(MockitoExtension.class)
-class StudentsControllerTest {
+class StudentsRestControllerTest {
 
     @InjectMocks
     private StudentsRestController studentsRestController;
@@ -46,7 +46,7 @@ class StudentsControllerTest {
     @Mock
     private StudentService studentService;
 
-    List<StudentDto> students = new ArrayList<StudentDto>();
+    List<StudentDto> students = new ArrayList<>();
 
     MockMvc mockMvc;
 
@@ -139,11 +139,10 @@ class StudentsControllerTest {
     
     @Test
     void deleteStudent() throws Exception {
-        given(studentService.findStudent(any())).willReturn(validStudent);
+        given(studentService.findStudent(any())).willReturn(validStudent).willReturn(new StudentDto());
         given(studentService.deleteStudent(any())).willReturn(true);
         
         mockMvc.perform(delete("/student/" + validStudent.getIdPerson()))
-                .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(status().isOk());
     }
 }
