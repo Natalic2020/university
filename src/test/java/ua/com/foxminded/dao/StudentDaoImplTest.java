@@ -54,7 +54,9 @@ class StudentDaoImplTest {
         Optional<Student> foundStudent = studentDao.findById(personUUID);
 
         String studentName = foundStudent.orElse(new Student()).getFirstName();
+        System.out.println("**************************");
        System.out.println(studentName);
+        System.out.println("**************************");
         assertThat(studentName).isEqualTo(student.getFirstName());
   }
     

@@ -23,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -52,17 +53,21 @@ class StudentServiceTest {
     StudentDao studentDao;
     
     @InjectMocks
-    StudentServiceImpl studentServise; 
+    StudentServiceImpl studentServise;
 
-//    @Autowired
+    @Spy
     StudentConverter studentConverter = new StudentConverter();
-    
+//    @Autowired
+//    StudentConverter studentConverter = new StudentConverter();
+
+    String uuid = "1bfc7ee3-28de-4e7d-b068-8dccd095d655";
+
     Student validStudent;
     
     @BeforeEach
     void setUpBeforeClass()  {
 
-        validStudent =  ((Student) new Student().setIdPerson(UUID.randomUUID().toString())
+        validStudent =  ((Student) new Student().setIdPerson(uuid)
                 .setFirstName("Maria")
                 .setLastName("Kokoshka")
                 .setContactInfo(new ContactInfo().setId(UUID.randomUUID().toString())
@@ -86,28 +91,14 @@ class StudentServiceTest {
     
     @Test
     void findStudentTest() {
-//        Optional<Student> student = Optional.ofNullable((Student) new Student().setIdPerson("bea86405-4378-4ba3-8224-c7d3173ee7db"));
-        
         Optional<Student> student = Optional.ofNullable(validStudent);
         Mockito.when(studentDao.findById(any()))
         .thenReturn(student);
-//        given(studentDao.findById(any())).willReturn(student);
 
         StudentDto studentFound = studentServise.findStudent(UUID.fromString(validStudent.getIdPerson()));
         
         assertThat(studentFound).isNotNull();
-        verify(studentDao).findById("1");
-        
-//      //given
-//        List<PetType> petTypeList = new ArrayList<>();
-//        given(petRepository.findPetTypes()).willReturn(petTypeList);
-//        //when
-//        Collection<PetType> returnedPetTypes = service.findPetTypes();
-//
-//        //then
-//        then(petRepository).should().findPetTypes();
-//        assertThat(returnedPetTypes).isNotNull();
-
+        verify(studentDao).findById(uuid);
     }
     
     
