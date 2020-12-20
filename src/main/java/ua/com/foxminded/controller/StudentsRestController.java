@@ -125,8 +125,8 @@ public class StudentsRestController  {
         studentService.deleteStudent(UUID.fromString(uuid));
         studentCheck = studentService.findStudent(UUID.fromString(uuid));
         if (studentCheck.getIdPerson() != null) {
-            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Do not delete Student with id  " + uuid),
-                    HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_IMPLEMENTED).setMessage("Do not delete Student with id  " + uuid),
+                    HttpStatus.NOT_IMPLEMENTED);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

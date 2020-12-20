@@ -15,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -38,6 +40,7 @@ import ua.com.foxminded.model.enums.StudyStatus;
 import ua.com.foxminded.service.interfaces.StudentService;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class StudentsRestControllerTest {
 
     @InjectMocks
@@ -85,15 +88,6 @@ class StudentsRestControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(studentsRestController).build();
     }
 
-    @Test
-    void findAllStudent() throws Exception {
-        given(studentService.findAllStudent()).willReturn(students);
-
-        mockMvc.perform(get("/students"))
-                .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
     public static String asJsonString(final Object obj) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
@@ -105,7 +99,25 @@ class StudentsRestControllerTest {
     }
 
     @Test
-    void createStudent() throws Exception {
+    void findAllStudent_whenValidArrayStudents_thenStatusOk() throws Exception {
+        given(studentService.findAllStudent()).willReturn(students);
+
+        mockMvc.perform(get("/students"))
+                .andExpect(status().isOk())
+               .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void findAllStudent_whenStudentsNull_thenStatusNotFound() throws Exception {
+        given(studentService.findAllStudent()).willReturn(null);
+
+        mockMvc.perform(get("/students"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void createStudent_whenValidIdStudent_thenStatusCreated() throws Exception {
         given(studentService.addStudent(any(StudentDto.class))).willReturn(true);
 
         mockMvc.perform(post("/student").content(asJsonString(validStudent))
@@ -115,7 +127,27 @@ class StudentsRestControllerTest {
     }
 
     @Test
-    void showStudent() throws Exception {
+    void createStudent_whenNotValidIdPerson_thenStatusBadRequest() throws Exception {
+        given(studentService.addStudent(any(StudentDto.class))).willReturn(true);
+
+        mockMvc.perform(post("/student").content(asJsonString(validStudent.setStartOfStudy(null)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createStudent_whenNotValidStudent_thenStatusNotFound() throws Exception {
+        given(studentService.addStudent(any(StudentDto.class))).willReturn(false);
+
+        mockMvc.perform(post("/student").content(asJsonString(validStudent))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void showStudent_whenValidStudent_thenStatusOk() throws Exception {
         given(studentService.findStudent(any())).willReturn(validStudent);
 
         mockMvc.perform(get("/student/" + validStudent.getIdPerson()))
@@ -124,9 +156,18 @@ class StudentsRestControllerTest {
                .andExpect(jsonPath("$.idPerson", is(validStudent.getIdPerson().toString())))
                .andExpect(jsonPath("$.firstName", is("Maria")));
     }
+
+    @Test
+    void showStudent_whenStudentNull_thenStatusNotFound() throws Exception {
+        given(studentService.findStudent(any())).willReturn(null);
+
+        mockMvc.perform(get("/student/" + validStudent.getIdPerson()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
     
     @Test
-    void editStudent() throws Exception {
+    void editStudent_whenValidIdStudent_thenStatusCreated() throws Exception {
         given(studentService.editStudent(any(StudentDto.class), any())).willReturn(true);
         given(studentService.findStudent(any())).willReturn(validStudent);
         
@@ -135,14 +176,52 @@ class StudentsRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk());
-    }   
-    
+    }
+
     @Test
-    void deleteStudent() throws Exception {
+    void editStudent_whenNotValidIdPerson_thenStatusBadRequest() throws Exception {
+        given(studentService.editStudent(any(StudentDto.class), any())).willReturn(true);
+
+        mockMvc.perform(post("/student").content(asJsonString(validStudent.setStartOfStudy(null)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void editStudent_whenNotValidStudent_thenStatusNotFound() throws Exception {
+        given(studentService.editStudent(any(StudentDto.class), any())).willReturn(true);
+        given(studentService.findStudent(any())).willReturn(new StudentDto());
+
+        mockMvc.perform(post("/student").content(asJsonString(validStudent))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteStudent_whenDeleteStudent_thenStatusOK() throws Exception {
         given(studentService.findStudent(any())).willReturn(validStudent).willReturn(new StudentDto());
         given(studentService.deleteStudent(any())).willReturn(true);
         
         mockMvc.perform(delete("/student/" + validStudent.getIdPerson()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteStudent_whenNotFoundStudent_thenStatusNotFound() throws Exception {
+        given(studentService.findStudent(any())).willReturn(new StudentDto());
+
+        mockMvc.perform(delete("/student/" + validStudent.getIdPerson()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteStudent_whenNotDeleteStudent_thenStatus_notImplemented() throws Exception {
+        given(studentService.findStudent(any())).willReturn(validStudent).willReturn(validStudent);
+        given(studentService.deleteStudent(any())).willReturn(true);
+
+        mockMvc.perform(delete("/student/" + validStudent.getIdPerson()))
+                .andExpect(status().isNotImplemented());
     }
 }

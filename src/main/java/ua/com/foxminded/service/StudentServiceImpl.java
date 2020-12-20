@@ -15,6 +15,7 @@ import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.GroupDao;
 import ua.com.foxminded.dao.interfaces.StudentDao;
+import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.service.interfaces.GroupService;
@@ -38,13 +39,14 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     GroupConverter groupConverter;
     
-    @Autowired
+//    @Autowired
     GroupService groupService;
     
     @Autowired
-    public StudentServiceImpl(StudentDao studentDao, StudentConverter studentConverter) {
+    public StudentServiceImpl(StudentDao studentDao, StudentConverter studentConverter, GroupService groupService) {
         this.studentDao = studentDao;
         this.studentConverter = studentConverter;
+        this.groupService = groupService;
     }
 
     
@@ -53,7 +55,8 @@ public class StudentServiceImpl implements StudentService {
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
-       studentDto.getContactInfo().setId(UUID.randomUUID());
+        Optional.ofNullable(studentDto.getContactInfo()).map(info -> info.setId(UUID.randomUUID()))
+                .orElse(new ContactInfoDto().setId(UUID.randomUUID()));
         
         GroupDto groupDto = groupService.findGroupByName(groupName);
         studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
@@ -75,8 +78,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Boolean deleteStudent(UUID uuid) {
-        studentDao.deleteById(uuid.toString());
-        return true;
+       studentDao.deleteById(uuid.toString());
+       return true;
     }
 
     @Override
