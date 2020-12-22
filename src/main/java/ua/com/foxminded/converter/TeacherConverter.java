@@ -36,8 +36,11 @@ public class TeacherConverter {
                .setSalary(teacherDto.getSalary());
         
         ContactInfoDto contactInfoDto = teacherDto.getContactInfo();
-        ContactInfo contactInfo = new ContactInfo()
-                .setIndex(contactInfoDto.getIndex())
+        ContactInfo contactInfo = new ContactInfo();
+        Optional.ofNullable(contactInfoDto)
+                .ifPresent( contactInfoDto1 -> {
+                    contactInfo
+                            .setIndex(contactInfoDto.getIndex())
                 .setCountry(contactInfoDto.getCountry())
                 .setCity(contactInfoDto.getCity())
                 .setStreet(contactInfoDto.getStreet())
@@ -45,10 +48,10 @@ public class TeacherConverter {
                 .setApartment(contactInfoDto.getApartment())
                 .setPhone1(contactInfoDto.getPhone1())
                 .setPhone2(contactInfoDto.getPhone2())
-                .setEmail(contactInfoDto.getEmail())
-                .setId(Optional.of(contactInfoDto.getId())
-                        .orElse(UUID.randomUUID()).toString());    
-        contactInfo.setPerson(teacher);
+                .setEmail(contactInfoDto.getEmail());
+                    Optional.ofNullable(contactInfoDto.getId())
+                            .ifPresent(ci -> contactInfo.setId(ci.toString()));
+                });
         teacher.setContactInfo(contactInfo);
         return teacher;
     }

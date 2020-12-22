@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.anything;
 
+import java.sql.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,15 +19,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -180,12 +186,20 @@ class StudentsRestControllerTest {
 
     @Test
     void editStudent_whenNotValidIdPerson_thenStatusBadRequest() throws Exception {
-        given(studentService.editStudent(any(StudentDto.class), any())).willReturn(true);
 
-        mockMvc.perform(post("/student").content(asJsonString(validStudent.setStartOfStudy(null)))
+        mockMvc.perform(put("/student/" + validStudent.getIdPerson())
+                .content(asJsonString(validStudent.setStartOfStudy(null)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.timestamp", is(notNullValue())))
+                .andExpect(jsonPath("$.message", is("Validation errors")))
+                .andExpect(jsonPath("$.status", is("BAD_REQUEST")))
+                .andExpect(jsonPath("$.subErrors[0]") .isArray())
+                .andExpect(jsonPath("$.subErrors[0]", hasSize(4)))
+                .andExpect(jsonPath("$.subErrors[0]", hasItem("student")))
+                .andExpect(jsonPath("$.subErrors[0]", containsInAnyOrder("student","startOfStudy",null,"must not be null")));
+        verify(studentService, times(0)).editStudent(any(StudentDto.class),any());
     }
 
     @Test
@@ -193,7 +207,8 @@ class StudentsRestControllerTest {
         given(studentService.editStudent(any(StudentDto.class), any())).willReturn(true);
         given(studentService.findStudent(any())).willReturn(new StudentDto());
 
-        mockMvc.perform(post("/student").content(asJsonString(validStudent))
+        mockMvc.perform(put("/student/" + validStudent.getIdPerson())
+                .content(asJsonString(validStudent))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());

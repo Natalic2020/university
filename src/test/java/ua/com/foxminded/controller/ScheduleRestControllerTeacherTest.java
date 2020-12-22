@@ -29,12 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import ua.com.foxminded.model.dto.GroupDto;
-import ua.com.foxminded.model.dto.RoomDto;
-import ua.com.foxminded.model.dto.ScheduleItemDto;
-import ua.com.foxminded.model.dto.TeacherDto;
-import ua.com.foxminded.model.dto.SubjectDto;
-import ua.com.foxminded.model.dto.TimeSlotDto;
+import ua.com.foxminded.model.dto.*;
 import ua.com.foxminded.model.enums.DayOfWeek;
 import ua.com.foxminded.service.interfaces.ScheduleItemService;
 import ua.com.foxminded.service.interfaces.TeacherService;
@@ -84,7 +79,7 @@ class ScheduleRestControllerTeacherTest {
     }
 
     @Test
-    void showScheduleTeacherWeek() throws Exception {
+    void showSchedule_whenTeacherWeek_thanStatusOK() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
         given(scheduleService.findWeekScheduleTeacher(any())).willReturn(scheduleWeek);
         
@@ -99,7 +94,7 @@ class ScheduleRestControllerTeacherTest {
     }
     
     @Test
-    void showScheduleTeacherDay() throws Exception {   
+    void showSchedule_whenTeacherDay_thanStatusOK() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
         given(scheduleService.findDayScheduleTeacher(any(),any())).willReturn(scheduleWeek);
         
@@ -114,7 +109,7 @@ class ScheduleRestControllerTeacherTest {
     }
     
     @Test
-    void showScheduleTeacherMonth() throws Exception {
+    void showSchedule_whenTeacherMonth_thanStatusOK() throws Exception {
         
         Map<String, List<ScheduleItemDto>> scheduleMonth = new HashMap<String, List<ScheduleItemDto>>();
         scheduleMonth.put("2020-06-01", scheduleWeek);
@@ -130,5 +125,24 @@ class ScheduleRestControllerTeacherTest {
                .andExpect(jsonPath("$.2020-06-01[0].dayOfWeek", is(schedule.getDayOfWeek().toString())))
                .andExpect(jsonPath("$.2020-06-01[0].timeSlot.startTime[0]").value(equalTo(8)))
                .andExpect(jsonPath("$.2020-06-01[0].room.name", is(schedule.getRoom().getName())));
+    }
+
+    @Test
+    void showSchedule_whenTeacherNotFound_thanStatusNotFound() throws Exception {
+        given(teacherService.findTeacher(any())).willReturn(new TeacherDto());
+
+        mockMvc.perform(get("/schedule/teacher/" + validTeacher.getIdPerson()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void showSchedule_whenScheduleNull_thanStatusNotFound() throws Exception {
+        given(teacherService.findTeacher(any())).willReturn(validTeacher);
+        given(scheduleService.findWeekScheduleTeacher(any())).willReturn(null);
+
+        mockMvc.perform(get("/schedule/teacher/" + validTeacher.getIdPerson()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

@@ -58,7 +58,7 @@ class StudentServiceTest {
     StudentConverter studentConverter = new StudentConverter();
 
     @Spy
-    GroupService groupService; // = new GroupServiceImpl();
+    GroupService groupService;
 
     String uuid = "1bfc7ee3-28de-4e7d-b068-8dccd095d655";
 
@@ -84,41 +84,39 @@ class StudentServiceTest {
                 .setGroup(new Group().setId(UUID.randomUUID().toString()).setName("gggr").setSpecialty("ECONOMY"))
                 .setStudyStatus("FINISHED")
                 .setStartOfStudy(LocalDate.now());
-//        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-
-//        when(studentDao.findById(any())).thenReturn( Optional.ofNullable(validStudent));
-
-
-
     }
     
-    @Test
-    void findStudentTest() {
-        Optional<Student> student = Optional.ofNullable(validStudent);
-        Mockito.when(studentDao.findById(any()))
-        .thenReturn(student);
 
-        StudentDto studentFound = studentServise.findStudent(UUID.fromString(validStudent.getIdPerson()));
-        
-        assertThat(studentFound).isNotNull();
-        verify(studentDao).findById(uuid);
-    }
 
     @Test
-    void addStudentTest() {
-        Optional<Student> student = Optional.ofNullable(validStudent);
+    void addStuden_whenAddValidStuden_thenTrue() {
         when(studentDao.save(org.mockito.ArgumentMatchers.any(Student.class))).thenReturn(new Student());
-        when(studentDao.findById(any())).thenReturn( Optional.ofNullable(validStudent));
+        when(studentDao.findById(any())).thenReturn(Optional.ofNullable(validStudent));
 
         boolean isAddStudent = studentServise.addStudent(new StudentDto());
 
         assertTrue(isAddStudent);
-
     }
 
     @Test
-    void editStudentTest() {
-        Optional<Student> student = Optional.ofNullable(validStudent);
+    void addStuden_whenAddNotValidStuden_thenFalse() {
+        when(studentDao.save(org.mockito.ArgumentMatchers.any(Student.class))).thenReturn(new Student());
+        when(studentDao.findById(any())).thenReturn( Optional.ofNullable(new Student()));
+
+        boolean isAddStudent = studentServise.addStudent(new StudentDto());
+
+        assertFalse(isAddStudent);
+    }
+
+    @Test
+    void addStuden_whenAddNullStudent_thenFalse() {
+        boolean isAddStudent = studentServise.addStudent(null);
+
+        assertFalse(isAddStudent);
+    }
+
+    @Test
+    void editStudent_whenEditValidStuden_thenTrue() {
         when(studentDao.save(org.mockito.ArgumentMatchers.any(Student.class))).thenReturn(new Student());
 
         boolean isEditStudent = studentServise.editStudent(new StudentDto(), UUID.fromString(uuid));
@@ -126,8 +124,46 @@ class StudentServiceTest {
     }
 
     @Test
+    void editStudent_whenNulldStuden_thenFalse() {
+        boolean isEditStudent = studentServise.editStudent(null, null);
+
+        assertFalse(isEditStudent);
+    }
+
+    @Test
+    void deleteStudent_whenValidStudent_thenTrue() {
+        List<Student> students = new ArrayList<>();
+        students.add(validStudent);
+
+        studentDao.deleteById(uuid.toString());
+
+        studentServise.deleteStudent(UUID.randomUUID());
+    }
+
+    @Test
+    void deleteStudent_whenValidStudent_thenFalse() {
+
+        assertFalse(studentServise.deleteStudent(null));
+    }
+
+    @Test
+    void findStudent_whenUuidValid_thenReturnStudent() {
+        when(studentDao.findById(org.mockito.ArgumentMatchers.any())).thenReturn(Optional.ofNullable(validStudent));
+        StudentDto studentFound = studentServise.findStudent(UUID.fromString(uuid));
+
+        assertThat(studentFound).isNotEqualTo(new StudentDto());
+    }
+
+    @Test
+    void findStudent_whenUuidNull_thenReturnNewStudent() {
+
+        StudentDto studentFound = studentServise.findStudent(null);
+
+        assertThat(studentFound).isEqualTo(new StudentDto());
+    }
+
+    @Test
     void findAllTest() {
-        StudentDto student = new StudentDto();
         List<Student> students = new ArrayList<>();
         students.add(validStudent);
         given(studentDao.findAll()).willReturn(students);
@@ -136,18 +172,4 @@ class StudentServiceTest {
 
        assertThat(studentsFound).hasSize(1);
     }
-    
-   
-
-    @Test
-    void deleteStudent() {
-        StudentDto student = new StudentDto();
-        List<Student> students = new ArrayList<>();
-        students.add(validStudent);
-//        given(studentDao.deleteById(Mockito.any())).willReturn(students);
-        studentDao.deleteById(uuid.toString());
-
-        studentServise.deleteStudent(UUID.randomUUID());
-    }
-    
 }

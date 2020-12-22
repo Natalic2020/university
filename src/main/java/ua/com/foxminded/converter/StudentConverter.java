@@ -55,7 +55,6 @@ public class StudentConverter {
                             Optional.ofNullable(contactInfoDto.getId())
                                     .ifPresent(ci -> contactInfo.setId(ci.toString()));
                         });
-        contactInfo.setPerson(student);
         student.setContactInfo(contactInfo);
       return   student;
         

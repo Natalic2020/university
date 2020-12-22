@@ -18,7 +18,6 @@ import ua.com.foxminded.model.enums.Specialty;
 @Component
 public class GroupConverter {
 
-    
     public Group convertDtoToEntity(GroupDto groupDto) {
         Group group = new Group();
         Optional.ofNullable(groupDto.getId())
@@ -48,11 +47,13 @@ public class GroupConverter {
         .ifPresent(ss -> groupDto.setSpecialty(Specialty.valueOf(ss))); 
         
         List<StudentDto> studentDtoList = new ArrayList<>();
-        group.getStudents().forEach(student -> {
-            studentDtoList.add((StudentDto) new StudentDto().setIdPerson(UUID.fromString(student.getIdPerson())));
-        });
+        Optional.ofNullable(group.getStudents())
+                .ifPresent(st -> {
+                    st.forEach(student -> {
+                        studentDtoList.add((StudentDto) new StudentDto().setIdPerson(UUID.fromString(student.getIdPerson())));
+                    });
+                        });
         groupDto.setStudents(studentDtoList);
-        
         return groupDto;
     }
 }

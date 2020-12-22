@@ -35,25 +35,43 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
     ScheduleItemConverter scheduleItemConverter;
 
     @Override
-    public void addScheduleItem(ScheduleItemDto scheduleItemDto) {
+    public Boolean addScheduleItem(ScheduleItemDto scheduleItemDto) {
+        if (scheduleItemDto == null){
+            return false;
+        }
         scheduleItemDao.save(scheduleItemConverter.convertDtoToEntity(scheduleItemDto));
+        return true;
     }
 
     @Override
-    public void editScheduleItem(ScheduleItemDto scheduleItemDto) {
+    public Boolean editScheduleItem(ScheduleItemDto scheduleItemDto) {
+        if (scheduleItemDto == null){
+            return false;
+        }
         scheduleItemDao.save(scheduleItemConverter.convertDtoToEntity(scheduleItemDto));
+        return true;
     }
 
     @Override
-    public void deleteScheduleItem(UUID id) {
+    public Boolean deleteScheduleItem(UUID id) {
+        if (id == null){
+            return false;
+        }
         scheduleItemDao.deleteById(id.toString());
+        return true;
     }
     
     @Override
     public List<ScheduleItemDto> findWeekScheduleStudent(UUID id) {
-        String idGroup = studentDao.findById(id.toString()).orElse(new Student()).getGroup().getId().toString();
         List<ScheduleItemDto> schedule = new ArrayList<>();
-        scheduleItemDao.findByGroupIdGroup(idGroup.toString()).forEach(sch -> {
+        Student student = studentDao.findById(id.toString()).orElse(new Student());
+        if (student.equals(new Student()) || student.getGroup() == null)
+        {
+            return schedule;
+        }
+        String idGroup = student.getGroup().getId();
+
+        scheduleItemDao.findByGroupIdGroup(idGroup).forEach(sch -> {
             schedule.add(scheduleItemConverter.convertEntityToDto(sch));
         });
         return schedule;
@@ -93,6 +111,9 @@ public class ScheduleItemServiceImpl implements ScheduleItemService {
     @Override
     public List<ScheduleItemDto> findWeekScheduleTeacher(UUID id) {
         List<ScheduleItemDto> schedule = new ArrayList<>();
+        if (id == null){
+            return schedule;
+        }
         scheduleItemDao.findByTeacherIdPerson(id.toString()).forEach(sch -> {
             schedule.add(scheduleItemConverter.convertEntityToDto(sch));
         });

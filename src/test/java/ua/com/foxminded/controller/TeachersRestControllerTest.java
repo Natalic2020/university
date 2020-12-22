@@ -27,6 +27,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -36,6 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.TeacherDto;
+import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.model.enums.Degree;
 import ua.com.foxminded.model.enums.Department;
 import ua.com.foxminded.model.enums.Specialty;
@@ -43,6 +46,7 @@ import ua.com.foxminded.model.enums.StudyStatus;
 import ua.com.foxminded.service.interfaces.TeacherService;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class TeachersRestControllerTest {
 
     @InjectMocks
@@ -88,15 +92,6 @@ class TeachersRestControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(teachersRestController).build();
     }
 
-    @Test
-    void findAllTeacher() throws Exception {
-        given(teacherService.findAllTeacher()).willReturn(teachers);
-
-        mockMvc.perform(get("/teachers"))
-                .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
     public static String asJsonString(final Object obj) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
@@ -108,44 +103,131 @@ class TeachersRestControllerTest {
     }
 
     @Test
-    void createTeacher() throws Exception {
+    void findAllteacher_whenValidArrayTeachers_thenStatusOk() throws Exception {
+        given(teacherService.findAllTeacher()).willReturn(teachers);
+
+        mockMvc.perform(get("/teachers"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void findAllTeacher_whenTeachersNull_thenStatusNotFound() throws Exception {
+        given(teacherService.findAllTeacher()).willReturn(null);
+
+        mockMvc.perform(get("/teachers"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void createTeacher_whenValidIdTeacher_thenStatusCreated() throws Exception {
         given(teacherService.addTeacher(any(TeacherDto.class))).willReturn(true);
 
         mockMvc.perform(post("/teacher").content(asJsonString(validTeacher))
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isCreated());
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
     }
 
     @Test
-    void showTeacher() throws Exception {
+    void createTeacher_whenNotValidIdPerson_thenStatusBadRequest() throws Exception {
+        given(teacherService.addTeacher(any(TeacherDto.class))).willReturn(true);
+
+        mockMvc.perform(post("/teacher").content(asJsonString(validTeacher.setDepartment(null)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createTeacher_whenNotValidTeacher_thenStatusNotFound() throws Exception {
+        given(teacherService.addTeacher(any(TeacherDto.class))).willReturn(false);
+
+        mockMvc.perform(post("/teacher").content(asJsonString(validTeacher))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void showTeacher_whenValidTeacher_thenStatusOk() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
 
         mockMvc.perform(get("/teacher/" + validTeacher.getIdPerson()))
-               .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("$.idPerson", is(validTeacher.getIdPerson().toString())))
-               .andExpect(jsonPath("$.firstName", is("Anna")));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.idPerson", is(validTeacher.getIdPerson().toString())))
+                .andExpect(jsonPath("$.firstName", is("Anna")));
     }
-    
+
     @Test
-    void editTeacher() throws Exception {
+    void showTeacher_whenTeacherNull_thenStatusNotFound() throws Exception {
+        given(teacherService.findTeacher(any())).willReturn(null);
+
+        mockMvc.perform(get("/teacher/" + validTeacher.getIdPerson()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void editTeacher_whenValidIdTeacher_thenStatusCreated() throws Exception {
         given(teacherService.editTeacher(any(TeacherDto.class), any())).willReturn(true);
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
-        
+
         mockMvc.perform(put("/teacher/" + validTeacher.getIdPerson())
                 .content(asJsonString(validTeacher))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk());
-    }   
-    
+                .andExpect(status().isOk());
+    }
+
     @Test
-    void deleteTeacher() throws Exception {
+    void editTeacher_whenNotValidIdPerson_thenStatusBadRequest() throws Exception {
+        given(teacherService.editTeacher(any(TeacherDto.class), any())).willReturn(true);
+
+        mockMvc.perform(put("/teacher/" + validTeacher.getIdPerson())
+                .content(asJsonString(validTeacher.setDepartment(null)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void editTeacher_whenNotValidTeacher_thenStatusNotFound() throws Exception {
+        given(teacherService.editTeacher(any(TeacherDto.class), any())).willReturn(true);
+        given(teacherService.findTeacher(any())).willReturn(new TeacherDto());
+
+        mockMvc.perform(put("/teacher/" + validTeacher.getIdPerson())
+                .content(asJsonString(validTeacher))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteTeacher_whenDeleteTeacher_thenStatusOK() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher).willReturn(new TeacherDto());
         given(teacherService.deleteTeacher(any())).willReturn(true);
-        
+
         mockMvc.perform(delete("/teacher/" + validTeacher.getIdPerson()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteTeacher_whenNotFoundTeacher_thenStatusNotFound() throws Exception {
+        given(teacherService.findTeacher(any())).willReturn(new TeacherDto());
+
+        mockMvc.perform(delete("/teacher/" + validTeacher.getIdPerson()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteTeacher_whenNotDeleteTeacher_thenStatus_notImplemented() throws Exception {
+        given(teacherService.findTeacher(any())).willReturn(validTeacher).willReturn(validTeacher);
+        given(teacherService.deleteTeacher(any())).willReturn(true);
+
+        mockMvc.perform(delete("/teacher/" + validTeacher.getIdPerson()))
+                .andExpect(status().isNotImplemented());
     }
 }

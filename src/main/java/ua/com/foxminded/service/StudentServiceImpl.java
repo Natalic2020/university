@@ -32,14 +32,12 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     @Qualifier("groupDao")
     GroupDao groupDao;
-    
-//    @Autowired
+
     StudentConverter studentConverter;
     
     @Autowired
     GroupConverter groupConverter;
-    
-//    @Autowired
+
     GroupService groupService;
     
     @Autowired
@@ -52,6 +50,9 @@ public class StudentServiceImpl implements StudentService {
     
     @Override
     public Boolean addStudent(StudentDto studentDto) {
+        if (studentDto==null){
+            return false;
+        }
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
@@ -67,6 +68,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Boolean editStudent(StudentDto studentDto, UUID uuid) {
+        if (studentDto==null || uuid == null){
+            return false;
+        }
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
@@ -78,12 +82,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Boolean deleteStudent(UUID uuid) {
+        if (uuid == null){
+            return false;
+        }
        studentDao.deleteById(uuid.toString());
        return true;
     }
 
     @Override
     public StudentDto findStudent(UUID uuid) {
+        if (uuid == null){
+            return new StudentDto();
+        }
         return studentConverter.convertEntityToDto(studentDao.findById(uuid.toString()).orElse(new Student()));
     }
 

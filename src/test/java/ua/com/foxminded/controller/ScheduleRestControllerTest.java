@@ -84,7 +84,7 @@ class ScheduleRestControllerTest {
     }
 
     @Test
-    void showScheduleStudentWeek() throws Exception {
+    void showSchedule_whenStudentWeek_thanStatusOk() throws Exception {
         given(studentService.findStudent(any())).willReturn(validStudent);
         given(scheduleService.findWeekScheduleStudent(any())).willReturn(scheduleWeek);
         
@@ -99,7 +99,7 @@ class ScheduleRestControllerTest {
     }
     
     @Test
-    void showScheduleStudentDay() throws Exception {   
+    void showSchedule_whenStudentDay_thanStatusOk() throws Exception {
         given(studentService.findStudent(any())).willReturn(validStudent);
         given(scheduleService.findDayScheduleStudent(any(),any())).willReturn(scheduleWeek);
         
@@ -114,7 +114,7 @@ class ScheduleRestControllerTest {
     }
     
     @Test
-    void showScheduleStudentMonth() throws Exception {
+    void showSchedule_whenStudentMonth__thanStatusOk() throws Exception {
         
         Map<String, List<ScheduleItemDto>> scheduleMonth = new HashMap<String, List<ScheduleItemDto>>();
         scheduleMonth.put("2020-06-01", scheduleWeek);
@@ -130,5 +130,24 @@ class ScheduleRestControllerTest {
                .andExpect(jsonPath("$.2020-06-01[0].dayOfWeek", is(schedule.getDayOfWeek().toString())))
                .andExpect(jsonPath("$.2020-06-01[0].timeSlot.startTime[0]").value(equalTo(8)))
                .andExpect(jsonPath("$.2020-06-01[0].room.name", is(schedule.getRoom().getName())));
+    }
+
+    @Test
+    void showSchedule_whenStudentNotFound_thanStatusNotFound() throws Exception {
+        given(studentService.findStudent(any())).willReturn(new StudentDto());
+
+        mockMvc.perform(get("/schedule/student/" + validStudent.getIdPerson()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void showSchedule_whenScheduleNull_thanStatusNotFound() throws Exception {
+        given(studentService.findStudent(any())).willReturn(validStudent);
+        given(scheduleService.findWeekScheduleStudent(any())).willReturn(null);
+
+        mockMvc.perform(get("/schedule/student/" + validStudent.getIdPerson()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

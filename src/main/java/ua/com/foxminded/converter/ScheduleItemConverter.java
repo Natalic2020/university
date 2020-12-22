@@ -25,64 +25,65 @@ public class ScheduleItemConverter {
     
 public   ScheduleItem convertDtoToEntity(ScheduleItemDto scheduleItemDto) {
 
-            List<Student> students = new ArrayList<>();
+    List<Student> students = new ArrayList<>();
 
-            Group group = new Group();
-            if (scheduleItemDto.getGroup() != null) {
-            scheduleItemDto.getGroup().getStudents().forEach(studentDto ->
-                {   
-                    Student student = new Student();
-                    Optional.ofNullable(studentDto.getIdPerson())
+    Group group = new Group();
+    if (scheduleItemDto.getGroup() != null) {
+        Optional.ofNullable(scheduleItemDto.getGroup().getStudents())
+                .ifPresent(st -> st.forEach(studentDto ->
+        {
+            Student student = new Student();
+            Optional.ofNullable(studentDto.getIdPerson())
                     .ifPresent(ss -> student.setIdPerson(ss.toString()));
-                   student.setFirstName(studentDto.getFirstName())
+            student.setFirstName(studentDto.getFirstName())
                     .setLastName(studentDto.getLastName());
-                    students.add(student);
-                });
+            students.add(student);
+        }));
 
-            
-            Optional.ofNullable(scheduleItemDto.getGroup().getId())
-            .ifPresent(ss -> group.setId(ss.toString()));
-            group.setName(scheduleItemDto.getGroup().getName())
-                 .setStudents(students);
-            }
-            
-            Room room = new Room();
-            if (scheduleItemDto.getRoom()!= null) {
-                Optional.ofNullable(scheduleItemDto.getRoom().getId())
+
+        Optional.ofNullable(scheduleItemDto.getGroup().getId())
+                .ifPresent(ss -> group.setId(ss.toString()));
+        group.setName(scheduleItemDto.getGroup().getName())
+                .setStudents(students);
+    }
+
+    Room room = new Room();
+    if (scheduleItemDto.getRoom() != null) {
+        Optional.ofNullable(scheduleItemDto.getRoom().getId())
                 .ifPresent(ss -> room.setId(ss.toString()));
-                room.setName(scheduleItemDto.getRoom().getName());
-            }
-            
-            Subject subject = new Subject();
-            
-            if (scheduleItemDto.getSubject()!= null) {
-                Optional.ofNullable(scheduleItemDto.getSubject().getId())
+        room.setName(scheduleItemDto.getRoom().getName());
+    }
+
+    Subject subject = new Subject();
+
+    if (scheduleItemDto.getSubject() != null) {
+        Optional.ofNullable(scheduleItemDto.getSubject().getId())
                 .ifPresent(ss -> subject.setId(ss.toString()));
-                subject.setName(scheduleItemDto.getSubject().getName());
-            }
-            
-            TimeSlot timeSlot = new TimeSlot();
-            
-            if (scheduleItemDto.getTimeSlot() != null) {
-                Optional.ofNullable(scheduleItemDto.getTimeSlot().getId())
-                        .ifPresent(ss -> timeSlot.setId(ss.toString()));
-                timeSlot.setSerialNumber(scheduleItemDto.getTimeSlot()
-                        .getSerialNumber())
-                        .setStartTime(scheduleItemDto.getTimeSlot()
-                                .getStartTime())
-                        .setFinishTime(scheduleItemDto.getTimeSlot()
-                                .getFinishTime());
-            }
-            
-            
+        subject.setName(scheduleItemDto.getSubject().getName());
+    }
 
-            Teacher teacher = new Teacher();
-            Optional.ofNullable(scheduleItemDto.getTeacher().getIdPerson())
-            .ifPresent(ss -> teacher.setIdPerson(ss.toString()));
+    TimeSlot timeSlot = new TimeSlot();
 
-            teacher.setFirstName(scheduleItemDto.getTeacher().getFirstName())
-                  .setLastName(scheduleItemDto.getTeacher().getLastName());
-            
+    if (scheduleItemDto.getTimeSlot() != null) {
+        Optional.ofNullable(scheduleItemDto.getTimeSlot().getId())
+                .ifPresent(ss -> timeSlot.setId(ss.toString()));
+        timeSlot.setSerialNumber(scheduleItemDto.getTimeSlot()
+                .getSerialNumber())
+                .setStartTime(scheduleItemDto.getTimeSlot()
+                        .getStartTime())
+                .setFinishTime(scheduleItemDto.getTimeSlot()
+                        .getFinishTime());
+    }
+
+
+    Teacher teacher = new Teacher();
+    if (scheduleItemDto.getTeacher() != null) {
+    Optional.ofNullable(scheduleItemDto.getTeacher())
+            .ifPresent(ss -> teacher.setIdPerson(ss.getIdPerson().toString()));
+
+    teacher.setFirstName(scheduleItemDto.getTeacher().getFirstName())
+            .setLastName(scheduleItemDto.getTeacher().getLastName());
+    }
             ScheduleItem scheduleItem = new ScheduleItem();
             
             Optional.ofNullable(scheduleItemDto.getId())

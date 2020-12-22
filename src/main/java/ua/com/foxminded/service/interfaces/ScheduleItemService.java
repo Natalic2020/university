@@ -8,9 +8,9 @@ import java.util.UUID;
 import ua.com.foxminded.model.dto.ScheduleItemDto;
 
 public interface ScheduleItemService {
-    public void addScheduleItem(ScheduleItemDto scheduleItemDto);
-    public void editScheduleItem(ScheduleItemDto scheduleItemDto);
-    public void deleteScheduleItem(UUID id);
+    public Boolean addScheduleItem(ScheduleItemDto scheduleItemDto);
+    public Boolean editScheduleItem(ScheduleItemDto scheduleItemDto);
+    public Boolean deleteScheduleItem(UUID id);
     public List<ScheduleItemDto> findWeekScheduleStudent(UUID id);
     public Map<String, List<ScheduleItemDto>> findMonthScheduleStudent(UUID id, LocalDate date);
     public List<ScheduleItemDto> findWeekScheduleTeacher(UUID id);

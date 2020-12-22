@@ -67,7 +67,7 @@ public class ScheduleRestController {
             schedule.put(day, scheduleDay);
         }
           
-        return schedule != null &&  !schedule.isEmpty()
+        return schedule.values().toArray()[0] != null
                 ? new ResponseEntity<>(schedule, HttpStatus.OK)
                         : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find Student with id  " + uuid),
                                 HttpStatus.NOT_FOUND);
@@ -105,7 +105,7 @@ public class ScheduleRestController {
             schedule.put(day, scheduleDay);
         }
 
-        return schedule != null &&  !schedule.isEmpty()
+        return schedule.values().toArray()[0] != null &&  !schedule.isEmpty()
                 ? new ResponseEntity<>(schedule, HttpStatus.OK)
                         : new ResponseEntity(new ErrorDescriptor().setStatus(HttpStatus.NOT_FOUND).setMessage("Not find teacher with id  " + uuid),
                                 HttpStatus.NOT_FOUND);

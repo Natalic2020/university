@@ -13,17 +13,6 @@ import ua.com.foxminded.service.ScheduleItemServiceImpl;
 @Profile("test")
 @Configuration
 public class TestConfig {
-//    @Bean
-//    public JavaMailSender mailSender() {
-//       // example of returning a mock object 
-//       return Mockito.mock(JavaMailSender.class);
-//    }    
-//
-//    @Bean
-//    public GreenMail smtpServer() {
-//       // another mock
-//       return Mockito.mock(GreenMail.class);
-//    }
 
     @Bean
     @Qualifier("scheduleItemDao")
