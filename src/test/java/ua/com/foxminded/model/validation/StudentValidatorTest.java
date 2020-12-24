@@ -64,9 +64,9 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("firstName"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"firstName");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -79,9 +79,9 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("lastName"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"lastName");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -94,9 +94,9 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotNull.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("studyStatus"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotNull.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"studyStatus");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -109,9 +109,9 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotNull.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("startOfStudy"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotNull.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"startOfStudy");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -124,9 +124,9 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{ua.com.foxminded.constraints.NotPastDate}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("startOfStudy"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().toString().equals("2020-12-12"));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{ua.com.foxminded.constraints.NotPastDate}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"startOfStudy");
+        assertEquals(constraintViolation.get(0).getInvalidValue().toString(),"2020-12-12");
     }
 
     @Test
@@ -139,9 +139,9 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("citizenship"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"citizenship");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -154,9 +154,9 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.PositiveOrZero.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("grant"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().equals(BigDecimal.valueOf(-200)));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.PositiveOrZero.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"grant");
+        assertEquals(constraintViolation.get(0).getInvalidValue(),BigDecimal.valueOf(-200));
     }
 
     @Test
@@ -169,8 +169,8 @@ public class StudentValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotNull.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("contactInfo"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotNull.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"contactInfo");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 }

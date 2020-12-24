@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TeacherValidatorTest {
 
@@ -62,9 +62,9 @@ public class TeacherValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation> constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("firstName"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"firstName");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -77,9 +77,9 @@ public class TeacherValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("lastName"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"lastName");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -92,9 +92,9 @@ public class TeacherValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotNull.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("department"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotNull.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"department");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -107,9 +107,9 @@ public class TeacherValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.PositiveOrZero.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("salary"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().equals(BigDecimal.valueOf(-200)));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.PositiveOrZero.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"salary");
+        assertEquals(constraintViolation.get(0).getInvalidValue(),BigDecimal.valueOf(-200));
     }
 
     @Test
@@ -122,8 +122,8 @@ public class TeacherValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotNull.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("contactInfo"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotNull.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"contactInfo");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 }

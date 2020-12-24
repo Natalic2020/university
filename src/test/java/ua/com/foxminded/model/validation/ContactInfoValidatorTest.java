@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ContactInfoValidatorTest {
 
@@ -52,9 +52,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation> constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.Min.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("index"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().equals(1));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.Min.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"index");
+        assertEquals(constraintViolation.get(0).getInvalidValue(),1);
     }
 
     @Test
@@ -67,9 +67,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("country"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"country");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -82,9 +82,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("city"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"city");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -97,9 +97,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("street"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"street");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -112,9 +112,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.NotBlank.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("house"));
-        assertTrue(constraintViolation.get(0).getInvalidValue() == null);
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.NotBlank.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"house");
+        assertNull(constraintViolation.get(0).getInvalidValue());
     }
 
     @Test
@@ -127,9 +127,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation> constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.Positive.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("apartment"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().equals(-25));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.Positive.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"apartment");
+        assertEquals(constraintViolation.get(0).getInvalidValue(),-25);
     }
 
     @Test
@@ -142,9 +142,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.Pattern.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("phone1"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().equals("25H"));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.Pattern.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"phone1");
+        assertEquals(constraintViolation.get(0).getInvalidValue(),"25H");
     }
 
     @Test
@@ -157,9 +157,9 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.Pattern.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("phone2"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().equals("25H"));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.Pattern.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"phone2");
+        assertEquals(constraintViolation.get(0).getInvalidValue(),"25H");
     }
     
     @Test
@@ -172,8 +172,8 @@ public class ContactInfoValidatorTest {
         assertTrue(constraintViolations.size() == 1);
         List<ConstraintViolation>   constraintViolation = constraintViolations.stream().collect(Collectors.toList());
 
-        assertTrue(constraintViolation.get(0).getMessageTemplate().equals("{javax.validation.constraints.Email.message}"));
-        assertTrue(constraintViolation.get(0).getPropertyPath().toString().equals("email"));
-        assertTrue(constraintViolation.get(0).getInvalidValue().equals("25H"));
+        assertEquals(constraintViolation.get(0).getMessageTemplate(),"{javax.validation.constraints.Email.message}");
+        assertEquals(constraintViolation.get(0).getPropertyPath().toString(),"email");
+        assertEquals(constraintViolation.get(0).getInvalidValue(),"25H");
     }
 }
