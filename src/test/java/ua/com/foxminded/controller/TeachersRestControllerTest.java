@@ -151,7 +151,7 @@ class TeachersRestControllerTest {
     }
 
     @Test
-    void showTeacher_whenValidTeacher_thenStatusOk() throws Exception {
+    void getTeacher_whenValidTeacher_thenStatusOk() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
 
         mockMvc.perform(get("/teacher/" + validTeacher.getIdPerson()))
@@ -162,7 +162,7 @@ class TeachersRestControllerTest {
     }
 
     @Test
-    void showTeacher_whenTeacherNull_thenStatusNotFound() throws Exception {
+    void getTeacher_whenTeacherNull_thenStatusNotFound() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(null);
 
         mockMvc.perform(get("/teacher/" + validTeacher.getIdPerson()))

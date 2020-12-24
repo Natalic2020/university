@@ -32,7 +32,6 @@ public class StudentConverterTest {
 
     @BeforeEach
     void initEach() {
-        System.out.println(" in Each");
         group = new Group()
                 .setId(uuidGroup)
                 .setName("gggr");

@@ -23,13 +23,11 @@ public class TestConfig {
     
     @Bean
     public ScheduleItemServiceImpl scheduleItemServiceImple(){
-        // this could also be used to return a Mock object
         return new ScheduleItemServiceImpl();
     }
     
     @Bean
     public  StudentConverter studentConverter(){
-        // this could also be used to return a Mock object
         return new StudentConverter();
     }
 }

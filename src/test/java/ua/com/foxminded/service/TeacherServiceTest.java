@@ -119,17 +119,11 @@ public class TeacherServiceTest {
 
     @Test
     void deleteTeacher_whenValidTeacher_thenTrue() {
-        List<Teacher> teachers = new ArrayList<>();
-        teachers.add(validTeacher);
-
-        teacherDao.deleteById(uuid.toString());
-
-        teacherServise.deleteTeacher(UUID.randomUUID());
+        assertTrue(teacherServise.deleteTeacher(UUID.randomUUID()));
     }
 
     @Test
     void deleteTeacher_whenValidTeacher_thenFalse() {
-
         assertFalse(teacherServise.deleteTeacher(null));
     }
 

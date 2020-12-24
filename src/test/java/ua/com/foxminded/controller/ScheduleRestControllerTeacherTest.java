@@ -79,7 +79,7 @@ class ScheduleRestControllerTeacherTest {
     }
 
     @Test
-    void showSchedule_whenTeacherWeek_thanStatusOK() throws Exception {
+    void getSchedule_whenTeacherWeek_thanStatusOK() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
         given(scheduleService.findWeekScheduleTeacher(any())).willReturn(scheduleWeek);
         
@@ -94,7 +94,7 @@ class ScheduleRestControllerTeacherTest {
     }
     
     @Test
-    void showSchedule_whenTeacherDay_thanStatusOK() throws Exception {
+    void getSchedule_whenTeacherDay_thanStatusOK() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
         given(scheduleService.findDayScheduleTeacher(any(),any())).willReturn(scheduleWeek);
         
@@ -109,7 +109,7 @@ class ScheduleRestControllerTeacherTest {
     }
     
     @Test
-    void showSchedule_whenTeacherMonth_thanStatusOK() throws Exception {
+    void getSchedule_whenTeacherMonth_thanStatusOK() throws Exception {
         
         Map<String, List<ScheduleItemDto>> scheduleMonth = new HashMap<String, List<ScheduleItemDto>>();
         scheduleMonth.put("2020-06-01", scheduleWeek);
@@ -128,7 +128,7 @@ class ScheduleRestControllerTeacherTest {
     }
 
     @Test
-    void showSchedule_whenTeacherNotFound_thanStatusNotFound() throws Exception {
+    void getSchedule_whenTeacherNotFound_thanStatusNotFound() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(new TeacherDto());
 
         mockMvc.perform(get("/schedule/teacher/" + validTeacher.getIdPerson()))
@@ -137,7 +137,7 @@ class ScheduleRestControllerTeacherTest {
     }
 
     @Test
-    void showSchedule_whenScheduleNull_thanStatusNotFound() throws Exception {
+    void getSchedule_whenScheduleNull_thanStatusNotFound() throws Exception {
         given(teacherService.findTeacher(any())).willReturn(validTeacher);
         given(scheduleService.findWeekScheduleTeacher(any())).willReturn(null);
 

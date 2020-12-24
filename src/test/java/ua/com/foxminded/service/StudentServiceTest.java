@@ -132,17 +132,11 @@ class StudentServiceTest {
 
     @Test
     void deleteStudent_whenValidStudent_thenTrue() {
-        List<Student> students = new ArrayList<>();
-        students.add(validStudent);
-
-        studentDao.deleteById(uuid.toString());
-
-        studentServise.deleteStudent(UUID.randomUUID());
+        assertTrue(studentServise.deleteStudent(UUID.randomUUID()));
     }
 
     @Test
     void deleteStudent_whenValidStudent_thenFalse() {
-
         assertFalse(studentServise.deleteStudent(null));
     }
 

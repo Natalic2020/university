@@ -24,7 +24,7 @@ public class TeacherDaoImplTest {
     private static String personUUID = "69c97b95-8ce5-4923-8d39-4c17bd5389d0";
 
     @Test
-    public void teacherFindById() {
+    public void teacherFindById_whenSearchTeacher_thenFirstNameRight() {
        
         String expected = "Yashwant";
  
@@ -35,7 +35,7 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void teacherFindAll() {
+    public void teacherFindAll_whenSearchAllTeachers_thenTeachersCount3() {
     
         List<Teacher> teachers = (List<Teacher>) teacherDao.findAll();
 
@@ -43,7 +43,7 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void teacherDeleteById() {
+    public void teacherDeleteById_whenDeleteTeacher_thenTeachersCount1Less() {
 
         teacherDao.deleteById("69c97b95-8ce5-4923-8d39-4c17bd5389d0");
         List<Teacher> teachers = (List<Teacher>) teacherDao.findAll();
@@ -52,7 +52,7 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void teacherEdit() {
+    public void teacherEdit_whenEdit1Teacher_thenFirstNameNew() {
 
         Teacher teacherEdit = new Teacher()
                                            .setDegree("DOCENT")
@@ -76,7 +76,7 @@ public class TeacherDaoImplTest {
     }
 
     @Test
-    public void teacherAdd() {
+    public void teacherAdd_whenAdd1Teacher_thenTeachersCount1More() {
 
         Teacher teacherNew = new Teacher()
                                           .setDegree("DOCENT")

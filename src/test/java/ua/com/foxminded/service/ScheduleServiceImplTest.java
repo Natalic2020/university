@@ -168,5 +168,4 @@ class ScheduleServiceImplTest {
 
         assertFalse(isDeleteSchedule);
     }
-
 }

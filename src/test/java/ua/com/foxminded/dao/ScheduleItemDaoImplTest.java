@@ -77,27 +77,20 @@ class ScheduleItemDaoImplTest {
     }
 
     @Test
-    public void scheduleFindByTeacherIdPerson() {
+    public void scheduleFindByTeacherIdPerson_whenSearchSchedule_ThenCountSchedule3() {
         List<ScheduleItem> schedule = scheduleItemDao.findByTeacherIdPerson(teacherUUID);
         assertThat(schedule.size()).isEqualTo(3);
     }
 
     @Test
-    public void scheduleFindByGroupIdGroup() {
+    public void scheduleFindByGroupIdGroup_whenSearchSchedule_ThenCountSchedule2() {
         List<ScheduleItem> schedule = scheduleItemDao.findByGroupIdGroup(groupUUID);
         assertThat(schedule.size()).isEqualTo(2);
     }
 
     @Test
-    public void scheduleDeleteById() {
+    public void scheduleDeleteById_whenDeleteSchedule_thenCount1Less() {
         scheduleItemDao.deleteById("5e9330ba-162f-45ea-b9de-605ae734f585");
-        List<ScheduleItem> schedule = scheduleItemDao.findByTeacherIdPerson(teacherUUID);
-        assertThat(schedule.size()).isEqualTo(2);
-    }
-    
-    @Test
-    public void scheduleDeleteById_uuidFalse() {
-        scheduleItemDao.deleteById("cb0aba06-3f97-11eb-b378-0242ac130002");
         List<ScheduleItem> schedule = scheduleItemDao.findByTeacherIdPerson(teacherUUID);
         assertThat(schedule.size()).isEqualTo(2);
     }

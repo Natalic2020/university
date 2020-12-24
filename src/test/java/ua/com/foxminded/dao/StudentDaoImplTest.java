@@ -46,22 +46,19 @@ class StudentDaoImplTest {
     }
    
     @Test
-    public void studentFindById() {
-
+    public void studentFindById_whenSearchStudent_thenFirstNameRight() {
         entityManager.persist(student);
         entityManager.flush();
 
         Optional<Student> foundStudent = studentDao.findById(personUUID);
 
         String studentName = foundStudent.orElse(new Student()).getFirstName();
-        System.out.println("**************************");
-       System.out.println(studentName);
-        System.out.println("**************************");
+
         assertThat(studentName).isEqualTo(student.getFirstName());
   }
     
     @Test
-    public void studentFindAll() {
+    public void studentFindAll_whenSearchAllStudents_thenStudentsCount4() {
 
         entityManager.persist(student);
         entityManager.flush();
@@ -72,8 +69,7 @@ class StudentDaoImplTest {
   }
     
     @Test
-    public void studentDeleteById() {
-
+    public void studentDeleteById_whenDeleteStudent_thenStudentsCount1Less() {
        studentDao.deleteById("f17e5b3a-5963-4098-a2ff-26b497701e70");
        List<Student> students = (List<Student>) studentDao.findAll();
 
@@ -81,7 +77,7 @@ class StudentDaoImplTest {
   }  
     
     @Test
-    public void studentEdit() {
+    public void studentEdit_whenEdit1Student_thenFirstNameNew() {
 
       Student  studentEdit = new Student()
                                .setStudyStatus(StudyStatus.FINISHED.toString())
@@ -105,7 +101,7 @@ class StudentDaoImplTest {
   } 
     
     @Test
-    public void studentAdd() {
+    public void studentAdd_whenAdd1Student_thenStudentsCount1More() {
 
       Student  studentNew = new Student()
                                .setStudyStatus(StudyStatus.FINISHED.toString())

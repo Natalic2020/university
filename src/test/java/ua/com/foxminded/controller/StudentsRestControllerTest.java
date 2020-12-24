@@ -153,7 +153,7 @@ class StudentsRestControllerTest {
     }
 
     @Test
-    void showStudent_whenValidStudent_thenStatusOk() throws Exception {
+    void getStudent_whenValidStudent_thenStatusOk() throws Exception {
         given(studentService.findStudent(any())).willReturn(validStudent);
 
         mockMvc.perform(get("/student/" + validStudent.getIdPerson()))
@@ -164,7 +164,7 @@ class StudentsRestControllerTest {
     }
 
     @Test
-    void showStudent_whenStudentNull_thenStatusNotFound() throws Exception {
+    void getStudent_whenStudentNull_thenStatusNotFound() throws Exception {
         given(studentService.findStudent(any())).willReturn(null);
 
         mockMvc.perform(get("/student/" + validStudent.getIdPerson()))
