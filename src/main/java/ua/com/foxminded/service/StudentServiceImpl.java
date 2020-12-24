@@ -15,6 +15,7 @@ import ua.com.foxminded.converter.StudentConverter;
 import ua.com.foxminded.dao.entity.Student;
 import ua.com.foxminded.dao.interfaces.GroupDao;
 import ua.com.foxminded.dao.interfaces.StudentDao;
+import ua.com.foxminded.model.dto.ContactInfoDto;
 import ua.com.foxminded.model.dto.GroupDto;
 import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.service.interfaces.GroupService;
@@ -31,26 +32,32 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     @Qualifier("groupDao")
     GroupDao groupDao;
-    
-    @Autowired
+
     StudentConverter studentConverter;
     
     @Autowired
     GroupConverter groupConverter;
-    
-    @Autowired
+
     GroupService groupService;
     
-    public StudentServiceImpl(StudentDao studentDao) {
+    @Autowired
+    public StudentServiceImpl(StudentDao studentDao, StudentConverter studentConverter, GroupService groupService) {
         this.studentDao = studentDao;
+        this.studentConverter = studentConverter;
+        this.groupService = groupService;
     }
 
+    
     @Override
     public Boolean addStudent(StudentDto studentDto) {
+        if (studentDto==null){
+            return false;
+        }
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
-       studentDto.getContactInfo().setId(UUID.randomUUID());
+        Optional.ofNullable(studentDto.getContactInfo()).map(info -> info.setId(UUID.randomUUID()))
+                .orElse(new ContactInfoDto().setId(UUID.randomUUID()));
         
         GroupDto groupDto = groupService.findGroupByName(groupName);
         studentDao.save(studentConverter.convertDtoToEntity((StudentDto) studentDto
@@ -60,22 +67,33 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void editStudent(StudentDto studentDto, UUID uuid) {
+    public Boolean editStudent(StudentDto studentDto, UUID uuid) {
+        if (studentDto==null || uuid == null){
+            return false;
+        }
         String groupName = Optional.ofNullable(studentDto.getGroup())
                 .map(gr -> gr.getName())
                 .orElse("");
         GroupDto groupDto = groupService.findGroupByName(groupName);
         studentDao.save(studentConverter.convertDtoToEntity(((StudentDto) studentDto.setIdPerson(uuid))
                 .setGroup(groupDto)));
+        return true;
     }
 
     @Override
-    public void deleteStudent(UUID uuid) {
-        studentDao.deleteById(uuid.toString());
+    public Boolean deleteStudent(UUID uuid) {
+        if (uuid == null){
+            return false;
+        }
+       studentDao.deleteById(uuid.toString());
+       return true;
     }
 
     @Override
     public StudentDto findStudent(UUID uuid) {
+        if (uuid == null){
+            return new StudentDto();
+        }
         return studentConverter.convertEntityToDto(studentDao.findById(uuid.toString()).orElse(new Student()));
     }
 

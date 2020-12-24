@@ -21,8 +21,13 @@ public class StudentConverter {
         
         Student student = new Student();
         Optional.ofNullable(studentDto.getGroup())  
-        .ifPresent(gr -> student.setGroup(new Group().setId(gr.getId().toString())
-                .setName(gr.getName())));
+        .ifPresent(gr ->   {
+            Group group = new Group();
+            Optional.ofNullable(gr.getId())
+                    .ifPresent(grI -> group.setId(grI.toString()));
+            group.setName(gr.getName());
+            student.setGroup(group);
+        });
         Optional.ofNullable(studentDto.getIdPerson())
         .ifPresent(ss -> student.setIdPerson(ss.toString()));        
          student.setFirstName(studentDto.getFirstName())
@@ -34,19 +39,22 @@ public class StudentConverter {
         .ifPresent(ss -> student.setStudyStatus(ss.name()));   
       
         ContactInfoDto contactInfoDto = studentDto.getContactInfo();
-        ContactInfo contactInfo = new ContactInfo()
-                .setIndex(contactInfoDto.getIndex())
-                .setCountry(contactInfoDto.getCountry())
-                .setCity(contactInfoDto.getCity())
-                .setStreet(contactInfoDto.getStreet())
-                .setHouse(contactInfoDto.getHouse())
-                .setApartment(contactInfoDto.getApartment())
-                .setPhone1(contactInfoDto.getPhone1())
-                .setPhone2(contactInfoDto.getPhone2())
-                .setEmail(contactInfoDto.getEmail())
-                .setId(contactInfoDto.getId().toString());
-               
-        contactInfo.setPerson(student);
+        ContactInfo contactInfo = new ContactInfo();
+        Optional.ofNullable(contactInfoDto)
+                .ifPresent( contactInfoDto1 -> {
+                            contactInfo
+                                    .setIndex(contactInfoDto.getIndex())
+                                    .setCountry(contactInfoDto.getCountry())
+                                    .setCity(contactInfoDto.getCity())
+                                    .setStreet(contactInfoDto.getStreet())
+                                    .setHouse(contactInfoDto.getHouse())
+                                    .setApartment(contactInfoDto.getApartment())
+                                    .setPhone1(contactInfoDto.getPhone1())
+                                    .setPhone2(contactInfoDto.getPhone2())
+                                    .setEmail(contactInfoDto.getEmail());
+                            Optional.ofNullable(contactInfoDto.getId())
+                                    .ifPresent(ci -> contactInfo.setId(ci.toString()));
+                        });
         student.setContactInfo(contactInfo);
       return   student;
         

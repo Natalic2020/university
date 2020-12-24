@@ -2,6 +2,7 @@ package ua.com.foxminded.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import ua.com.foxminded.converter.TeacherConverter;
 import ua.com.foxminded.dao.entity.Teacher;
 import ua.com.foxminded.dao.interfaces.TeacherDao;
+import ua.com.foxminded.model.dto.ContactInfoDto;
+import ua.com.foxminded.model.dto.StudentDto;
 import ua.com.foxminded.model.dto.TeacherDto;
 import ua.com.foxminded.service.interfaces.TeacherService;
 
@@ -28,24 +31,39 @@ public class TeacherServiceImpl implements TeacherService {
     
     @Override
     public Boolean addTeacher(TeacherDto teacherDto) {
-        teacherDto.getContactInfo().setId(UUID.randomUUID());
+        if (teacherDto==null){
+            return false;
+        }
+        Optional.ofNullable(teacherDto.getContactInfo()).map(info -> info.setId(UUID.randomUUID()))
+                .orElse(new ContactInfoDto().setId(UUID.randomUUID()));
         teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto
               .setIdPerson(UUID.randomUUID())));
         return !findTeacher(teacherDto.getIdPerson()).equals(new TeacherDto());
     }
 
     @Override
-    public void editTeacher(TeacherDto teacherDto, UUID uuid) {
+    public Boolean editTeacher(TeacherDto teacherDto, UUID uuid) {
+        if (teacherDto==null || uuid == null){
+            return false;
+        }
         teacherDao.save(teacherConverter.convertDtoToEntity((TeacherDto) teacherDto.setIdPerson(uuid)));
-     }
+        return true;
+    }
 
     @Override
-    public void deleteTeacher(UUID uuid) {
+    public Boolean deleteTeacher(UUID uuid) {
+        if (uuid == null){
+            return false;
+        }
         teacherDao.deleteById(uuid.toString());
+        return true;
     }
 
     @Override
     public TeacherDto findTeacher(UUID uuid) {
+        if (uuid == null){
+            return new TeacherDto();
+        }
         return teacherConverter.convertEntityToDto(teacherDao.findById(uuid.toString()).orElse(new Teacher()));
 
     }

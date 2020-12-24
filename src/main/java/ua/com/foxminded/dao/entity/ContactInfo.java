@@ -27,7 +27,7 @@ public class ContactInfo {
 	private String street;
 	private String house;
 	private int apartment;
-	private String phone1;
+    private String phone1;
 	private String phone2;
 	private String email;
 	
@@ -132,5 +132,39 @@ public class ContactInfo {
     public ContactInfo setPerson(Person person) {
         this.person = person;
         return this;
-    } 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ContactInfo)) return false;
+
+        ContactInfo that = (ContactInfo) o;
+
+        if (getIndex() != that.getIndex()) return false;
+        if (getApartment() != that.getApartment()) return false;
+        if (getPerson() != null ? !getPerson().equals(that.getPerson()) : that.getPerson() != null) return false;
+        if (getCountry() != null ? !getCountry().equals(that.getCountry()) : that.getCountry() != null) return false;
+        if (getCity() != null ? !getCity().equals(that.getCity()) : that.getCity() != null) return false;
+        if (getStreet() != null ? !getStreet().equals(that.getStreet()) : that.getStreet() != null) return false;
+        if (getHouse() != null ? !getHouse().equals(that.getHouse()) : that.getHouse() != null) return false;
+        if (getPhone1() != null ? !getPhone1().equals(that.getPhone1()) : that.getPhone1() != null) return false;
+        if (getPhone2() != null ? !getPhone2().equals(that.getPhone2()) : that.getPhone2() != null) return false;
+        return getEmail() != null ? getEmail().equals(that.getEmail()) : that.getEmail() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getPerson() != null ? getPerson().hashCode() : 0;
+        result = 31 * result + getIndex();
+        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+        result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
+        result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
+        result = 31 * result + (getHouse() != null ? getHouse().hashCode() : 0);
+        result = 31 * result + getApartment();
+        result = 31 * result + (getPhone1() != null ? getPhone1().hashCode() : 0);
+        result = 31 * result + (getPhone2() != null ? getPhone2().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        return result;
+    }
 }

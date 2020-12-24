@@ -1,3 +1,4 @@
+package ua.com.foxminded;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -23,9 +24,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import ua.com.foxminded.dao.DatebaseCreator;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 @ServletComponentScan
-@ComponentScan(basePackages = "ua.com.foxminded")
 @EnableJpaRepositories(basePackages = "ua.com.foxminded.dao")
 @EntityScan(basePackages = "ua.com.foxminded.dao.entity")
 public class Application extends SpringBootServletInitializer{
