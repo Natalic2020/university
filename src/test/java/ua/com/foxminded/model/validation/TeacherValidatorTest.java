@@ -31,6 +31,7 @@ public class TeacherValidatorTest {
     String uuidPerson = "d4d8b36a-4435-11eb-b378-0242ac130002";
     String uuidContactInfo = "2a6e5b4a-4436-11eb-b378-0242ac130002";
 
+
     @BeforeEach
     void initEach() {
 
